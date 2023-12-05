@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPSA.Web", "IPSA.Web\IPSA.Web\IPSA.Web.csproj", "{866E3602-6FCB-4750-8091-A1F172A034FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web", "IPSA.Web\IPSA.Web\IPSA.Web.csproj", "{866E3602-6FCB-4750-8091-A1F172A034FD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{84BC794D-669D-4E63-9968-0F55ADAA2C18} = {84BC794D-669D-4E63-9968-0F55ADAA2C18}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPSA.Web.Client", "IPSA.Web\IPSA.Web.Client\IPSA.Web.Client.csproj", "{01F98BC9-C65A-42D8-A60C-47E61E968107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web.Client", "IPSA.Web\IPSA.Web.Client\IPSA.Web.Client.csproj", "{01F98BC9-C65A-42D8-A60C-47E61E968107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPSA.DataAccess", "IPSA.DataAccess\IPSA.DataAccess.csproj", "{CFAB8DAB-C1FA-40FC-B049-315659B678C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Models", "IPSA.Models\IPSA.Models.csproj", "{84BC794D-669D-4E63-9968-0F55ADAA2C18}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.API", "IPSA.API\IPSA.API.csproj", "{BE5F414A-637A-49D0-9519-68691EE6E206}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +28,14 @@ Global
 		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CFAB8DAB-C1FA-40FC-B049-315659B678C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CFAB8DAB-C1FA-40FC-B049-315659B678C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CFAB8DAB-C1FA-40FC-B049-315659B678C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CFAB8DAB-C1FA-40FC-B049-315659B678C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE5F414A-637A-49D0-9519-68691EE6E206}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE5F414A-637A-49D0-9519-68691EE6E206}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE5F414A-637A-49D0-9519-68691EE6E206}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE5F414A-637A-49D0-9519-68691EE6E206}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

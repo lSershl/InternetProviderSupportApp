@@ -1,5 +1,7 @@
 using IPSA.Web.Client.Pages;
 using IPSA.Web.Components;
+using IPSA.Web.Services;
+using IPSA.Web.Services.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:5027") });
+builder.Services.AddScoped<IAbonentService, AbonentService>();
 
 var app = builder.Build();
 

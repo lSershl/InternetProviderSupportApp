@@ -1,0 +1,6 @@
+@IPSA.API_HostAddress = http://localhost:5027
+
+GET {{IPSA.API_HostAddress}}/Abonents/
+Accept: application/json
+
+###

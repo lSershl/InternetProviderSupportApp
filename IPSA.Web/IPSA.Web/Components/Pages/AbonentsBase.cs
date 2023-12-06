@@ -1,6 +1,4 @@
-﻿//using IPEA.Data;
-//using IPEA.Handlers.Interfaces;
-using IPSA.Models;
+﻿using IPSA.Web.Dtos;
 using IPSA.Web.Services.Contracts;
 using Microsoft.AspNetCore.Components;
 
@@ -17,17 +15,16 @@ namespace IPSA.Web
         [Inject]
         public required NavigationManager navManager { get; set; }
 
-        public IEnumerable<Abonent>? abonList;
+        public IEnumerable<AbonentReadDto>? abonList;
         //public List<City> citiesList;
         public SearchAbonentFilter? filter = new SearchAbonentFilter();
-        public string selectedCity;
+        public required string selectedCity = "Все доступные";
         public int max_result_count = 20;
 
         protected override async Task OnInitializedAsync()
         {
             abonList = await AbonentService.GetAllAbonents();
             //citiesList = addressHandler.GetCitiesList();
-            selectedCity = "Все доступные";
         }
 
         //protected void Search(SearchAbonentFilter filter, int max_result_count)
@@ -42,7 +39,7 @@ namespace IPSA.Web
         //    }
 
         //    if (max_result_count < 0) max_result_count = 0;
-            
+
         //    if (filter == null)
         //    {
         //        abonHandler.GetAbonents().OrderBy(x => x.abon_id);
@@ -61,22 +58,22 @@ namespace IPSA.Web
 
         //protected void ClearFilter()
         //{
-        //    filter.abon_id = null;
-        //    filter.first_name = null;
-        //    filter.last_name = null;
-        //    filter.surname = null;
-        //    filter.phone = null;
-        //    filter.conn_city = null;
-        //    filter.conn_street = null;
-        //    filter.conn_house = null;
-        //    filter.conn_apartment = null;
+        //    filter.AbonentId = null;
+        //    filter.FirstName = null;
+        //    filter.LastName = null;
+        //    filter.Surname = null;
+        //    filter.PhoneNumber = null;
+        //    filter.City = null;
+        //    filter.Street = null;
+        //    filter.House = null;
+        //    filter.Apartment = null;
         //    selectedCity = "Все доступные";
         //    max_result_count = 20;
         //}
 
         protected void GoToAbonPage(int abon_id)
         {
-            navManager.NavigateTo($"/abon/info/{abon_id}");
+            navManager.NavigateTo($"/abonent/info/{abon_id}");
         }
     }
 }

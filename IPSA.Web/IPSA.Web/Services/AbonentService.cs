@@ -1,6 +1,7 @@
-﻿using IPSA.Models;
+﻿using IPSA.Web.Dtos;
 using IPSA.Web.Services.Contracts;
-using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 
 namespace IPSA.Web.Services
 {
@@ -12,7 +13,7 @@ namespace IPSA.Web.Services
             _httpClient = httpClient;
         }
 
-        public async Task<IEnumerable<Abonent>> GetAllAbonents()
+        public async Task<IEnumerable<AbonentReadDto>> GetAllAbonents()
         {
             try
             {
@@ -21,10 +22,10 @@ namespace IPSA.Web.Services
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return Enumerable.Empty<Abonent>();
+                        return Enumerable.Empty<AbonentReadDto>();
                     }
 
-                    return await response.Content.ReadFromJsonAsync<IEnumerable<Abonent>>();
+                    return await response.Content.ReadFromJsonAsync<IEnumerable<AbonentReadDto>>();
                 }
                 else
                 {
@@ -39,20 +40,20 @@ namespace IPSA.Web.Services
             }
         }
 
-        public async Task<Abonent> GetAbonent(int id)
+        public async Task<AbonentReadDto> GetAbonent(int id)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"Abonents/{id}");
+                var response = await _httpClient.GetAsync($"API/Abonents/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return default(Abonent);
+                        return default(AbonentReadDto);
                     }
 
-                    return await response.Content.ReadFromJsonAsync<Abonent>();
+                    return await response.Content.ReadFromJsonAsync<AbonentReadDto>();
                 }
                 else
                 {
@@ -67,6 +68,33 @@ namespace IPSA.Web.Services
             }
         }
 
-        
+        public async Task AddNewAbonent(AbonentCreateDto abonentCreateDto)
+        {
+            try
+            {
+                var httpContent = new StringContent(
+                JsonSerializer.Serialize(abonentCreateDto),
+                Encoding.UTF8,
+                "application/json");
+
+                var response = await _httpClient.PostAsync("API/Abonents/NewAbonent", httpContent);
+                //var response = await _httpClient.PostAsJsonAsync("API/Abonents/NewAbonent", httpContent);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return;
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
     }
 }

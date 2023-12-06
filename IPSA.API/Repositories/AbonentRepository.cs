@@ -26,6 +26,18 @@ namespace IPSA.API.Repositories
             return abonent;
         }
 
-        
+        public async Task<Task> AddNewAbonent(Abonent newAbonent)
+        {
+            await _appDbContext.AddAsync(newAbonent);
+            _appDbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
+
+        public Task UpdateAbonent(Abonent updAbonent)
+        {
+            _appDbContext.Update(updAbonent);
+            _appDbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
     }
 }

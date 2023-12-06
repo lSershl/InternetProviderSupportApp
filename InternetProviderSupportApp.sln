@@ -3,16 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34310.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web", "IPSA.Web\IPSA.Web\IPSA.Web.csproj", "{866E3602-6FCB-4750-8091-A1F172A034FD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{84BC794D-669D-4E63-9968-0F55ADAA2C18} = {84BC794D-669D-4E63-9968-0F55ADAA2C18}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web.Client", "IPSA.Web\IPSA.Web.Client\IPSA.Web.Client.csproj", "{01F98BC9-C65A-42D8-A60C-47E61E968107}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Models", "IPSA.Models\IPSA.Models.csproj", "{84BC794D-669D-4E63-9968-0F55ADAA2C18}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.API", "IPSA.API\IPSA.API.csproj", "{BE5F414A-637A-49D0-9519-68691EE6E206}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web", "IPSA.Web\IPSA.Web\IPSA.Web.csproj", "{85E88521-BA6B-438B-BD14-7669355F12FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web.Client", "IPSA.Web\IPSA.Web.Client\IPSA.Web.Client.csproj", "{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,14 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{866E3602-6FCB-4750-8091-A1F172A034FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{866E3602-6FCB-4750-8091-A1F172A034FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{866E3602-6FCB-4750-8091-A1F172A034FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{866E3602-6FCB-4750-8091-A1F172A034FD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{01F98BC9-C65A-42D8-A60C-47E61E968107}.Release|Any CPU.Build.0 = Release|Any CPU
 		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84BC794D-669D-4E63-9968-0F55ADAA2C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -36,6 +25,14 @@ Global
 		{BE5F414A-637A-49D0-9519-68691EE6E206}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE5F414A-637A-49D0-9519-68691EE6E206}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE5F414A-637A-49D0-9519-68691EE6E206}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85E88521-BA6B-438B-BD14-7669355F12FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85E88521-BA6B-438B-BD14-7669355F12FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85E88521-BA6B-438B-BD14-7669355F12FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85E88521-BA6B-438B-BD14-7669355F12FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

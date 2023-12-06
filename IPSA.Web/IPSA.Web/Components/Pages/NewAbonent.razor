@@ -1,0 +1,183 @@
+﻿@page "/newAbonent"
+@inherits NewAbonentBase
+
+<PageTitle>Новый абонент</PageTitle>
+
+<div>
+    <h4>Добавить нового абонента</h4>
+    <br />
+
+    @* <EditForm Model="newAbonent">
+
+    </EditForm> *@
+    <table>
+        <tr>
+            <td class="left_column">Фамилия</td>
+            <td><input class="right_column" placeholder="Введите фамилию" @bind="newAbonent.LastName" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Имя</td>
+            <td><input class="right_column" placeholder="Введите имя" @bind="newAbonent.FirstName" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Отчество</td>
+            <td><input class="right_column" placeholder="Введите отчество" @bind="newAbonent.Surname" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Место рождения</td>
+            <td><input class="right_column" placeholder="Введите место рождения" @bind="newAbonent.BirthPlace" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Дата рождения</td>
+            <td><input class="right_column" type="date" @bind="newAbonent.DateOfBirth" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Контактный номер телефона</td>
+            <td><input class="right_column" placeholder="88005553535" @bind="newAbonent.PhoneNumber" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Номер телефона для рассылок</td>
+            <td><input class="right_column" placeholder="88005553535" @bind="newAbonent.PhoneNumberForSending" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Электронная почта</td>
+            <td><input class="right_column" placeholder="sample@gmail.com" @bind="newAbonent.Email" /></td>
+        </tr>
+    </table>
+    <br />
+
+    <table>
+        <tr>
+            <td class="left_column">Серия паспорта</td>
+            <td><input maxlength=4 class="right_column" placeholder="Четыре цифры" @bind="newAbonent.PassportSeries" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Номер паспорта</td>
+            <td><input maxlength=6 class="right_column" placeholder="Шесть цифр" @bind="newAbonent.PassportNumber" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Место выдачи паспорта</td>
+            <td><input class="right_column" placeholder="Введите орган выдачи" @bind="newAbonent.PassportRegistration" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Дата выдачи паспорта</td>
+            <td><input class="right_column" type="date" @bind="newAbonent.PassportRegDate" /></td>
+        </tr>
+    </table>
+    <br />
+
+    <table>
+        <tr>
+            <td class="left_column">Адрес прописки</td>
+            <td><input class="street" placeholder="Улица прописки" @bind="registryStreet"/></td>
+            <td><input class="house" placeholder="Дом" @bind="registryHouse" /></td>
+            <td><input class="appartment" placeholder="Квартира" @bind="registryApartment" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Населённый пункт</td>
+            <td><input class="city" placeholder="Населённый пункт прописки" @bind="registryCity"/></td>
+        </tr>
+        <tr>
+            <td class="left_column">Почтовый индекс</td>
+            <td><input maxlength=6 class="right_column" placeholder="(Необязателен)" @bind="newAbonent.RegistrationZipCode" /></td>
+        </tr>
+    </table>
+    <br />
+
+    <table>
+        <tr>
+            <td class="left_column">Адрес подключения</td>
+            <td>
+                <select class="city" @bind="newAbonent.City">
+                    <option style="font-style: italic;">Братск</option>
+                    @* @if(citiesList is null)
+                    {
+                        <option style="font-style: italic;">-Выберите город-</option>
+                        
+                    }
+                    else
+                    {
+                        @foreach (var city in citiesList)
+                        {
+                            <option value="@city.city_name" @onclick="() => SelectCity(city.city_name)">@city.city_name</option>
+                        }
+                    } *@
+                </select>
+            </td>
+            @* <td>
+                <select class="district" @onclick="() => RefreshDistrictsList(newAbonent.City)">
+                    @if (districtsList == null)
+                    {
+                        <option>-</option>
+                    }
+                    else if (districtsList.Count == 1)
+                    {
+                        <option>@districtsList.First().dist_name</option>
+                        RefreshStreetsList(districtsList.First().dist_id);
+                    }
+                    else
+                    {
+                        <option @onclick="() => RefreshStreetsList(newAbonent.City)">-</option>
+                        @foreach (var district in districtsList)
+                        {
+                            <option value="@district.dist_name" @onclick="() => RefreshStreetsList(district.dist_id)">@district.dist_name</option>
+                        }
+                    }
+                </select>
+            </td> *@
+            @* <td>
+                <select class="street" @bind="newAbonent.Street">
+                    @if(streetsList == null || streetsList.Count == 0)
+                    {
+                        <option>-</option>
+                    }
+                    else if (districtsList == null)
+                    {
+                        RefreshStreetsList(newAbonent.City);
+                        @foreach (var street in streetsList)
+                        {
+                            <option value="@street.street_name">@street.street_name</option>
+                        }
+                    }
+                    else
+                    {
+                        @foreach (var street in streetsList)
+                        {
+                            <option value="@street.street_name">@street.street_name</option>
+                        }
+                    }
+                </select>
+            </td> *@
+            <td><input class="house" placeholder="Дом" @bind="newAbonent.House" /></td>
+            <td><input class="appartment" placeholder="Квартира" @bind="newAbonent.Apartment" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Подъезд</td>
+            <td><input class="right_column" placeholder="Номер подъезда" @bind="newAbonent.HouseEntranceNumber" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Этаж</td>
+            <td><input class="right_column" placeholder="Номер этажа" @bind="newAbonent.HouseFloorNumber" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Почтовый индекс</td>
+            <td><input maxlength=6 class="right_column" placeholder="(Необязателен)" @bind="newAbonent.AddressZipCode" /></td>
+        </tr>
+    </table>
+    <br />
+
+    <table>
+        <tr>
+            <td class="left_column">Кодовое слово</td>
+            <td><input class="right_column" placeholder="Слово или цифры" @bind="newAbonent.SecretPhrase" /></td>
+        </tr>
+        <tr>
+            <td class="left_column">Добавить SMS рассылку</td>
+            <td><input type="checkbox" @bind="newAbonent.SMSSending" /></td>
+        </tr>
+    </table>
+
+    <br />
+    <button class="btn-outline-primary" @onclick="Save_Button_Click">Сохранить</button>
+    @* <button class="btn btn-primary" @onclick="Save_Button_Click" disabled="@isBusy">Сохранить</button> *@
+</div>

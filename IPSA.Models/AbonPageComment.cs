@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IPSA.Models
 {
-    //[Table ("AbonPageComments", Schema = "public")]
     public class AbonPageComment
     {
         [Key]

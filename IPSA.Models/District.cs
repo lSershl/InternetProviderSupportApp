@@ -3,7 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IPSA.Models
 {
-    //[Table("Districts", Schema = "public")]
     public class District
     {
         [Key]

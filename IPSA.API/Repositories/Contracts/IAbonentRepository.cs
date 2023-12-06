@@ -6,5 +6,7 @@ namespace IPSA.API.Repositories.Contracts
     {
         Task<IEnumerable<Abonent>> GetAllAbonents();
         Task<Abonent> GetAbonent(int id);
+        Task<Task> AddNewAbonent(Abonent newAbonent);
+        Task UpdateAbonent(Abonent updAbonent);
     }
 }

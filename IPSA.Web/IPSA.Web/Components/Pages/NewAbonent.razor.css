@@ -1,0 +1,96 @@
+﻿table {
+    width: 100%;
+    border: thin solid; 
+    border-color: black;
+    max-width: 800px;
+    border-spacing: 2px;
+}
+
+tr {
+    /*width: 600px;*/
+    border: solid 1px;
+    border-spacing: 2px;
+}
+
+td.left_column {
+    width: 25%;
+    background-color: #99ccff;
+}
+
+input.left_column {
+    width: 40%;
+    background-color: #99ccff;
+}
+
+input.right_column {
+    border: inset 0.3px;
+    width: 100%;
+}
+
+select.city {
+    border: inset 0.3px;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+}
+
+select.district {
+    border: inset 0.3px;
+    width: max-content;
+    background-color: whitesmoke;
+}
+
+select.street {
+    border: inset 0.3px;
+    width: max-content;
+    height: auto;
+    background-color: whitesmoke;
+}
+
+input.city {
+    border: inset 0.3px;
+    width: 100%;
+    height: auto;
+}
+
+input.street {
+    border: inset 0.3px;
+    width: 100%;
+    height: auto;
+}
+
+input.house {
+    width: 100px;
+    border: solid 1px;
+    border-color: black;
+}
+
+input.appartment {
+    width: 100px;
+    border: solid 1px;
+    border-color: black;
+}
+
+.button {
+    border: solid;
+    color: black;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+.button:active {
+    
+}
+

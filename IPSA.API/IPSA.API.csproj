@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\IPSA.Models\IPSA.Models.csproj" />
+    <ProjectReference Include="..\IPSA.Shared\IPSA.Shared.csproj" />
   </ItemGroup>
 
 </Project>

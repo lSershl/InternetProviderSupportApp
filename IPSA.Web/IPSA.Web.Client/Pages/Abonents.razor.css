@@ -1,12 +1,12 @@
-﻿input.sml_input {
+﻿.input.sml_input {
     width: 50px;
 }
 
-input.med_input {
+.input.med_input {
     width: 100px;
 }
 
-input.lrg_input {
+.input.lrg_input {
     width: 300px;
 }
 

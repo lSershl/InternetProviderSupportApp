@@ -1,7 +1,8 @@
 using AutoMapper;
 using IPSA.API.Dtos;
-using IPSA.API.Repositories;
+using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
+using IPSA.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -9,16 +10,10 @@ namespace IPSA.API.Controllers
 {
     [ApiController]
     [Route("API/[controller]")]
-    public class AbonentsController : ControllerBase
+    public class AbonentsController(IAbonentRepository abonentRepository, IMapper mapper) : ControllerBase
     {
-        private readonly AbonentRepository _abonentRepository;
-        private readonly IMapper _mapper;
-
-        public AbonentsController(AbonentRepository abonentRepository, IMapper mapper)
-        {
-            _abonentRepository = abonentRepository;
-            _mapper = mapper;
-        }
+        private readonly IAbonentRepository _abonentRepository = abonentRepository;
+        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Abonent>>> GetAllAbonents()
@@ -65,18 +60,17 @@ namespace IPSA.API.Controllers
         }
 
         [HttpPost("NewAbonent")]
-        public async Task<IActionResult> AddNewAbonent(AbonentCreateDto abonentCreateDto)
+        public async Task<ActionResult<ServiceResponse>> AddNewAbonent(AbonentCreateDto abonentCreateDto)
         {
             try
             {
                 if (abonentCreateDto is null)
                 {
-                    return BadRequest();
+                    return BadRequest("Ошибка. Бланк абонента не содержит данных.");
                 }
 
                 var newAbonent = _mapper.Map<Abonent>(abonentCreateDto);
                 _abonentRepository.AddNewAbonent(newAbonent);
-                //return CreatedAtAction("AddNewAbonent", abonentCreateDto);
                 return Ok();
             }
             catch (Exception)

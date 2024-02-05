@@ -5,14 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IPSA.API.Repositories
 {
-    public class AbonentRepository : IAbonentRepository
+    public class AbonentRepository(AppDbContext appDbContext) : IAbonentRepository
     {
-        private readonly AppDbContext _appDbContext;
-
-        public AbonentRepository(AppDbContext appDbContext)
-        {
-            _appDbContext = appDbContext;
-        }
+        private readonly AppDbContext _appDbContext = appDbContext;
 
         public async Task<IEnumerable<Abonent>> GetAllAbonents()
         {

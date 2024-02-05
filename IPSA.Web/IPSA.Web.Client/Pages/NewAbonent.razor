@@ -1,15 +1,11 @@
 ﻿@page "/newAbonent"
 @inherits NewAbonentBase
+@rendermode InteractiveServer
 
 <PageTitle>Новый абонент</PageTitle>
 
-<div>
+<div style="align-content:flex-start">
     <h4>Добавить нового абонента</h4>
-    <br />
-
-    @* <EditForm Model="newAbonent">
-
-    </EditForm> *@
     <table>
         <tr>
             <td class="left_column">Фамилия</td>
@@ -178,6 +174,5 @@
     </table>
 
     <br />
-    <button class="btn-outline-primary" @onclick="Save_Button_Click">Сохранить</button>
-    @* <button class="btn btn-primary" @onclick="Save_Button_Click" disabled="@isBusy">Сохранить</button> *@
+    <button class="btn btn-primary" style="margin-bottom:20px" @onclick="Save_Button_Click">Сохранить</button>
 </div>

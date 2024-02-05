@@ -1,8 +1,8 @@
-﻿using IPSA.Web.Dtos;
-using IPSA.Web.Services.Contracts;
+﻿using IPSA.Shared.Dtos;
+using IPSA.Shared.Contracts;
 using Microsoft.AspNetCore.Components;
 
-namespace IPSA.Web
+namespace IPSA.Web.Client.Pages
 {
     public class AbonentsBase : ComponentBase
     {

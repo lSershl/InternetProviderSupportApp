@@ -1,17 +1,13 @@
-﻿using IPSA.Web.Dtos;
-using IPSA.Web.Services.Contracts;
+﻿using IPSA.Shared.Dtos;
+using IPSA.Shared.Contracts;
 using Microsoft.AspNetCore.Components;
 
-namespace IPSA.Web
+namespace IPSA.Web.Client.Pages
 {
     public class NewAbonentBase : ComponentBase
     {
-        //[Inject]
-        //public IAbonentHandler? abonHandler { get; set; }
-        //[Inject]
-        //public IAddressHandler? addressHandler { get; set; }
         [Inject]
-        public IAbonentService AbonentService { get; set; }
+        public required IAbonentService AbonentService { get; set; }
         [Inject]
         public NavigationManager NavManager { get; set; }
 
@@ -50,20 +46,18 @@ namespace IPSA.Web
         //public List<Street>? streetsList;
         //public List<House>? housesList;
 
-        public string registryCity;
-        public string registryStreet;
-        public string registryHouse;
-        public string registryApartment;
+        protected string registryCity;
+        protected string registryStreet;
+        protected string registryHouse;
+        protected string registryApartment;
 
-        public bool isBusy = false;
+        protected bool isBusy = false;
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             //citiesList = addressHandler.GetCitiesList();
             //abon.conn_city = citiesList.FirstOrDefault().city_name;
             //streetsList = addressHandler.GetStreetsByCity(citiesList.FirstOrDefault().city_id).DistinctBy(x => x.street_name).OrderBy(x => x.street_name).ToList();
-
-            //AbonentService.AddNewAbonent(testAbonent);
         }
 
         //protected void SelectCity(string city_name)
@@ -93,15 +87,14 @@ namespace IPSA.Web
         //    streetsList = addressHandler.GetStreetsByCity(city.city_id).DistinctBy(x => x.street_name).OrderBy(x => x.street_name).ToList();
         //}
 
-        protected void Save_Button_Click()
+        protected async Task Save_Button_Click()
         {
-            isBusy = true;
-            //newAbonent.Id = 0;
-            //newAbonent.RegistrationAddress = registryCity + ", " + registryStreet + " " + registryHouse + "-" + registryApartment;
-            //AbonentService.AddNewAbonent(newAbonent);
+            //await AbonentService.AddNewAbonent(testAbonent);
+            //isBusy = true;
+            newAbonent.RegistrationAddress = registryCity + ", " + registryStreet + " " + registryHouse + "-" + registryApartment;
+            newAbonent.Street = registryStreet;
+            await AbonentService.AddNewAbonent(newAbonent);
 
-            AbonentService.AddNewAbonent(testAbonent);
-            
             NavManager.NavigateTo("/abonents");
         }
     }

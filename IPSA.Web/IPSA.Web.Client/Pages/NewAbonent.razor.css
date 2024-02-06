@@ -6,80 +6,87 @@
     border-spacing: 2px;
 }
 
-tr {
+.tr {
     /*width: 600px;*/
     border: solid 1px;
     border-spacing: 2px;
 }
 
-td.left_column {
+td {
+    margin-right: 100px;
+}
+
+.td.left_column {
     width: 25%;
     background-color: #99ccff;
 }
 
-input.left_column {
+.input.left_column {
     width: 40%;
     background-color: #99ccff;
 }
 
-input.right_column {
+#right_column {
     border: inset 0.3px;
-    width: 100%;
+    width: fit-content;
 }
 
-select.city {
+.input.right_column {
+    border: inset 0.3px;
+    width: fit-content;
+}
+
+.select.city {
     border: inset 0.3px;
     width: 100%;
     height: 100%;
     background-color: whitesmoke;
 }
 
-select.district {
+.select.district {
     border: inset 0.3px;
     width: max-content;
     background-color: whitesmoke;
 }
 
-select.street {
+.select.street {
     border: inset 0.3px;
     width: max-content;
     height: auto;
     background-color: whitesmoke;
 }
 
-input.city {
+.input.city {
     border: inset 0.3px;
     width: 100%;
     height: auto;
 }
 
-input.street {
+.input.street {
     border: inset 0.3px;
     width: 100%;
     height: auto;
 }
 
-input.house {
+.input.house {
     width: 100px;
     border: solid 1px;
     border-color: black;
 }
 
-input.appartment {
+.input.appartment {
     width: 100px;
     border: solid 1px;
     border-color: black;
 }
 
-.button {
+button {
     border: solid;
     color: black;
-    padding: 8px 32px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     transition-duration: 0.4s;
     cursor: pointer;
     background-color: white;

@@ -9,7 +9,7 @@ namespace IPSA.Web.Client.Pages
         [Inject]
         public required IAbonentService AbonentService { get; set; }
         [Inject]
-        public NavigationManager NavManager { get; set; }
+        public required NavigationManager NavManager { get; set; }
 
         public AbonentCreateDto newAbonent = new AbonentCreateDto();
 
@@ -37,8 +37,7 @@ namespace IPSA.Web.Client.Pages
             HouseFloorNumber = "4",
             AddressZipCode = "",
             SecretPhrase = "Слово",
-            SMSSending = false,
-            Balance = 0m
+            SMSSending = false
         };
 
         //public List<City>? citiesList;
@@ -46,10 +45,18 @@ namespace IPSA.Web.Client.Pages
         //public List<Street>? streetsList;
         //public List<House>? housesList;
 
-        protected string registryCity;
-        protected string registryStreet;
-        protected string registryHouse;
-        protected string registryApartment;
+        protected string? registryCity;
+        protected string? registryStreet;
+        protected string? registryHouse;
+        protected string? registryApartment;
+
+        protected List<string>? citiesList = new List<string>
+        {
+            "Братск",
+            "Иркутск",
+            "Вихоревка",
+            "Усть-Илимск"
+        };
 
         protected bool isBusy = false;
 
@@ -87,12 +94,10 @@ namespace IPSA.Web.Client.Pages
         //    streetsList = addressHandler.GetStreetsByCity(city.city_id).DistinctBy(x => x.street_name).OrderBy(x => x.street_name).ToList();
         //}
 
-        protected async Task Save_Button_Click()
+        protected async Task Save_New_Abonent()
         {
             //await AbonentService.AddNewAbonent(testAbonent);
             //isBusy = true;
-            newAbonent.RegistrationAddress = registryCity + ", " + registryStreet + " " + registryHouse + "-" + registryApartment;
-            newAbonent.Street = registryStreet;
             await AbonentService.AddNewAbonent(newAbonent);
 
             NavManager.NavigateTo("/abonents");

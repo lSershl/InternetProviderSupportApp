@@ -1,154 +1,154 @@
-﻿@page "/newAbonent"
+﻿@page "/NewAbonent"
 @inherits NewAbonentBase
 @rendermode InteractiveServer
 
 <PageTitle>Новый абонент</PageTitle>
 
-<div>
-    <div class="h-100 d-flex flex-column align-items-left justify-content-left ">
-        <div class="row formStyle p-0">
-            <div class="col-12 col-md-8 p-4">
-                <h4>Добавить нового абонента</h4>
-                <EditForm Model="newAbonent" OnValidSubmit="Save_New_Abonent">
-                    <DataAnnotationsValidator />
-                    <div class="col-12 col-md-8 p-4">
-                        <div class="mb-3">
-                            <label class="form-label" for="last_name">Фамилия</label>
-                            <InputText class="form-control" id="last_name" placeholder="Введите фамилию" @bind-Value="newAbonent.LastName" />
-                            <ValidationMessage For="@(() => newAbonent.LastName)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="first_name">Имя</label>
-                            <InputText class="form-control" id="first_name" placeholder="Введите имя" @bind-Value="newAbonent.FirstName" />
-                            <ValidationMessage For="@(() => newAbonent.FirstName)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="surname">Отчество</label>
-                            <InputText class="form-control" id="surname" placeholder="Введите отчество" @bind-Value="newAbonent.Surname" />
-                            <ValidationMessage For="@(() => newAbonent.Surname)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="birth_place">Место рождения</label>
-                            <InputText class="form-control" id="birth_place" placeholder="Введите место рождения" @bind-Value="newAbonent.BirthPlace" />
-                            <ValidationMessage For="@(() => newAbonent.BirthPlace)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Дата рождения</label>
-                            <InputDate class="form-control" @bind-Value="newAbonent.DateOfBirth" />
-                            <ValidationMessage For="@(() => newAbonent.DateOfBirth)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="phone_number">Контактный номер телефона</label>
-                            <InputText class="form-control" id="phone_number" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumber" />
-                            <ValidationMessage For="@(() => newAbonent.PhoneNumber)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="phone_number_for_sending">Номер телефона для рассылок</label>
-                            <InputText class="form-control" id="phone_number_for_sending" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumberForSending" />
-                            <ValidationMessage For="@(() => newAbonent.PhoneNumberForSending)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="email">Электронная почта</label>
-                            <InputText class="form-control" id="email" placeholder="sample@gmail.com" @bind-Value="newAbonent.Email" />
+<div class="h-100 d-flex flex-column align-items-left justify-content-left ">
+    <div class="row formStyle p-0">
+        <div class="col-12 col-md-8 p-4">
+            <EditForm Model="newAbonent" OnValidSubmit="Save_New_Abonent">
+                <DataAnnotationsValidator />
+                <div class="col-12 col-md-8 p-4">
+                    <h4 class="mb-2">Добавить нового абонента</h4>
+                    <div class="mb-3">
+                        <label class="form-label" for="last_name">Фамилия</label>
+                        <InputText class="form-control" id="last_name" placeholder="Введите фамилию" @bind-Value="newAbonent.LastName" />
+                        <ValidationMessage For="@(() => newAbonent.LastName)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="first_name">Имя</label>
+                        <InputText class="form-control" id="first_name" placeholder="Введите имя" @bind-Value="newAbonent.FirstName" />
+                        <ValidationMessage For="@(() => newAbonent.FirstName)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="surname">Отчество</label>
+                        <InputText class="form-control" id="surname" placeholder="Введите отчество" @bind-Value="newAbonent.Surname" />
+                        <ValidationMessage For="@(() => newAbonent.Surname)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="birth_place">Место рождения</label>
+                        <InputText class="form-control" id="birth_place" placeholder="Введите место рождения" @bind-Value="newAbonent.BirthPlace" />
+                        <ValidationMessage For="@(() => newAbonent.BirthPlace)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Дата рождения</label>
+                        <InputDate class="form-control" @bind-Value="newAbonent.DateOfBirth" />
+                        <ValidationMessage For="@(() => newAbonent.DateOfBirth)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="phone_number">Контактный номер телефона</label>
+                        <InputText class="form-control" id="phone_number" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumber" />
+                        <ValidationMessage For="@(() => newAbonent.PhoneNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="phone_number_for_sending">Номер телефона для рассылок</label>
+                        <InputText class="form-control" id="phone_number_for_sending" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumberForSending" />
+                        <ValidationMessage For="@(() => newAbonent.PhoneNumberForSending)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Электронная почта</label>
+                        <InputText class="form-control" id="email" placeholder="sample@gmail.com" @bind-Value="newAbonent.Email" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_series">Серия паспорта</label>
+                        <InputText maxlength=4 class="form-control" id="passport_series" placeholder="Четыре цифры" @bind-Value="newAbonent.PassportSeries" />
+                        <ValidationMessage For="@(() => newAbonent.PassportSeries)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_number">Номер паспорта</label>
+                        <InputText maxlength=6 class="form-control" id="passport_number" placeholder="Шесть цифр" @bind-Value="newAbonent.PassportNumber" />
+                        <ValidationMessage For="@(() => newAbonent.PassportNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_registration">Место выдачи паспорта</label>
+                        <InputText class="form-control" id="passport_registration" placeholder="Введите орган выдачи" @bind-Value="newAbonent.PassportRegistration" />
+                        <ValidationMessage For="@(() => newAbonent.PassportRegistration)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_reg_date">Дата выдачи паспорта</label>
+                        <InputDate class="form-control" id="passport_reg_date" @bind-Value="newAbonent.PassportRegDate" />
+                        <ValidationMessage For="@(() => newAbonent.PassportRegDate)" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label">Адрес прописки</label>
+                        <InputText class="form-control" placeholder="(Город, Улица дом-квартира)" @bind-Value="newAbonent.RegistrationAddress" />
+                        <ValidationMessage For="@(() => newAbonent.RegistrationAddress)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="registration_zipcode">Почтовый индекс</label>
+                        <InputText maxlength=6 class="form-control" id="registration_zipcode" placeholder="(Необязателен)" @bind-Value="newAbonent.RegistrationZipCode" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <label class="form-label">Адрес подключения:</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="select_city">Город</label>
+                        <InputSelect class="form-select" id="select_city" @bind-Value="newAbonent.City" @bind-Value:after="RefreshStreetsListOnCityChange">
+                            @if (newAbonent.City is null)
+                            {
+                                <option selected disabled>Выберите город из списка</option>
+                            }
+                            @foreach (var city in citiesList!)
+                            {
+                                <option value="@city.Name">@city.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="select_street">Улица</label>
+                        <InputSelect class="form-select" id="select_street" @bind-Value="newAbonent.Street">
+                            @if (streetsList!.Count == 0)
+                            {
+                                <option selected disabled>Город не выбран</option>
+                            }
+                            @foreach (var street in streetsList!)
+                            {
+                                <option value="@street.Name">@street.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house" placeholder="Дом" @bind-Value="newAbonent.House" />
+                        <ValidationMessage For="@(() => newAbonent.House)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="apartment" placeholder="Квартира" @bind-Value="newAbonent.Apartment" />
+                        <ValidationMessage For="@(() => newAbonent.Apartment)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house_entrance" placeholder="Номер подъезда" @bind-Value="newAbonent.HouseEntranceNumber" />
+                        <ValidationMessage For="@(() => newAbonent.HouseEntranceNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house_floor" placeholder="Номер этажа" @bind-Value="newAbonent.HouseFloorNumber" />
+                        <ValidationMessage For="@(() => newAbonent.HouseFloorNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="address_zipcode">Почтовый индекс</label>
+                        <InputText maxlength=6 class="form-control" id="address_zipcode" placeholder="(Необязателен)" @bind-Value="newAbonent.AddressZipCode" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="secret_phrase">Кодовое слово</label>
+                        <InputText class="form-control" id="secret_phrase" placeholder="Слово или цифры" @bind-Value="newAbonent.SecretPhrase" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Добавить SMS рассылку</label>
+                        <InputCheckbox type="checkbox" @bind-Value="newAbonent.SMSSending" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 mb-1">
+                            <button class="button" type="submit">Сохранить</button>
                         </div>
                     </div>
-                    <div class="col-12 col-md-8 p-4">
-                        <div class="mb-3">
-                            <label class="form-label" for="passport_series">Серия паспорта</label>
-                            <InputText maxlength=4 class="form-control" id="passport_series" placeholder="Четыре цифры" @bind-Value="newAbonent.PassportSeries" />
-                            <ValidationMessage For="@(() => newAbonent.PassportSeries)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="passport_number">Номер паспорта</label>
-                            <InputText maxlength=6 class="form-control" id="passport_number" placeholder="Шесть цифр" @bind-Value="newAbonent.PassportNumber" />
-                            <ValidationMessage For="@(() => newAbonent.PassportNumber)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="passport_registration">Место выдачи паспорта</label>
-                            <InputText class="form-control" id="passport_registration" placeholder="Введите орган выдачи" @bind-Value="newAbonent.PassportRegistration" />
-                            <ValidationMessage For="@(() => newAbonent.PassportRegistration)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="passport_reg_date">Дата выдачи паспорта</label>
-                            <InputDate class="form-control" id="passport_reg_date" @bind-Value="newAbonent.PassportRegDate" />
-                            <ValidationMessage For="@(() => newAbonent.PassportRegDate)" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-8 p-4">
-                        <div class="mb-3">
-                            <label class="form-label">Адрес прописки</label>
-                            <InputText class="form-control" placeholder="(Город, Улица дом-квартира)" @bind-Value="newAbonent.RegistrationAddress" />
-                            <ValidationMessage For="@(() => newAbonent.RegistrationAddress)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="registration_zipcode">Почтовый индекс</label>
-                            <InputText maxlength=6 class="form-control" id="registration_zipcode" placeholder="(Необязателен)" @bind-Value="newAbonent.RegistrationZipCode" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-8 p-4">
-                        <label class="form-label">Адрес подключения:</label>
-                        <div class="mb-3">
-                            <label class="form-label" for="select_city">Город</label>
-                            <InputSelect class="form-select" id="select_city" @bind-Value="newAbonent.City" @bind-Value:after="RefreshStreetsListOnCityChange">
-                                @if (newAbonent.City is null)
-                                {
-                                    <option selected disabled>Выберите город из списка</option>
-                                }
-                                @foreach (var city in citiesList!)
-                                {
-                                    <option value="@city.Name">@city.Name</option>
-                                }
-                            </InputSelect>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="select_street">Улица</label>
-                            <InputSelect class="form-select" id="select_street" @bind-Value="newAbonent.Street">
-                                @if (streetsList!.Count == 0)
-                                {
-                                    <option selected disabled>Город не выбран</option>
-                                }
-                                @foreach (var street in streetsList!)
-                                {
-                                    <option value="@street.Name">@street.Name</option>
-                                }
-                            </InputSelect>
-                        </div>
-                        <div class="mb-3">
-                            <InputText class="form-control" id="house" placeholder="Дом" @bind-Value="newAbonent.House" />
-                            <ValidationMessage For="@(() => newAbonent.House)" />
-                        </div>
-                        <div class="mb-3">
-                            <InputText class="form-control" id="apartment" placeholder="Квартира" @bind-Value="newAbonent.Apartment" />
-                            <ValidationMessage For="@(() => newAbonent.Apartment)" />
-                        </div>
-                        <div class="mb-3">
-                            <InputText class="form-control" id="house_entrance" placeholder="Номер подъезда" @bind-Value="newAbonent.HouseEntranceNumber" />
-                            <ValidationMessage For="@(() => newAbonent.HouseEntranceNumber)" />
-                        </div>
-                        <div class="mb-3">
-                            <InputText class="form-control" id="house_floor" placeholder="Номер этажа" @bind-Value="newAbonent.HouseFloorNumber" />
-                            <ValidationMessage For="@(() => newAbonent.HouseFloorNumber)" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="address_zipcode">Почтовый индекс</label>
-                            <InputText maxlength=6 class="form-control" id="address_zipcode" placeholder="(Необязателен)" @bind-Value="newAbonent.AddressZipCode" />
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-8 p-4">
-                        <div class="mb-3">
-                            <label class="form-label" for="secret_phrase">Кодовое слово</label>
-                            <InputText class="form-control" id="secret_phrase" placeholder="Слово или цифры" @bind-Value="newAbonent.SecretPhrase" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Добавить SMS рассылку</label>
-                            <InputCheckbox type="checkbox" @bind-Value="newAbonent.SMSSending" />
-                        </div>
-                        <div class="mb-3">
-                            <button class="btn btn-primary" type="submit">Сохранить</button>
-                        </div>
-                    </div>
-                </EditForm>
-            </div>
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>

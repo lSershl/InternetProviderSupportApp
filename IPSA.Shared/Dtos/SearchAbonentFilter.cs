@@ -2,14 +2,14 @@
 {
     public class SearchAbonentFilter
     {
-        public int? AbonentId { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
-        public string? Surname { get; set; }
-        public string? PhoneNumber { get; set; }
-        public string? City { get; set; }
-        public string? Street { get; set; }
-        public string? House { get; set; }
-        public string? Apartment { get; set; }
+        public int? AbonentId { get; set; } = null;
+        public string? FirstName { get; set; } = string.Empty;
+        public string? LastName { get; set; } = string.Empty;
+        public string? Surname { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; } = string.Empty;
+        public string? City { get; set; } = string.Empty;
+        public string? Street { get; set; } = string.Empty;
+        public string? House { get; set; } = string.Empty;
+        public string? Apartment { get; set; } = string.Empty;
     }
 }

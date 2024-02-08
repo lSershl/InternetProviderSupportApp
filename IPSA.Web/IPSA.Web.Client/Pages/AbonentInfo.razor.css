@@ -1,0 +1,237 @@
+﻿.div.main {
+    position: relative;
+    left: 0;
+    height: 350px;
+}
+
+.div.btn_row {
+    position: relative;
+    top: 3%;
+    margin-bottom: 20px;
+    height: 50px;
+    width: max-content;
+}
+
+.div.abon_info {
+    width: 50%;
+    max-width: 1000px;
+    float: left;
+}
+
+.div.abon_balance {
+    width: 40%;
+    max-width: 1000px;
+    float: right;
+    height: 100px;
+}
+
+.div.abon_services_payment {
+    width: 40%;
+    max-width: 1000px;
+    float: right;
+}
+
+.div.abon_services {
+    position: relative;
+    width: 100%;
+}
+
+.div.comments {
+    position: relative;
+    width: 100%;
+}
+
+.button {
+    border: solid;
+    color: black;
+    padding: 8px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: white;
+}
+
+.button:hover {
+    background-color: #008CBA;
+    color: white;
+}
+
+.button:active {
+    transform: scale(0.60);
+}
+
+.h4 {
+    text-align: center;
+}
+
+.input {
+    width: 100%;
+}
+
+.input.text {
+    resize: vertical;
+    height: initial;
+}
+.input.text:active {
+    height: auto;
+}
+.input.text:focus {
+    min-height: 25px;
+}
+
+.table {
+    width: 100%;
+    border: thin solid;
+    border-color: black;
+    border-spacing: 2px;
+    text-align: center;
+}
+
+.thead {
+    background-color: #99ccff;
+    border: thin solid;
+    text-align: center;
+    font-weight: bold;
+}
+
+.tr {
+    width: auto;
+}
+
+.th {
+    background-color: #99ccff;
+    border: thin solid;
+    text-align: center;
+    font-weight: bold;
+}
+
+.td {
+    border: thin solid;
+}
+
+.td.head {
+    width: 30%;
+    background-color: #99ccff;
+    border: thin solid;
+    font-weight: bold;
+}
+
+.td.content {
+    width: 20%;
+    border: thin solid;
+}
+
+.comments-collabsible {
+    border-top-color: black;
+    border-style: solid;
+    border-color: black;
+    margin-bottom: 1.2rem 0;
+}
+
+.input[type='checkbox'] {
+    display: none;
+}
+
+.lbl-toggle {
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 7px;
+    border-color: black;
+    display: table;
+    transition: all 0.25s ease-out;
+}
+
+.lbl-toggle:hover {
+    color: grey;
+}
+
+.lbl-toggle::before {
+    content: ' ';
+    display: inline-block;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 5px solid currentColor;
+    vertical-align: middle;
+    margin-right: .7rem;
+    transform: translateY(-2px);
+    transition: transform .2s ease-out;
+}
+
+.toggle:checked + .lbl-toggle::before {
+    transform: rotate(90deg) translateX(-3px);
+}
+
+.collapsible-content {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height .25s ease-in-out;
+}
+
+.toggle:checked + .lbl-toggle + .collapsible-content {
+    max-height: 100vh;
+}
+
+.toggle:checked + .lbl-toggle {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.collapsible-content.content-inner {
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+.label.comment_btn {
+    color: mediumblue;
+}
+
+.label.comment_btn:hover {
+    color: royalblue;
+}
+
+.lds-facebook {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-facebook div {
+    display: inline-block;
+    position: absolute;
+    left: 8px;
+    width: 16px;
+    background: #99ccff;
+    animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+
+.lds-facebook div:nth-child(1) {
+    left: 8px;
+    animation-delay: -0.24s;
+}
+
+.lds-facebook div:nth-child(2) {
+    left: 32px;
+    animation-delay: -0.12s;
+}
+
+.lds-facebook div:nth-child(3) {
+    left: 56px;
+    animation-delay: 0;
+}
+
+@keyframes lds-facebook {
+    0% {
+        top: 8px;
+        height: 64px;
+    }
+
+    50%, 100% {
+        top: 24px;
+        height: 32px;
+    }
+}

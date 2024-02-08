@@ -23,6 +23,8 @@ namespace IPSA.Web.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             citiesList = await CityService.GetCitiesList();
+
+            citiesList = citiesList.OrderBy(x => x.Name).ToList();
         }
 
         protected async Task RefreshStreetsListOnCityChange()
@@ -30,13 +32,15 @@ namespace IPSA.Web.Client.Pages
             int selectedCityId = citiesList!.FirstOrDefault(x => x.Name == newAbonent.City)!.Id;
 
             streetsList = await StreetService.GetStreetsListByCity(selectedCityId);
+
+            streetsList = streetsList.OrderBy(x => x.Name).ToList();
         }
 
         protected async Task Save_New_Abonent()
         {
             await AbonentService.AddNewAbonent(newAbonent);
 
-            NavManager.NavigateTo("/abonents");
+            NavManager.NavigateTo("/Abonents");
         }
     }
 }

@@ -80,7 +80,7 @@ td {
     border-color: black;
 }
 
-button {
+.button {
     border: solid;
     color: black;
     text-align: center;
@@ -90,6 +90,7 @@ button {
     transition-duration: 0.4s;
     cursor: pointer;
     background-color: white;
+    max-block-size: max-content;
 }
 
 .button:hover {

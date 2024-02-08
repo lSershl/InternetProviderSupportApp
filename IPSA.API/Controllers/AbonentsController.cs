@@ -1,5 +1,5 @@
 using AutoMapper;
-using IPSA.API.Dtos;
+using IPSA.Shared.Dtos;
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Responses;
@@ -70,7 +70,7 @@ namespace IPSA.API.Controllers
                 }
 
                 var newAbonent = _mapper.Map<Abonent>(abonentCreateDto);
-                _abonentRepository.AddNewAbonent(newAbonent);
+                await _abonentRepository.AddNewAbonent(newAbonent);
                 return Ok();
             }
             catch (Exception)

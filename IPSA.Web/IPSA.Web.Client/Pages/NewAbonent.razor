@@ -39,12 +39,12 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="phone_number">Контактный номер телефона</label>
-                            <InputText class="form-control" id="phone_number" placeholder="88005553535" @bind-Value="newAbonent.PhoneNumber" />
+                            <InputText class="form-control" id="phone_number" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumber" />
                             <ValidationMessage For="@(() => newAbonent.PhoneNumber)" />
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="phone_number_for_sending">Номер телефона для рассылок</label>
-                            <InputText class="form-control" id="phone_number_for_sending" placeholder="88005553535" @bind-Value="newAbonent.PhoneNumberForSending" />
+                            <InputText class="form-control" id="phone_number_for_sending" placeholder="+78005553535" @bind-Value="newAbonent.PhoneNumberForSending" />
                             <ValidationMessage For="@(() => newAbonent.PhoneNumberForSending)" />
                         </div>
                         <div class="mb-3">
@@ -86,22 +86,32 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-8 p-4">
+                        <label class="form-label">Адрес подключения:</label>
                         <div class="mb-3">
-                            <label class="form-label" for="select_city">Адрес подключения</label>
-                            <InputSelect class="form-select" id="select_city" @bind-Value="newAbonent.City">
+                            <label class="form-label" for="select_city">Город</label>
+                            <InputSelect class="form-select" id="select_city" @bind-Value="newAbonent.City" @bind-Value:after="RefreshStreetsListOnCityChange">
                                 @if (newAbonent.City is null)
                                 {
-                                    <option style="font: italic">Выберите город из списка</option>
+                                    <option selected disabled>Выберите город из списка</option>
                                 }
-                                @foreach (var city in citiesList)
+                                @foreach (var city in citiesList!)
                                 {
-                                    <option value="@city">@city</option>
+                                    <option value="@city.Name">@city.Name</option>
                                 }
                             </InputSelect>
                         </div>
                         <div class="mb-3">
-                            <InputText class="form-control" id="street" placeholder="Улица подключения" @bind-Value="newAbonent.Street" />
-                            <ValidationMessage For="@(() => newAbonent.Street)" />
+                            <label class="form-label" for="select_street">Улица</label>
+                            <InputSelect class="form-select" id="select_street" @bind-Value="newAbonent.Street">
+                                @if (streetsList!.Count == 0)
+                                {
+                                    <option selected disabled>Город не выбран</option>
+                                }
+                                @foreach (var street in streetsList!)
+                                {
+                                    <option value="@street.Name">@street.Name</option>
+                                }
+                            </InputSelect>
                         </div>
                         <div class="mb-3">
                             <InputText class="form-control" id="house" placeholder="Дом" @bind-Value="newAbonent.House" />

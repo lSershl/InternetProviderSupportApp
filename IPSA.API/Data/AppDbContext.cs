@@ -94,296 +94,92 @@ namespace IPSA.API.Data
                 Name = "Вихоревка"
             });
 
-            // Districts
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 1,
-                Name = "1-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 2,
-                Name = "2-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 3,
-                Name = "4-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 4,
-                Name = "9-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 5,
-                Name = "10-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 6,
-                Name = "11-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 7,
-                Name = "14-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 8,
-                Name = "17-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 9,
-                Name = "18-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 10,
-                Name = "20-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 11,
-                Name = "21-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 12,
-                Name = "22-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 13,
-                Name = "23-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 14,
-                Name = "24-й мкрн",
-                CityId = 1
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 15,
-                Name = "Иркутск",
-                CityId = 2
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 16,
-                Name = "Усть-Кут",
-                CityId = 3
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 17,
-                Name = "Железногорск",
-                CityId = 4
-            });
-            modelBuilder.Entity<District>().HasData(new District
-            {
-                Id = 18,
-                Name = "Вихоревка",
-                CityId = 5
-            });
+
 
             // Streets
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 1,
                 Name = "Мира",
-                CityId = 1,
-                DistId = 1
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 2,
                 Name = "Южная",
-                CityId = 1,
-                DistId = 1
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 3,
                 Name = "Подбельского",
-                CityId = 1,
-                DistId = 1
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 4,
                 Name = "Кирова",
-                CityId = 1,
-                DistId = 2
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 5,
                 Name = "Пихтовая",
-                CityId = 1,
-                DistId = 3
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 6,
                 Name = "Ленина",
-                CityId = 1,
-                DistId = 6
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 7,
                 Name = "Обручева",
-                CityId = 1,
-                DistId = 7
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 8,
                 Name = "Советская",
-                CityId = 1,
-                DistId = 9
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 9,
                 Name = "Гагарина",
-                CityId = 1,
-                DistId = 11
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 10,
                 Name = "Рябикова",
-                CityId = 1,
-                DistId = 14
+                CityId = 1
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 11,
                 Name = "Байкальская",
-                CityId = 2,
-                DistId = 15
+                CityId = 2
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 12,
                 Name = "Пушкина",
-                CityId = 3,
-                DistId = 16
+                CityId = 3
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 13,
                 Name = "2-й квартал",
-                CityId = 4,
-                DistId = 17
+                CityId = 4
             });
             modelBuilder.Entity<Street>().HasData(new Street
             {
                 Id = 14,
                 Name = "Кошевого",
-                CityId = 5,
-                DistId = 18
-            });
-
-            // Houses
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 1,
-                Name = "1",
-                CityId = 1,
-                DistId = 1,
-                StreetId = 1
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 2,
-                Name = "52",
-                CityId = 1,
-                DistId = 3,
-                StreetId = 5
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 3,
-                Name = "16",
-                CityId = 1,
-                DistId = 4,
-                StreetId = 4
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 4,
-                Name = "18",
-                CityId = 1,
-                DistId = 9,
-                StreetId = 8
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 5,
-                Name = "26",
-                CityId = 1,
-                DistId = 14,
-                StreetId = 10
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 6,
-                Name = "26",
-                CityId = 1,
-                DistId = 14,
-                StreetId = 10
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 7,
-                Name = "26",
-                CityId = 2,
-                DistId = 15,
-                StreetId = 11
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 8,
-                Name = "26",
-                CityId = 3,
-                DistId = 16,
-                StreetId = 12
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 9,
-                Name = "26",
-                CityId = 4,
-                DistId = 17,
-                StreetId = 13
-            });
-            modelBuilder.Entity<House>().HasData(new House
-            {
-                Id = 10,
-                Name = "26",
-                CityId = 5,
-                DistId = 18,
-                StreetId = 14
+                CityId = 5
             });
         }
 
@@ -391,8 +187,6 @@ namespace IPSA.API.Data
         public DbSet<AbonPageComment> AbonPageComments { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<City> Cities { get; set; }
-        public DbSet<District> Districts { get; set; }
         public DbSet<Street> Streets { get; set; }
-        public DbSet<House> Houses { get; set; }
     }
 }

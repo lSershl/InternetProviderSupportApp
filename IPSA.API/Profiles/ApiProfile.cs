@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IPSA.Models;
-using IPSA.API.Dtos;
+using IPSA.Shared.Dtos;
 
 namespace IPSA.API.Profiles
 {

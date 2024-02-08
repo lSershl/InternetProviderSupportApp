@@ -14,6 +14,8 @@ builder.Services.AddScoped(http => new HttpClient
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!) 
 });
 builder.Services.AddScoped<IAbonentService, AbonentService>();
+builder.Services.AddScoped<ICityService, CityService>();
+builder.Services.AddScoped<IStreetService, StreetService>();
 
 var app = builder.Build();
 

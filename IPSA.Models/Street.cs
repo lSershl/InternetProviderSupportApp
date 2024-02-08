@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IPSA.Models
 {
@@ -9,6 +8,5 @@ namespace IPSA.Models
         public required int Id { get; set; }
         public required string Name { get; set; }
         public required int CityId { get; set; }
-        public required int DistId { get; set; }
     }
 }

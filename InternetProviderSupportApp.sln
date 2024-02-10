@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web", "IPSA.Web\IPSA.W
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web.Client", "IPSA.Web\IPSA.Web.Client\IPSA.Web.Client.csproj", "{AE09BDD4-EF6E-4267-B9BB-8B4BA27AF36A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPSA.Shared", "IPSA.Shared\IPSA.Shared.csproj", "{E025738B-D777-41F4-B010-113146BF3C19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Shared", "IPSA.Shared\IPSA.Shared.csproj", "{E025738B-D777-41F4-B010-113146BF3C19}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

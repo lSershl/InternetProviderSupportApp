@@ -6,6 +6,7 @@ var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.Services.AddScoped<IAbonentService, AbonentService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

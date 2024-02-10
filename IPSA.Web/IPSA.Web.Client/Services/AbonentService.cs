@@ -91,22 +91,34 @@ namespace IPSA.Web.Client.Services
         {
             try
             {
-                //var httpContent = new StringContent(
-                //JsonSerializer.Serialize(abonentCreateDto),
-                //Encoding.UTF8,
-                //"application/json");
-
-                //var abonent = await _httpClient.PostAsJsonAsync("API/Abonents/NewAbonent", abonentCreateDto);
-
-                //var response = await abonent.Content.ReadFromJsonAsync<AbonentCreateDto>();
-
-                //var response = await _httpClient.PostAsJsonAsync("API/Abonents/NewAbonent", httpContent);
-
                 var response = await _httpClient.PostAsync($"{BaseUrl}/NewAbonent", GenerateStringContent(SerializeObj(abonentCreateDto)));
 
                 if (response.IsSuccessStatusCode)
                 {
                     return new ServiceResponse("Абонент успешно зарегистрирован в базе");
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
+        public async Task<ServiceResponse> ApplyPaymentToAbonentBalance(PaymentDto paymentDto)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsync($"{BaseUrl}/ApplyPayment", GenerateStringContent(SerializeObj(paymentDto)));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new ServiceResponse("Платёж успешно внесён на баланс");
                 }
                 else
                 {

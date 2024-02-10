@@ -129,5 +129,30 @@ namespace IPSA.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при обновлении абонента в базе");
             }
         }
+
+        [HttpPut("ApplyPayment")]
+        public async Task<ActionResult> ApplyPaymentToAbonentBalance(PaymentDto paymentDto)
+        {
+            try
+            {
+                if (paymentDto is null)
+                {
+                    return BadRequest("Ошибка. Платёж не содержит данных.");
+                }
+
+                var abonToUpdate = await _abonentRepository.GetAbonent(paymentDto.AbonentId);
+                if (abonToUpdate is not null)
+                {
+                    abonToUpdate.Balance = abonToUpdate.Balance + paymentDto.Amount;
+                }
+
+                await _abonentRepository.UpdateAbonent(abonToUpdate);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при добавлении нового абонента в базу");
+            }
+        }
     }
 }

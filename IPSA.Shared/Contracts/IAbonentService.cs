@@ -8,5 +8,6 @@ namespace IPSA.Shared.Contracts
         Task<IEnumerable<AbonentReadDto>> GetAllAbonents();
         Task<AbonentReadDto> GetAbonent(int id);
         Task<ServiceResponse> AddNewAbonent(AbonentCreateDto abonentCreateDto);
+        Task<ServiceResponse> ApplyPaymentToAbonentBalance(PaymentDto paymentDto);
     }
 }

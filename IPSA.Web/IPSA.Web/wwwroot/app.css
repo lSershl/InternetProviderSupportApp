@@ -50,7 +50,7 @@ h1:focus {
     border-color: #929292;
 }
 
-.table {
+/*.table {
     border: 2px solid black;
     border-collapse: collapse;
     max-width: 100%;
@@ -126,4 +126,4 @@ h1:focus {
         top: 24px;
         height: 32px;
     }
-}
+}*/

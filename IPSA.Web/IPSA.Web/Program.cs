@@ -16,6 +16,7 @@ builder.Services.AddScoped(http => new HttpClient
 builder.Services.AddScoped<IAbonentService, AbonentService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 var app = builder.Build();
 

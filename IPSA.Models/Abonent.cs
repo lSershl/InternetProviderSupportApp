@@ -31,6 +31,6 @@ namespace IPSA.Models
         public string? AddressZipCode { get; set; }
         public string? SecretPhrase { get; set; }
         public bool SMSSending { get; set; } = false;
-        public decimal Balance { get; init; } = 0;
+        public decimal Balance { get; set; } = 0;
     }
 }

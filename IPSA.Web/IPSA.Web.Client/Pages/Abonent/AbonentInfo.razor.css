@@ -1,10 +1,9 @@
-﻿.div.main {
+﻿.main {
     position: relative;
-    left: 0;
-    height: 350px;
+    height: 50%;
 }
 
-.div.btn_row {
+.btn_row {
     position: relative;
     top: 3%;
     margin-bottom: 20px;
@@ -12,39 +11,39 @@
     width: max-content;
 }
 
-.div.abon_info {
-    width: 50%;
+.abon_info {
+    width: 40%;
     max-width: 1000px;
     float: left;
 }
 
-.div.abon_balance {
-    width: 40%;
-    max-width: 1000px;
-    float: right;
-    height: 100px;
-}
-
-.div.abon_services_payment {
-    width: 40%;
+.abon_balance {
+    width: 20%;
     max-width: 1000px;
     float: right;
 }
 
-.div.abon_services {
+.abon_tariffs_payment {
+    width: 20%;
+    max-width: 1000px;
+    float: right;
+}
+
+abon_tariffs {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.comments {
     position: relative;
     width: 100%;
 }
 
-.div.comments {
-    position: relative;
-    width: 100%;
-}
-
-.button {
+button {
     border: solid;
     color: black;
-    padding: 8px 32px;
+    /*padding: 8px 32px;*/
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -55,72 +54,69 @@
     background-color: white;
 }
 
-.button:hover {
-    background-color: #008CBA;
+button:hover {
+    background-color: #99ccff;
+    /*background-color: #008CBA;*/
     color: white;
 }
 
-.button:active {
-    transform: scale(0.60);
+button:active {
+    transform: scale(0.20);
 }
 
-.h4 {
-    text-align: center;
-}
-
-.input {
+input {
     width: 100%;
 }
 
-.input.text {
+input.text {
     resize: vertical;
     height: initial;
 }
-.input.text:active {
+input.text:active {
     height: auto;
 }
-.input.text:focus {
+input.text:focus {
     min-height: 25px;
 }
 
-.table {
-    width: 100%;
+table {
+    width: auto;
     border: thin solid;
     border-color: black;
     border-spacing: 2px;
     text-align: center;
 }
 
-.thead {
+thead {
     background-color: #99ccff;
     border: thin solid;
     text-align: center;
     font-weight: bold;
 }
 
-.tr {
+tr {
     width: auto;
 }
 
-.th {
+th {
     background-color: #99ccff;
     border: thin solid;
     text-align: center;
     font-weight: bold;
 }
 
-.td {
+td {
     border: thin solid;
 }
 
-.td.head {
-    width: 30%;
+.head {
+    width: 40%;
     background-color: #99ccff;
     border: thin solid;
     font-weight: bold;
 }
 
-.td.content {
+td.content {
     width: 20%;
     border: thin solid;
 }
@@ -132,7 +128,7 @@
     margin-bottom: 1.2rem 0;
 }
 
-.input[type='checkbox'] {
+input[type='checkbox'] {
     display: none;
 }
 
@@ -185,11 +181,11 @@
     border-bottom-right-radius: 7px;
 }
 
-.label.comment_btn {
+.comment_btn {
     color: mediumblue;
 }
 
-.label.comment_btn:hover {
+.comment_btn:hover {
     color: royalblue;
 }
 

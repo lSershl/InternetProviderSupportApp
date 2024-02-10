@@ -1,8 +1,9 @@
 ﻿using IPSA.Shared.Contracts;
 using IPSA.Shared.Dtos;
+using IPSA.Web.Client.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace IPSA.Web.Client.Pages
+namespace IPSA.Web.Client.Pages.Abonent
 {
     public class AbonentInfoBase : ComponentBase
     {
@@ -11,11 +12,13 @@ namespace IPSA.Web.Client.Pages
         [Inject]
         public required IAbonentService AbonentService { get; set; }
         [Inject]
+        public required IPaymentService PaymentService { get; set; }
+        [Inject]
         public required NavigationManager navManager { get; set; }
 
         public required AbonentReadDto abonent = new AbonentReadDto();
+        public PaymentDto payment = new PaymentDto();
         //public IEnumerable<AbonPageComment>? abonPageComments;
-        //public Payment payment = new Payment();
         //public AbonPageComment newComment = new AbonPageComment();
         //public AbonPageComment commentToEdit = new AbonPageComment();
         //public AbonPageComment commentToDelete = new AbonPageComment();
@@ -34,7 +37,7 @@ namespace IPSA.Web.Client.Pages
         {
             abonent = await AbonentService.GetAbonent(abon_id);
             //abonPageComments = commentsHandler.GetCommentsByAbonent(abon_id).OrderByDescending(x => x.comm_date_t);
-            //payment.payment_type = "Наличными в офисе";
+            payment.PaymentType = "Наличными в офисе";
         }
 
         protected void ShowPaymentPopup()
@@ -45,23 +48,22 @@ namespace IPSA.Web.Client.Pages
         protected void ClosePaymentPopup()
         {
             paymentAmount = 0;
-            paymentComment = null;
+            paymentComment = string.Empty;
             paymentPopup = false;
         }
 
-        //protected void AcceptPayment(decimal paymentAmount, string paymentComment)
-        //{
-        //    payment.payment_id = 0;
-        //    payment.abon_id = abon.abon_id;
-        //    payment.manager_id = 1;
-        //    payment.payment_date_t = DateTime.UtcNow;
-        //    payment.payment_comment = paymentComment;
-        //    payment.payment_amount = paymentAmount;
-        //    paymentHandler.AddPayment(payment);
-        //    abonHandler.UpdateAbonBalance(abon, paymentAmount);
-        //    paymentPopup = false;
-        //    navManager.NavigateTo($"/abon/info/{abon_id}", true);
-        //}
+        protected void AcceptPayment(decimal paymentAmount, string paymentComment)
+        {
+            payment.AbonentId = abon_id;
+            payment.ManagerId = 1;
+            payment.PaymentDateTime = DateTime.UtcNow;
+            payment.Comment = paymentComment;
+            payment.Amount = paymentAmount;
+            PaymentService.AddNewPayment(payment);
+            AbonentService.ApplyPaymentToAbonentBalance(payment);
+            paymentPopup = false;
+            navManager.NavigateTo($"/Abonent/{abon_id}/Info/", true);
+        }
 
         protected void GoToEditPage()
         {

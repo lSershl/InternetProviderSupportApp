@@ -69,7 +69,7 @@ namespace IPSA.Web.Client.Services
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return default(AbonentReadDto);
+                        return default(AbonentReadDto)!;
                     }
 
                     return await response.Content.ReadFromJsonAsync<AbonentReadDto>();

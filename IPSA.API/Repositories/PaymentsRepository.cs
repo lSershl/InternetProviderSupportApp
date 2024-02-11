@@ -9,9 +9,21 @@ namespace IPSA.API.Repositories
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
+        public async Task<List<Payment>> GetAllPaymentsList()
+        {
+            var payments = await _appDbContext.Payments.ToListAsync();
+            return payments;
+        }
+
+        public async Task<Payment> GetPayment(int paymentId)
+        {
+            var payment = _appDbContext.Payments.FirstOrDefault(p => p.Id == paymentId);
+            return payment!;
+        }
+
         public Task AddNewPayment(Payment payment)
         {
-            _appDbContext.Add(payment);
+            _appDbContext.Payments.Add(payment);
             _appDbContext.SaveChanges();
             return Task.CompletedTask;
         }
@@ -29,18 +41,6 @@ namespace IPSA.API.Repositories
             {
                 throw new NullReferenceException("Платёж не существует");
             }
-        }
-
-        public async Task<List<Payment>> GetAllPaymentsList()
-        {
-            var payments = await _appDbContext.Payments.ToListAsync();
-            return payments;
-        }
-
-        public async Task<Payment> GetPayment(int paymentId)
-        {
-            var payment = _appDbContext.Payments.FirstOrDefault(p => p.Id == paymentId);
-            return payment!;
         }
     }
 }

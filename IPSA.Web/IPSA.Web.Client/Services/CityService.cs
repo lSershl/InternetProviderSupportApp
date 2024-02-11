@@ -35,7 +35,7 @@ namespace IPSA.Web.Client.Services
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
-                        return null;
+                        return null!;
                     }
 
                     var result = await response.Content.ReadAsStringAsync();

@@ -11,6 +11,7 @@ namespace IPSA.API.Profiles
             // Source -> Target
             CreateMap<AbonentCreateDto, Abonent>();
             CreateMap<PaymentDto, Payment>();
+            CreateMap<AbonPageCommentDto, AbonPageComment>();
         }
     }
 }

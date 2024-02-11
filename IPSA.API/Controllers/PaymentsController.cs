@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using IPSA.API.Repositories;
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Dtos;
-using IPSA.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IPSA.API.Controllers

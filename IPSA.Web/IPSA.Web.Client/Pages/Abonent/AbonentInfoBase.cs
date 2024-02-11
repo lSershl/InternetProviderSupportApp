@@ -1,6 +1,5 @@
 ﻿using IPSA.Shared.Contracts;
 using IPSA.Shared.Dtos;
-using IPSA.Web.Client.Services;
 using Microsoft.AspNetCore.Components;
 
 namespace IPSA.Web.Client.Pages.Abonent
@@ -8,38 +7,55 @@ namespace IPSA.Web.Client.Pages.Abonent
     public class AbonentInfoBase : ComponentBase
     {
         [Parameter]
-        public int abon_id { get; set; }
+        public int AbonId { get; set; }
         [Inject]
-        public required IAbonentService AbonentService { get; set; }
+        public required IAbonentService AbonentService { get; init; }
         [Inject]
-        public required IPaymentService PaymentService { get; set; }
+        public required IPaymentService PaymentService { get; init; }
         [Inject]
-        public required NavigationManager navManager { get; set; }
+        public required IAbonPageCommentService CommentService { get; init; }
+        [Inject]
+        public required NavigationManager navManager { get; init; }
 
-        public required AbonentReadDto abonent = new AbonentReadDto();
-        public PaymentDto payment = new PaymentDto();
-        //public IEnumerable<AbonPageComment>? abonPageComments;
-        //public AbonPageComment newComment = new AbonPageComment();
-        //public AbonPageComment commentToEdit = new AbonPageComment();
-        //public AbonPageComment commentToDelete = new AbonPageComment();
-
-        protected decimal paymentAmount = 0;
-        protected string? paymentComment;
-        protected string? newCommentText;
-        protected string? editCommentText;
-
-        protected bool paymentPopup { get; set; }
-        protected bool addCommentPopup { get; set; }
-        protected bool editCommentPopup { get; set; }
-        protected bool deleteCommentPopup { get; set; }
+        protected AbonentReadDto abonent = new AbonentReadDto();
+        protected List<AbonPageCommentDto>? abonPageComments = new List<AbonPageCommentDto>();
 
         protected override async Task OnInitializedAsync()
         {
-            abonent = await AbonentService.GetAbonent(abon_id);
-            //abonPageComments = commentsHandler.GetCommentsByAbonent(abon_id).OrderByDescending(x => x.comm_date_t);
+            abonent = await AbonentService.GetAbonent(AbonId);
+            abonPageComments = await CommentService.GetAbonentPageComments(AbonId);
+            abonPageComments.OrderByDescending(d => d.CommentDateTime);
             payment.PaymentType = "Наличными в офисе";
         }
 
+        protected void GoToEditPage()
+        {
+            navManager.NavigateTo($"/Abonent/{AbonId}/Edit");
+        }
+
+        protected void GoToReportsPage()
+        {
+            navManager.NavigateTo($"/Abonent/{AbonId}/Reports");
+        }
+
+        protected bool paymentPopup { get; set; }
+        protected PaymentDto payment = new PaymentDto();
+        protected decimal paymentAmount = 0;
+        protected string? paymentComment;
+        
+        protected void AcceptPayment(decimal paymentAmount, string paymentComment)
+        {
+            payment.AbonentId = AbonId;
+            payment.ManagerId = 1;
+            payment.PaymentDateTime = DateTime.UtcNow;
+            payment.Comment = paymentComment;
+            payment.Amount = paymentAmount;
+            PaymentService.AddNewPayment(payment);
+            AbonentService.ApplyPaymentToAbonentBalance(payment);
+            paymentPopup = false;
+            navManager.NavigateTo($"/Abonent/{AbonId}/Info/", true);
+        }
+        
         protected void ShowPaymentPopup()
         {
             paymentPopup = true;
@@ -52,27 +68,19 @@ namespace IPSA.Web.Client.Pages.Abonent
             paymentPopup = false;
         }
 
-        protected void AcceptPayment(decimal paymentAmount, string paymentComment)
+        protected bool addCommentPopup { get; set; }
+        protected AbonPageCommentDto newComment = new AbonPageCommentDto();
+        protected string? newCommentText;
+        protected void AddNewComment(AbonPageCommentDto newComment)
         {
-            payment.AbonentId = abon_id;
-            payment.ManagerId = 1;
-            payment.PaymentDateTime = DateTime.UtcNow;
-            payment.Comment = paymentComment;
-            payment.Amount = paymentAmount;
-            PaymentService.AddNewPayment(payment);
-            AbonentService.ApplyPaymentToAbonentBalance(payment);
-            paymentPopup = false;
-            navManager.NavigateTo($"/Abonent/{abon_id}/Info/", true);
-        }
-
-        protected void GoToEditPage()
-        {
-            navManager.NavigateTo($"/Abonent/{abon_id}/Edit");
-        }
-
-        protected void GoToReportsPage()
-        {
-            navManager.NavigateTo($"/Abonent/{abon_id}/Reports");
+            newComment.Id = 0;
+            newComment.AbonentId = AbonId;
+            newComment.EmployeeId = 1;
+            newComment.Text = newCommentText;
+            newComment.CommentDateTime = DateTime.UtcNow;
+            CommentService.AddNewAbonentPageComment(newComment);
+            addCommentPopup = false;
+            navManager.NavigateTo($"/Abonent/{AbonId}/Info/", true);
         }
 
         protected void ShowAddCommentPopup()
@@ -85,54 +93,48 @@ namespace IPSA.Web.Client.Pages.Abonent
             addCommentPopup = false;
         }
 
-        //protected void AddNewComment(AbonPageComment new_comment)
-        //{
-        //    new_comment.comment_id = 0;
-        //    new_comment.abon_id = abon.abon_id;
-        //    new_comment.manager_id = 1;
-        //    new_comment.comm_text = newCommentText;
-        //    new_comment.comm_date_t = DateTime.UtcNow;
-        //    commentsHandler.AddComment(new_comment);
-        //    addCommentPopup = false;
-        //    navManager.NavigateTo($"/abon/info/{abon_id}", true);
-        //}
+        protected bool editCommentPopup { get; set; }
+        protected AbonPageCommentDto commentToEdit = new AbonPageCommentDto();
+        protected string? editCommentText;
+        protected void SaveEditedComment(AbonPageCommentDto commentToEdit)
+        {
+            commentToEdit.Text = editCommentText;
+            CommentService.UpdateAbonPageComment(commentToEdit);
+            editCommentPopup = false;
+            navManager.NavigateTo($"/Abonent/{AbonId}/Info/", true);
+        }
 
-        //protected void ShowEditCommentPopup(int commentId)
-        //{
-        //    commentToEdit = commentsHandler.GetSingleComment(commentId);
-        //    editCommentText = commentToEdit.comm_text;
-        //    editCommentPopup = true;
-        //}
+        protected void ShowEditCommentPopup(int commentId)
+        {
+            commentToEdit = abonPageComments!.Find(x => x.Id == commentId)!;
+            editCommentText = commentToEdit.Text;
+            editCommentPopup = true;
+        }
 
-        //protected void CloseEditCommentPopup()
-        //{
-        //    editCommentPopup = false;
-        //}
+        protected void CloseEditCommentPopup()
+        {
+            editCommentPopup = false;
+        }
 
-        //protected void SaveEditedComment(AbonPageComment commentToEdit)
-        //{
-        //    commentToEdit.comm_text = editCommentText;
-        //    commentsHandler.UpdateComment(commentToEdit);
-        //    editCommentPopup = false;
-        //    navManager.NavigateTo($"/abon/info/{abon_id}", true);
-        //}
+        protected bool deleteCommentPopup { get; set; }
+        protected AbonPageCommentDto commentToDelete = new AbonPageCommentDto();
 
-        //protected void ShowDeleteCommentPopup(int commentId)
-        //{
-        //    commentToDelete = commentsHandler.GetSingleComment(commentId);
-        //    deleteCommentPopup = true;
-        //}
+        protected void DeleteComment(AbonPageCommentDto commentToDelete)
+        {
+            CommentService.DeleteAbonPageComment(commentToDelete.Id);
+            deleteCommentPopup = false;
+            navManager.NavigateTo($"/Abonent/{AbonId}/Info/", true);
+        }
 
-        //protected void CloseDeleteCommentPopup()
-        //{
-        //    deleteCommentPopup = false;
-        //}
+        protected void ShowDeleteCommentPopup(int commentId)
+        {
+            commentToDelete = abonPageComments!.Find(x => x.Id == commentId)!;
+            deleteCommentPopup = true;
+        }
 
-        //protected void DeleteComment(AbonPageComment commentToDelete)
-        //{
-        //    commentsHandler.DeleteComment(commentToDelete);
-        //    deleteCommentPopup = false;
-        //    navManager.NavigateTo($"/abon/info/{abon_id}", true);
-        //}
+        protected void CloseDeleteCommentPopup()
+        {
+            deleteCommentPopup = false;
+        }
     }
 }

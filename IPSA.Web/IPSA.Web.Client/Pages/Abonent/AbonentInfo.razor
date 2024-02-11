@@ -1,8 +1,8 @@
-﻿@page "/Abonent/{abon_id:int}/Info/"
+﻿@page "/Abonent/{AbonId:int}/Info/"
 @inherits AbonentInfoBase
 @rendermode InteractiveServer
 
-<PageTitle>@abon_id | Информация об абоненте</PageTitle>
+<PageTitle>@AbonId | Информация об абоненте</PageTitle>
 
 @if(abonent is null)
 {
@@ -10,6 +10,16 @@
 }
 else
 {
+    <div class="col-12 col-lg-12 p-0 justify-content-space-between">
+        <div class="row">
+            <div class="mb-3">
+                <button class="button" type="submit" @onclick="ShowPaymentPopup">Платёж</button>
+                <button class="button" type="submit" @onclick="GoToEditPage">Редактировать ПД</button>
+                <button class="button" type="submit" @onclick="GoToReportsPage">Отчёты</button>
+                <button class="button" type="submit">Отключить услуги</button>
+            </div>
+        </div>
+    </div>
     @if (paymentPopup == true)
     {
         <div class="modal" tabindex="-1" style="display:block;">
@@ -50,16 +60,6 @@ else
             </div>
         </div>
     }
-    <div class="col-12 col-lg-12 p-0 justify-content-space-between">
-        <div class="row">
-            <div class="mb-3">
-                <button class="button" type="submit" @onclick="ShowPaymentPopup">Платёж</button>
-                <button class="button" type="submit" @onclick="GoToEditPage">Редактировать ПД</button>
-                <button class="button" type="submit" @onclick="GoToReportsPage">Отчёты</button>
-                <button class="button" type="submit">Отключить услуги</button>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-lg-4">
             <div>
@@ -163,22 +163,88 @@ else
                             <td>Удалить</td>
                         </tr>
                     </thead>
-                    @* <tbody>
-                    @foreach (var comment in abonPageComments)
+                    <tbody>
+                    @foreach (var comment in abonPageComments!)
                     {
                         <tr>
-                            <td>@comment.comm_date_t</td>
-                            <td>@comment.comm_text</td>
+                            <td>@comment.CommentDateTime</td>
+                            <td>@comment.Text</td>
                             <td>(Имя менеджера)</td>
-                            <td><label class="comment_btn" @onclick="() => ShowEditCommentPopup(comment.comment_id)">[Редактировать]</label></td>
-                            <td><label class="comment_btn" @onclick="() => ShowDeleteCommentPopup(comment.comment_id)">[Удалить]</label></td>
+                            <td><label class="comment_btn" @onclick="() => ShowEditCommentPopup(comment.Id)">[Редактировать]</label></td>
+                            <td><label class="comment_btn" @onclick="() => ShowDeleteCommentPopup(comment.Id)">[Удалить]</label></td>
                         </tr>
                     }
-                    </tbody> *@
+                    </tbody>
                 </table>
             </div>
         </div>
     </div>
+    @if (addCommentPopup == true)
+    {
+        <div class="modal" tabindex="-1" style="display:block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Добавить комментарий</h5>
+                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseAddCommentPopup">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input @bind="newCommentText" />
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseAddCommentPopup">Отмена</button>
+                        <button class="btn btn-primary" data-dismiss="modal" @onclick="() => AddNewComment(newComment)">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (editCommentPopup == true)
+    {
+        <div class="modal" tabindex="-1" style="display:block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Редактирование комментария</h5>
+                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseEditCommentPopup">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input @bind="editCommentText" />
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseEditCommentPopup">Отмена</button>
+                        <button class="btn btn-primary" data-dismiss="modal" @onclick="() => SaveEditedComment(commentToEdit)">Сохранить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    @if (deleteCommentPopup == true)
+    {
+        <div class="modal" tabindex="-1" style="display:block;">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Удалить комментарий</h5>
+                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">
+                            <span aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Вы действительно хотите удалить этот комментарий?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">Нет</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="() => DeleteComment(commentToDelete)">Да</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
     <div>
         <div class="mb-1">
             <h4>Интернет</h4>

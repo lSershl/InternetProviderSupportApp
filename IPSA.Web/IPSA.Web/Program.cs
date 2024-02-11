@@ -17,6 +17,7 @@ builder.Services.AddScoped<IAbonentService, AbonentService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IAbonPageCommentService, AbonPageCommentService>();
 
 var app = builder.Build();
 

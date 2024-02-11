@@ -23,14 +23,14 @@ namespace IPSA.API.Repositories
 
         public async Task<Task> AddNewAbonent(Abonent newAbonent)
         {
-            await _appDbContext.AddAsync(newAbonent);
+            await _appDbContext.Abonents.AddAsync(newAbonent);
             _appDbContext.SaveChanges();
             return Task.CompletedTask;
         }
 
         public Task UpdateAbonent(Abonent updAbonent)
         {
-            _appDbContext.Update(updAbonent);
+            _appDbContext.Abonents.Update(updAbonent);
             _appDbContext.SaveChanges();
             return Task.CompletedTask;
         }

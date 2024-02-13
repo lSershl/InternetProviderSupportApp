@@ -5,8 +5,6 @@ namespace IPSA.Models
 {
     public class Abonent
     {
-        [Key]
-        [Required]
         public int Id { get; set; }
         public string LastName { get; set; } = string.Empty;
         public string FirstName { get; set; } = string.Empty;
@@ -32,5 +30,7 @@ namespace IPSA.Models
         public string? SecretPhrase { get; set; }
         public bool SMSSending { get; set; } = false;
         public decimal Balance { get; set; } = 0;
+
+        public List<ConnectedTariff> ConnectedTariffs { get; set; } = new();
     }
 }

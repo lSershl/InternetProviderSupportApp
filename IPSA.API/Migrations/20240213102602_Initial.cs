@@ -14,22 +14,6 @@ namespace IPSA.API.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AbonPageComments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    AbonentId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AbonPageComments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Abonents",
                 columns: table => new
                 {
@@ -66,6 +50,22 @@ namespace IPSA.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AbonPageComments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AbonentId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CommentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AbonPageComments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
@@ -79,36 +79,6 @@ namespace IPSA.API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Districts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Districts", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Houses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    DistId = table.Column<int>(type: "int", nullable: false),
-                    StreetId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Houses", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Payments",
                 columns: table => new
                 {
@@ -119,7 +89,8 @@ namespace IPSA.API.Migrations
                     PaymentDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PaymentType = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Cancelled = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,18 +104,67 @@ namespace IPSA.API.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CityId = table.Column<int>(type: "int", nullable: false),
-                    DistId = table.Column<int>(type: "int", nullable: false)
+                    CityId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Streets", x => x.Id);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tariffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PricingModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MonthlyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DailyPrice = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Archived = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tariffs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ConnectedTariffs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    AbonentId = table.Column<int>(type: "int", nullable: false),
+                    TariffId = table.Column<int>(type: "int", nullable: false),
+                    CreationDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IpAddress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LinkToHardware = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsBlocked = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConnectedTariffs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConnectedTariffs_Abonents_AbonentId",
+                        column: x => x.AbonentId,
+                        principalTable: "Abonents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConnectedTariffs_Tariffs_TariffId",
+                        column: x => x.TariffId,
+                        principalTable: "Tariffs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AbonPageComments",
                 columns: new[] { "Id", "AbonentId", "CommentDateTime", "EmployeeId", "Text" },
-                values: new object[] { 1, 1, new DateTime(2023, 12, 4, 11, 23, 35, 540, DateTimeKind.Utc).AddTicks(8382), 1, "Тестовый комментарий" });
+                values: new object[] { 1, 1, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8303), 1, "Тестовый комментарий" });
 
             migrationBuilder.InsertData(
                 table: "Abonents",
@@ -164,72 +184,58 @@ namespace IPSA.API.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Districts",
-                columns: new[] { "Id", "CityId", "Name" },
-                values: new object[,]
-                {
-                    { 1, 1, "1-й мкрн" },
-                    { 2, 1, "2-й мкрн" },
-                    { 3, 1, "4-й мкрн" },
-                    { 4, 1, "9-й мкрн" },
-                    { 5, 1, "10-й мкрн" },
-                    { 6, 1, "11-й мкрн" },
-                    { 7, 1, "14-й мкрн" },
-                    { 8, 1, "17-й мкрн" },
-                    { 9, 1, "18-й мкрн" },
-                    { 10, 1, "20-й мкрн" },
-                    { 11, 1, "21-й мкрн" },
-                    { 12, 1, "22-й мкрн" },
-                    { 13, 1, "23-й мкрн" },
-                    { 14, 1, "24-й мкрн" },
-                    { 15, 2, "Иркутск" },
-                    { 16, 3, "Усть-Кут" },
-                    { 17, 4, "Железногорск" },
-                    { 18, 5, "Вихоревка" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Houses",
-                columns: new[] { "Id", "CityId", "DistId", "Name", "StreetId" },
-                values: new object[,]
-                {
-                    { 1, 1, 1, "1", 1 },
-                    { 2, 1, 3, "52", 5 },
-                    { 3, 1, 4, "16", 4 },
-                    { 4, 1, 9, "18", 8 },
-                    { 5, 1, 14, "26", 10 },
-                    { 6, 1, 14, "26", 10 },
-                    { 7, 2, 15, "26", 11 },
-                    { 8, 3, 16, "26", 12 },
-                    { 9, 4, 17, "26", 13 },
-                    { 10, 5, 18, "26", 14 }
-                });
-
-            migrationBuilder.InsertData(
                 table: "Payments",
-                columns: new[] { "Id", "AbonentId", "Amount", "Comment", "ManagerId", "PaymentDateTime", "PaymentType" },
-                values: new object[] { 1, 1, 10m, "", 1, new DateTime(2023, 12, 4, 11, 23, 35, 540, DateTimeKind.Utc).AddTicks(8410), "" });
+                columns: new[] { "Id", "AbonentId", "Amount", "Cancelled", "Comment", "ManagerId", "PaymentDateTime", "PaymentType" },
+                values: new object[] { 1, 1, 10m, false, "", 1, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8335), "" });
 
             migrationBuilder.InsertData(
                 table: "Streets",
-                columns: new[] { "Id", "CityId", "DistId", "Name" },
+                columns: new[] { "Id", "CityId", "Name" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "Мира" },
-                    { 2, 1, 1, "Южная" },
-                    { 3, 1, 1, "Подбельского" },
-                    { 4, 1, 2, "Кирова" },
-                    { 5, 1, 3, "Пихтовая" },
-                    { 6, 1, 6, "Ленина" },
-                    { 7, 1, 7, "Обручева" },
-                    { 8, 1, 9, "Советская" },
-                    { 9, 1, 11, "Гагарина" },
-                    { 10, 1, 14, "Рябикова" },
-                    { 11, 2, 15, "Байкальская" },
-                    { 12, 3, 16, "Пушкина" },
-                    { 13, 4, 17, "2-й квартал" },
-                    { 14, 5, 18, "Кошевого" }
+                    { 1, 1, "Мира" },
+                    { 2, 1, "Южная" },
+                    { 3, 1, "Подбельского" },
+                    { 4, 1, "Кирова" },
+                    { 5, 1, "Пихтовая" },
+                    { 6, 1, "Ленина" },
+                    { 7, 1, "Обручева" },
+                    { 8, 1, "Советская" },
+                    { 9, 1, "Гагарина" },
+                    { 10, 1, "Рябикова" },
+                    { 11, 2, "Байкальская" },
+                    { 12, 3, "Пушкина" },
+                    { 13, 4, "2-й квартал" },
+                    { 14, 5, "Кошевого" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Tariffs",
+                columns: new[] { "Id", "Archived", "CreationDateTime", "DailyPrice", "Description", "MonthlyPrice", "Name", "PricingModel", "Type" },
+                values: new object[,]
+                {
+                    { 1, false, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8361), 13.4m, "Безлимитный Интернет со скоростью 100 Мбит/сек", 400m, "Безлимитный 100", "Месячный", "Интернет" },
+                    { 2, false, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8381), 6.7m, "Базовый пакет каналов цифрового телевидения", 200m, "Базовое ЦКТВ", "Месячный", "ЦКТВ" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ConnectedTariffs",
+                columns: new[] { "Id", "AbonentId", "CreationDateTime", "IpAddress", "IsBlocked", "LinkToHardware", "TariffId" },
+                values: new object[,]
+                {
+                    { 1, 1, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8400), "127.0.0.1", false, "(ссылка на мост к сетевому оборудованию)", 1 },
+                    { 2, 1, new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8417), "127.0.0.1", false, "(ссылка на мост к сетевому оборудованию)", 2 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConnectedTariffs_AbonentId",
+                table: "ConnectedTariffs",
+                column: "AbonentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConnectedTariffs_TariffId",
+                table: "ConnectedTariffs",
+                column: "TariffId");
         }
 
         /// <inheritdoc />
@@ -239,22 +245,22 @@ namespace IPSA.API.Migrations
                 name: "AbonPageComments");
 
             migrationBuilder.DropTable(
-                name: "Abonents");
-
-            migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Districts");
-
-            migrationBuilder.DropTable(
-                name: "Houses");
+                name: "ConnectedTariffs");
 
             migrationBuilder.DropTable(
                 name: "Payments");
 
             migrationBuilder.DropTable(
                 name: "Streets");
+
+            migrationBuilder.DropTable(
+                name: "Abonents");
+
+            migrationBuilder.DropTable(
+                name: "Tariffs");
         }
     }
 }

@@ -5,7 +5,6 @@ namespace IPSA.Models
 {
     public class Payment
     {
-        [Key]
         public int Id { get; set; }
         public required int AbonentId { get; set; }
         public required int ManagerId { get; set; }
@@ -13,5 +12,6 @@ namespace IPSA.Models
         public required string PaymentType { get; set; }
         public string? Comment { get; set; }
         public required decimal Amount { get; set; }
+        public required bool Cancelled { get; set;} = false;
     }
 }

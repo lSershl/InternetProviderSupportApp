@@ -15,6 +15,18 @@ namespace IPSA.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Abonent>()
+                .HasMany(e => e.ConnectedTariffs)
+                .WithOne(e => e.Abonent)
+                .HasForeignKey(e => e.AbonentId)
+                .IsRequired();
+
+            modelBuilder.Entity<Tariff>()
+                .HasMany(e => e.ConnectedTariffs)
+                .WithOne(e => e.Tariff)
+                .HasForeignKey(e => e.TariffId)
+                .IsRequired();
+
             // Abonents
             modelBuilder.Entity<Abonent>().HasData(new Abonent
             {
@@ -62,9 +74,60 @@ namespace IPSA.API.Data
                 AbonentId = 1,
                 ManagerId = 1,
                 PaymentDateTime = DateTime.UtcNow,
-                PaymentType = "",
-                Comment = "",
-                Amount = 10m
+                PaymentType = "Наличными в офисе",
+                Comment = "тест",
+                Amount = 10m,
+                Cancelled = false
+            });
+
+            // Tariffs
+            modelBuilder.Entity<Tariff>().HasData(new Tariff
+            {
+                Id = 1,
+                CreationDateTime = DateTime.UtcNow,
+                Name = "Безлимитный 100",
+                Type = "Интернет",
+                PricingModel = "Месячный",
+                MonthlyPrice = 400m,
+                DailyPrice = 13.4m,
+                Description = "Безлимитный Интернет со скоростью 100 Мбит/сек",
+                Archived = false
+            });
+
+            modelBuilder.Entity<Tariff>().HasData(new Tariff
+            {
+                Id = 2,
+                CreationDateTime = DateTime.UtcNow,
+                Name = "Базовое ЦКТВ",
+                Type = "ЦКТВ",
+                PricingModel = "Месячный",
+                MonthlyPrice = 200m,
+                DailyPrice = 6.7m,
+                Description = "Базовый пакет каналов цифрового телевидения",
+                Archived = false
+            });
+
+            // ConnectedTariffs
+            modelBuilder.Entity<ConnectedTariff>().HasData(new ConnectedTariff
+            {
+                Id = 1,
+                CreationDateTime = DateTime.UtcNow,
+                AbonentId = 1,
+                TariffId = 1,
+                IpAddress = "127.0.0.1",
+                LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                IsBlocked = false
+            });
+
+            modelBuilder.Entity<ConnectedTariff>().HasData(new ConnectedTariff
+            {
+                Id = 2,
+                CreationDateTime = DateTime.UtcNow,
+                AbonentId = 1,
+                TariffId = 2,
+                IpAddress = "127.0.0.1",
+                LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                IsBlocked = false
             });
 
             // Cities
@@ -186,6 +249,8 @@ namespace IPSA.API.Data
         public DbSet<Abonent> Abonents { get; set; }
         public DbSet<AbonPageComment> AbonPageComments { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Tariff> Tariffs { get; set; }
+        public DbSet<ConnectedTariff> ConnectedTariffs { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Street> Streets { get; set; }
     }

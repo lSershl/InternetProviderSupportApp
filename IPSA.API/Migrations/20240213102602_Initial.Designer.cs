@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPSA.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231205053347_ChangedAbonentModel")]
-    partial class ChangedAbonentModel
+    [Migration("20240213102602_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             AbonentId = 1,
-                            CommentDateTime = new DateTime(2023, 12, 5, 5, 33, 46, 414, DateTimeKind.Utc).AddTicks(9793),
+                            CommentDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8303),
                             EmployeeId = 1,
                             Text = "Тестовый комментарий"
                         });
@@ -236,7 +236,7 @@ namespace IPSA.API.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IPSA.Models.District", b =>
+            modelBuilder.Entity("IPSA.Models.ConnectedTariff", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -244,233 +244,54 @@ namespace IPSA.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CityId")
+                    b.Property<int>("AbonentId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkToHardware")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TariffId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Districts");
+                    b.HasIndex("AbonentId");
+
+                    b.HasIndex("TariffId");
+
+                    b.ToTable("ConnectedTariffs");
 
                     b.HasData(
                         new
                         {
                             Id = 1,
-                            CityId = 1,
-                            Name = "1-й мкрн"
+                            AbonentId = 1,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8400),
+                            IpAddress = "127.0.0.1",
+                            IsBlocked = false,
+                            LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                            TariffId = 1
                         },
                         new
                         {
                             Id = 2,
-                            CityId = 1,
-                            Name = "2-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CityId = 1,
-                            Name = "4-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CityId = 1,
-                            Name = "9-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CityId = 1,
-                            Name = "10-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CityId = 1,
-                            Name = "11-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CityId = 1,
-                            Name = "14-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CityId = 1,
-                            Name = "17-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CityId = 1,
-                            Name = "18-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CityId = 1,
-                            Name = "20-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CityId = 1,
-                            Name = "21-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CityId = 1,
-                            Name = "22-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CityId = 1,
-                            Name = "23-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CityId = 1,
-                            Name = "24-й мкрн"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CityId = 2,
-                            Name = "Иркутск"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CityId = 3,
-                            Name = "Усть-Кут"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CityId = 4,
-                            Name = "Железногорск"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            CityId = 5,
-                            Name = "Вихоревка"
-                        });
-                });
-
-            modelBuilder.Entity("IPSA.Models.House", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CityId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DistId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("StreetId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Houses");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CityId = 1,
-                            DistId = 1,
-                            Name = "1",
-                            StreetId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CityId = 1,
-                            DistId = 3,
-                            Name = "52",
-                            StreetId = 5
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CityId = 1,
-                            DistId = 4,
-                            Name = "16",
-                            StreetId = 4
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CityId = 1,
-                            DistId = 9,
-                            Name = "18",
-                            StreetId = 8
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CityId = 1,
-                            DistId = 14,
-                            Name = "26",
-                            StreetId = 10
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CityId = 1,
-                            DistId = 14,
-                            Name = "26",
-                            StreetId = 10
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CityId = 2,
-                            DistId = 15,
-                            Name = "26",
-                            StreetId = 11
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CityId = 3,
-                            DistId = 16,
-                            Name = "26",
-                            StreetId = 12
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CityId = 4,
-                            DistId = 17,
-                            Name = "26",
-                            StreetId = 13
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CityId = 5,
-                            DistId = 18,
-                            Name = "26",
-                            StreetId = 14
+                            AbonentId = 1,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8417),
+                            IpAddress = "127.0.0.1",
+                            IsBlocked = false,
+                            LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                            TariffId = 2
                         });
                 });
 
@@ -487,6 +308,9 @@ namespace IPSA.API.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Cancelled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -511,9 +335,10 @@ namespace IPSA.API.Migrations
                             Id = 1,
                             AbonentId = 1,
                             Amount = 10m,
+                            Cancelled = false,
                             Comment = "",
                             ManagerId = 1,
-                            PaymentDateTime = new DateTime(2023, 12, 5, 5, 33, 46, 414, DateTimeKind.Utc).AddTicks(9817),
+                            PaymentDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8335),
                             PaymentType = ""
                         });
                 });
@@ -529,9 +354,6 @@ namespace IPSA.API.Migrations
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DistId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -545,100 +367,181 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             CityId = 1,
-                            DistId = 1,
                             Name = "Мира"
                         },
                         new
                         {
                             Id = 2,
                             CityId = 1,
-                            DistId = 1,
                             Name = "Южная"
                         },
                         new
                         {
                             Id = 3,
                             CityId = 1,
-                            DistId = 1,
                             Name = "Подбельского"
                         },
                         new
                         {
                             Id = 4,
                             CityId = 1,
-                            DistId = 2,
                             Name = "Кирова"
                         },
                         new
                         {
                             Id = 5,
                             CityId = 1,
-                            DistId = 3,
                             Name = "Пихтовая"
                         },
                         new
                         {
                             Id = 6,
                             CityId = 1,
-                            DistId = 6,
                             Name = "Ленина"
                         },
                         new
                         {
                             Id = 7,
                             CityId = 1,
-                            DistId = 7,
                             Name = "Обручева"
                         },
                         new
                         {
                             Id = 8,
                             CityId = 1,
-                            DistId = 9,
                             Name = "Советская"
                         },
                         new
                         {
                             Id = 9,
                             CityId = 1,
-                            DistId = 11,
                             Name = "Гагарина"
                         },
                         new
                         {
                             Id = 10,
                             CityId = 1,
-                            DistId = 14,
                             Name = "Рябикова"
                         },
                         new
                         {
                             Id = 11,
                             CityId = 2,
-                            DistId = 15,
                             Name = "Байкальская"
                         },
                         new
                         {
                             Id = 12,
                             CityId = 3,
-                            DistId = 16,
                             Name = "Пушкина"
                         },
                         new
                         {
                             Id = 13,
                             CityId = 4,
-                            DistId = 17,
                             Name = "2-й квартал"
                         },
                         new
                         {
                             Id = 14,
                             CityId = 5,
-                            DistId = 18,
                             Name = "Кошевого"
                         });
+                });
+
+            modelBuilder.Entity("IPSA.Models.Tariff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DailyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MonthlyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PricingModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tariffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Archived = false,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8361),
+                            DailyPrice = 13.4m,
+                            Description = "Безлимитный Интернет со скоростью 100 Мбит/сек",
+                            MonthlyPrice = 400m,
+                            Name = "Безлимитный 100",
+                            PricingModel = "Месячный",
+                            Type = "Интернет"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Archived = false,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8381),
+                            DailyPrice = 6.7m,
+                            Description = "Базовый пакет каналов цифрового телевидения",
+                            MonthlyPrice = 200m,
+                            Name = "Базовое ЦКТВ",
+                            PricingModel = "Месячный",
+                            Type = "ЦКТВ"
+                        });
+                });
+
+            modelBuilder.Entity("IPSA.Models.ConnectedTariff", b =>
+                {
+                    b.HasOne("IPSA.Models.Abonent", "Abonent")
+                        .WithMany("ConnectedTariffs")
+                        .HasForeignKey("AbonentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IPSA.Models.Tariff", "Tariff")
+                        .WithMany("ConnectedTariffs")
+                        .HasForeignKey("TariffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Abonent");
+
+                    b.Navigation("Tariff");
+                });
+
+            modelBuilder.Entity("IPSA.Models.Abonent", b =>
+                {
+                    b.Navigation("ConnectedTariffs");
+                });
+
+            modelBuilder.Entity("IPSA.Models.Tariff", b =>
+                {
+                    b.Navigation("ConnectedTariffs");
                 });
 #pragma warning restore 612, 618
         }

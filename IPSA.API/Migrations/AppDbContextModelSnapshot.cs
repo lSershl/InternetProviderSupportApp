@@ -52,7 +52,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             AbonentId = 1,
-                            CommentDateTime = new DateTime(2024, 2, 7, 4, 21, 27, 293, DateTimeKind.Utc).AddTicks(5566),
+                            CommentDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8303),
                             EmployeeId = 1,
                             Text = "Тестовый комментарий"
                         });
@@ -233,6 +233,65 @@ namespace IPSA.API.Migrations
                         });
                 });
 
+            modelBuilder.Entity("IPSA.Models.ConnectedTariff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AbonentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("IpAddress")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsBlocked")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LinkToHardware")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TariffId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AbonentId");
+
+                    b.HasIndex("TariffId");
+
+                    b.ToTable("ConnectedTariffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            AbonentId = 1,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8400),
+                            IpAddress = "127.0.0.1",
+                            IsBlocked = false,
+                            LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                            TariffId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            AbonentId = 1,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8417),
+                            IpAddress = "127.0.0.1",
+                            IsBlocked = false,
+                            LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                            TariffId = 2
+                        });
+                });
+
             modelBuilder.Entity("IPSA.Models.Payment", b =>
                 {
                     b.Property<int>("Id")
@@ -246,6 +305,9 @@ namespace IPSA.API.Migrations
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
+
+                    b.Property<bool>("Cancelled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
@@ -270,9 +332,10 @@ namespace IPSA.API.Migrations
                             Id = 1,
                             AbonentId = 1,
                             Amount = 10m,
+                            Cancelled = false,
                             Comment = "",
                             ManagerId = 1,
-                            PaymentDateTime = new DateTime(2024, 2, 7, 4, 21, 27, 293, DateTimeKind.Utc).AddTicks(5591),
+                            PaymentDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8335),
                             PaymentType = ""
                         });
                 });
@@ -381,6 +444,101 @@ namespace IPSA.API.Migrations
                             CityId = 5,
                             Name = "Кошевого"
                         });
+                });
+
+            modelBuilder.Entity("IPSA.Models.Tariff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Archived")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("CreationDateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("DailyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("MonthlyPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PricingModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tariffs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Archived = false,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8361),
+                            DailyPrice = 13.4m,
+                            Description = "Безлимитный Интернет со скоростью 100 Мбит/сек",
+                            MonthlyPrice = 400m,
+                            Name = "Безлимитный 100",
+                            PricingModel = "Месячный",
+                            Type = "Интернет"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Archived = false,
+                            CreationDateTime = new DateTime(2024, 2, 13, 10, 26, 2, 385, DateTimeKind.Utc).AddTicks(8381),
+                            DailyPrice = 6.7m,
+                            Description = "Базовый пакет каналов цифрового телевидения",
+                            MonthlyPrice = 200m,
+                            Name = "Базовое ЦКТВ",
+                            PricingModel = "Месячный",
+                            Type = "ЦКТВ"
+                        });
+                });
+
+            modelBuilder.Entity("IPSA.Models.ConnectedTariff", b =>
+                {
+                    b.HasOne("IPSA.Models.Abonent", "Abonent")
+                        .WithMany("ConnectedTariffs")
+                        .HasForeignKey("AbonentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("IPSA.Models.Tariff", "Tariff")
+                        .WithMany("ConnectedTariffs")
+                        .HasForeignKey("TariffId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Abonent");
+
+                    b.Navigation("Tariff");
+                });
+
+            modelBuilder.Entity("IPSA.Models.Abonent", b =>
+                {
+                    b.Navigation("ConnectedTariffs");
+                });
+
+            modelBuilder.Entity("IPSA.Models.Tariff", b =>
+                {
+                    b.Navigation("ConnectedTariffs");
                 });
 #pragma warning restore 612, 618
         }

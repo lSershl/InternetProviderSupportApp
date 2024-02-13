@@ -8,9 +8,9 @@ namespace IPSA.API.Controllers
 {
     [Route("API/[controller]")]
     [ApiController]
-    public class PaymentsController(IPaymentsRepository paymentsRepository, IMapper mapper) : ControllerBase
+    public class PaymentsController(IPaymentRepository paymentRepository, IMapper mapper) : ControllerBase
     {
-        private readonly IPaymentsRepository _paymentsRepository = paymentsRepository;
+        private readonly IPaymentRepository _paymentRepository = paymentRepository;
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
@@ -18,7 +18,7 @@ namespace IPSA.API.Controllers
         {
             try
             {
-                var payments = await _paymentsRepository.GetAllPaymentsList();
+                var payments = _paymentRepository.GetAllPaymentsList();
                 if (payments is null)
                 {
                     return NotFound("Список городов пуст");
@@ -27,6 +27,26 @@ namespace IPSA.API.Controllers
                 {
                     return Ok(payments);
                 }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при получении данных из базы");
+            }
+        }
+
+        [HttpGet("Abonent/{abonId:int}")]
+        public async Task<ActionResult<List<Payment>>> GetAbonentPaymentsList(int abonId)
+        {
+            try
+            {
+                var abonPayments = _paymentRepository.GetPaymentsListByAbonent(abonId);
+
+                if (abonPayments is null)
+                {
+                    return NoContent();
+                }
+
+                return Ok(abonPayments);
             }
             catch (Exception)
             {
@@ -45,12 +65,26 @@ namespace IPSA.API.Controllers
                 }
 
                 var newPayment = _mapper.Map<Payment>(paymentDto);
-                await _paymentsRepository.AddNewPayment(newPayment);
+                await _paymentRepository.AddNewPayment(newPayment);
                 return Ok();
             }
             catch (Exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при добавлении платежа в базу");
+            }
+        }
+
+        [HttpPatch("CancelPayment/{paymentId:int}")]
+        public async Task<ActionResult> CancelPayment(int paymentId)
+        {
+            try
+            {
+                await _paymentRepository.CancelPayment(paymentId);
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при попытке отменить платёж");
             }
         }
         

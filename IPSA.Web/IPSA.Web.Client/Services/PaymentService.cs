@@ -62,6 +62,34 @@ namespace IPSA.Web.Client.Services
             }
         }
 
+        public async Task<List<PaymentDto>> GetPaymentsListByAbonent(int abonId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/Abonent/{abonId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return null!;
+                    }
+
+                    var result = await response.Content.ReadAsStringAsync();
+                    return [.. JSONSerializer.DeserializeJsonStringList<PaymentDto>(result)];
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
         public Task<PaymentDto> GetPayment(int paymentId)
         {
             throw new NotImplementedException();

@@ -1,12 +1,8 @@
 ﻿using IPSA.Shared.Dtos;
 using IPSA.Shared.Contracts;
-using System.Text;
-using System.Text.Json;
 using System.Net.Http.Json;
-using System.Text.Json.Serialization;
-using System.Net.Http;
-using System.Reflection;
 using IPSA.Shared.Responses;
+using IPSA.Shared.JSONSerializer;
 
 namespace IPSA.Web.Client.Services
 {
@@ -15,21 +11,6 @@ namespace IPSA.Web.Client.Services
         private readonly HttpClient _httpClient = httpClient;
 
         private const string BaseUrl = "API/Abonents";
-        private static string SerializeObj(object dto) => JsonSerializer.Serialize(dto, JsonOptions());
-        private static T DeserializeJsonString<T>(string jsonString) => JsonSerializer.Deserialize<T>(jsonString, JsonOptions())!;
-        private static StringContent GenerateStringContent(string serializedObj) => new(serializedObj, Encoding.UTF8, "application/json");
-        //private static IList<T> DeserializeJsonStringList<T>(string jsonString) => JsonSerializer.Deserialize<IList<T>>(jsonString, JsonOptions())!;
-        private static IEnumerable<T> DeserializeJsonStringList<T>(string jsonString) => JsonSerializer.Deserialize<IEnumerable<T>>(jsonString, JsonOptions())!;
-        private static JsonSerializerOptions JsonOptions()
-        {
-            return new JsonSerializerOptions
-            {
-                AllowTrailingCommas = true,
-                PropertyNameCaseInsensitive = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-                UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip
-            };
-        }
 
         public async Task<IEnumerable<AbonentReadDto>> GetAllAbonents()
         {
@@ -44,7 +25,7 @@ namespace IPSA.Web.Client.Services
                     }
 
                     var result = await response.Content.ReadAsStringAsync();
-                    return [.. DeserializeJsonStringList<AbonentReadDto>(result)];
+                    return [.. JSONSerializer.DeserializeJsonStringList<AbonentReadDto>(result)];
                 }
                 else
                 {
@@ -59,11 +40,11 @@ namespace IPSA.Web.Client.Services
             }
         }
 
-        public async Task<AbonentReadDto> GetAbonent(int id)
+        public async Task<AbonentReadDto> GetAbonent(int abonId)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{BaseUrl}/{id}");
+                var response = await _httpClient.GetAsync($"{BaseUrl}/{abonId}");
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -87,11 +68,39 @@ namespace IPSA.Web.Client.Services
             }
         }
 
+        public async Task<AbonentCreateDto> GetAbonentForEdit(int abonId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"{BaseUrl}/{abonId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return default(AbonentCreateDto)!;
+                    }
+
+                    return await response.Content.ReadFromJsonAsync<AbonentCreateDto>();
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
         public async Task<ServiceResponse> AddNewAbonent(AbonentCreateDto abonentCreateDto)
         {
             try
             {
-                var response = await _httpClient.PostAsync($"{BaseUrl}/NewAbonent", GenerateStringContent(SerializeObj(abonentCreateDto)));
+                var response = await _httpClient.PostAsync($"{BaseUrl}/NewAbonent", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(abonentCreateDto)));
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -110,11 +119,34 @@ namespace IPSA.Web.Client.Services
             }
         }
 
+        public async Task<ServiceResponse> UpdateAbonent(int abonId, AbonentCreateDto abonentToUpdateDto)
+        {
+            try
+            {
+                var response = await _httpClient.PatchAsync($"{BaseUrl}/UpdateAbonent/{abonId}", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(abonentToUpdateDto)));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return new ServiceResponse("Изменения успешно сохранены");
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
         public async Task<ServiceResponse> ApplyPaymentToAbonentBalance(PaymentDto paymentDto)
         {
             try
             {
-                var response = await _httpClient.PutAsync($"{BaseUrl}/ApplyPayment", GenerateStringContent(SerializeObj(paymentDto)));
+                var response = await _httpClient.PutAsync($"{BaseUrl}/ApplyPayment", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(paymentDto)));
 
                 if (response.IsSuccessStatusCode)
                 {

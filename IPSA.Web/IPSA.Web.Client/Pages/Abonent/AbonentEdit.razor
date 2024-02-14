@@ -1,0 +1,154 @@
+﻿@page "/Abonent/{AbonId:int}/Edit/"
+@inherits AbonentEditBase
+@rendermode InteractiveServer
+
+<PageTitle>Редактирование ПД абонента</PageTitle>
+
+<div class="h-100 d-flex flex-column align-items-left justify-content-left ">
+    <div class="row formStyle p-0">
+        <div class="col-12 col-md-8 p-1">
+            <EditForm Model="abonentToUpdate" OnValidSubmit="SaveChangesToAbonent">
+                <DataAnnotationsValidator />
+                <div class="col-12 col-md-8 p-4">
+                    <h4 class="mb-2">Добавить нового абонента</h4>
+                    <div class="mb-3">
+                        <label class="form-label" for="last_name">Фамилия</label>
+                        <InputText class="form-control" id="last_name" placeholder="Введите фамилию" @bind-Value="abonentToUpdate.LastName" />
+                        <ValidationMessage For="@(() => abonentToUpdate.LastName)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="first_name">Имя</label>
+                        <InputText class="form-control" id="first_name" placeholder="Введите имя" @bind-Value="abonentToUpdate.FirstName" />
+                        <ValidationMessage For="@(() => abonentToUpdate.FirstName)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="surname">Отчество</label>
+                        <InputText class="form-control" id="surname" placeholder="Введите отчество" @bind-Value="abonentToUpdate.Surname" />
+                        <ValidationMessage For="@(() => abonentToUpdate.Surname)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="birth_place">Место рождения</label>
+                        <InputText class="form-control" id="birth_place" placeholder="Введите место рождения" @bind-Value="abonentToUpdate.BirthPlace" />
+                        <ValidationMessage For="@(() => abonentToUpdate.BirthPlace)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Дата рождения</label>
+                        <InputDate class="form-control" @bind-Value="abonentToUpdate.DateOfBirth" />
+                        <ValidationMessage For="@(() => abonentToUpdate.DateOfBirth)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="phone_number">Контактный номер телефона</label>
+                        <InputText class="form-control" id="phone_number" placeholder="+78005553535" @bind-Value="abonentToUpdate.PhoneNumber" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PhoneNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="phone_number_for_sending">Номер телефона для рассылок</label>
+                        <InputText class="form-control" id="phone_number_for_sending" placeholder="+78005553535" @bind-Value="abonentToUpdate.PhoneNumberForSending" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PhoneNumberForSending)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="email">Электронная почта</label>
+                        <InputText class="form-control" id="email" placeholder="sample@gmail.com" @bind-Value="abonentToUpdate.Email" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_series">Серия паспорта</label>
+                        <InputText maxlength=4 class="form-control" id="passport_series" placeholder="Четыре цифры" @bind-Value="abonentToUpdate.PassportSeries" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PassportSeries)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_number">Номер паспорта</label>
+                        <InputText maxlength=6 class="form-control" id="passport_number" placeholder="Шесть цифр" @bind-Value="abonentToUpdate.PassportNumber" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PassportNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_registration">Место выдачи паспорта</label>
+                        <InputText class="form-control" id="passport_registration" placeholder="Введите орган выдачи" @bind-Value="abonentToUpdate.PassportRegistration" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PassportRegistration)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="passport_reg_date">Дата выдачи паспорта</label>
+                        <InputDate class="form-control" id="passport_reg_date" @bind-Value="abonentToUpdate.PassportRegDate" />
+                        <ValidationMessage For="@(() => abonentToUpdate.PassportRegDate)" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label">Адрес прописки</label>
+                        <InputText class="form-control" placeholder="(Город, Улица дом-квартира)" @bind-Value="abonentToUpdate.RegistrationAddress" />
+                        <ValidationMessage For="@(() => abonentToUpdate.RegistrationAddress)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="registration_zipcode">Почтовый индекс</label>
+                        <InputText maxlength=6 class="form-control" id="registration_zipcode" placeholder="(Необязателен)" @bind-Value="abonentToUpdate.RegistrationZipCode" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <label class="form-label">Адрес подключения:</label>
+                    <div class="mb-3">
+                        <label class="form-label" for="select_city">Город</label>
+                        <InputSelect class="form-select" id="select_city" @bind-Value="abonentToUpdate.City" @bind-Value:after="RefreshStreetsListOnCityChange">
+                            @if (abonentToUpdate.City is null)
+                            {
+                                <option selected disabled>Выберите город из списка</option>
+                            }
+                            @foreach (var city in citiesList!)
+                            {
+                                <option value="@city.Name">@city.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="select_street">Улица</label>
+                        <InputSelect class="form-select" id="select_street" @bind-Value="abonentToUpdate.Street">
+                            @if (streetsList!.Count == 0)
+                            {
+                                <option selected disabled>Город не выбран</option>
+                            }
+                            @foreach (var street in streetsList!)
+                            {
+                                <option value="@street.Name">@street.Name</option>
+                            }
+                        </InputSelect>
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house" placeholder="Дом" @bind-Value="abonentToUpdate.House" />
+                        <ValidationMessage For="@(() => abonentToUpdate.House)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="apartment" placeholder="Квартира" @bind-Value="abonentToUpdate.Apartment" />
+                        <ValidationMessage For="@(() => abonentToUpdate.Apartment)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house_entrance" placeholder="Номер подъезда" @bind-Value="abonentToUpdate.HouseEntranceNumber" />
+                        <ValidationMessage For="@(() => abonentToUpdate.HouseEntranceNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <InputText class="form-control" id="house_floor" placeholder="Номер этажа" @bind-Value="abonentToUpdate.HouseFloorNumber" />
+                        <ValidationMessage For="@(() => abonentToUpdate.HouseFloorNumber)" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="address_zipcode">Почтовый индекс</label>
+                        <InputText maxlength=6 class="form-control" id="address_zipcode" placeholder="(Необязателен)" @bind-Value="abonentToUpdate.AddressZipCode" />
+                    </div>
+                </div>
+                <div class="col-12 col-md-8 p-4">
+                    <div class="mb-3">
+                        <label class="form-label" for="secret_phrase">Кодовое слово</label>
+                        <InputText class="form-control" id="secret_phrase" placeholder="Слово или цифры" @bind-Value="abonentToUpdate.SecretPhrase" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Добавить SMS рассылку</label>
+                        <InputCheckbox type="checkbox" @bind-Value="abonentToUpdate.SMSSending" />
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 mb-1">
+                            <button class="btn btn-primary" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>

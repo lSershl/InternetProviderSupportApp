@@ -18,6 +18,7 @@ builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAbonPageCommentService, AbonPageCommentService>();
+builder.Services.AddScoped<IConnectedTariffService, ConnectedTariffService>();
 
 var app = builder.Build();
 

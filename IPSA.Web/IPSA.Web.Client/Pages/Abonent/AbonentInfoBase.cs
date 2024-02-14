@@ -38,6 +38,11 @@ namespace IPSA.Web.Client.Pages.Abonent
             navManager.NavigateTo($"/Abonent/{AbonId}/Reports");
         }
 
+        protected void GoToConnectedTariffsPage()
+        {
+            navManager.NavigateTo($"/Abonent/{AbonId}/Tariffs/");
+        }
+
         protected bool paymentPopup { get; set; }
         protected PaymentDto payment = new PaymentDto();
         protected decimal paymentAmount = 0;

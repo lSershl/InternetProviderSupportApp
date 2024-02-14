@@ -77,7 +77,7 @@ namespace IPSA.API.Data
                 PaymentType = "Наличными в офисе",
                 Comment = "тест",
                 Amount = 10m,
-                Cancelled = false
+                Cancelled = true
             });
 
             // Tariffs

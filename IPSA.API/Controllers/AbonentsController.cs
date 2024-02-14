@@ -79,44 +79,43 @@ namespace IPSA.API.Controllers
             }
         }
 
-        [HttpPut("UpdateAbonent")]
-        public async Task<ActionResult> UpdateAbonent(JsonContent content)
+        [HttpPatch("UpdateAbonent/{abonId}")]
+        public async Task<ActionResult> UpdateAbonent(int abonId, AbonentCreateDto updatedAbonent)
         {
             try
             {
-                if (content == null)
+                if (updatedAbonent == null)
                 {
                     return BadRequest();
                 }
                 else
                 {
-                    var updAbonent = await content.ReadFromJsonAsync<Abonent>();
-                    var currAbonent = await _abonentRepository.GetAbonent(updAbonent.Id);
+                    var currAbonent = await _abonentRepository.GetAbonent(abonId);
                     if (currAbonent is not null)
                     {
-                        currAbonent.FirstName = updAbonent.FirstName;
-                        currAbonent.LastName = updAbonent.LastName;
-                        currAbonent.Surname = updAbonent.Surname;
-                        currAbonent.DateOfBirth = updAbonent.DateOfBirth;
-                        currAbonent.BirthPlace = updAbonent.BirthPlace;
-                        currAbonent.PhoneNumber = updAbonent.PhoneNumber;
-                        currAbonent.PhoneNumberForSending = updAbonent.PhoneNumberForSending;
-                        currAbonent.Email = updAbonent.Email;
-                        currAbonent.PassportSeries = updAbonent.PassportSeries;
-                        currAbonent.PassportNumber = updAbonent.PassportNumber;
-                        currAbonent.PassportRegistration = updAbonent.PassportRegistration;
-                        currAbonent.PassportRegDate = updAbonent.PassportRegDate;
-                        currAbonent.RegistrationAddress = updAbonent.RegistrationAddress;
-                        currAbonent.RegistrationZipCode = updAbonent.RegistrationZipCode;
-                        currAbonent.City = updAbonent.City;
-                        currAbonent.Street = updAbonent.Street;
-                        currAbonent.House = updAbonent.House;
-                        currAbonent.Apartment = updAbonent.Apartment;
-                        currAbonent.HouseEntranceNumber = updAbonent.HouseEntranceNumber;
-                        currAbonent.HouseFloorNumber = updAbonent.HouseFloorNumber;
-                        currAbonent.AddressZipCode = updAbonent.AddressZipCode;
-                        currAbonent.SecretPhrase = updAbonent.SecretPhrase;
-                        currAbonent.SMSSending = updAbonent.SMSSending;
+                        currAbonent.FirstName = updatedAbonent.FirstName!;
+                        currAbonent.LastName = updatedAbonent.LastName!;
+                        currAbonent.Surname = updatedAbonent.Surname!;
+                        currAbonent.DateOfBirth = updatedAbonent.DateOfBirth;
+                        currAbonent.BirthPlace = updatedAbonent.BirthPlace!;
+                        currAbonent.PhoneNumber = updatedAbonent.PhoneNumber!;
+                        currAbonent.PhoneNumberForSending = updatedAbonent.PhoneNumberForSending!;
+                        currAbonent.Email = updatedAbonent.Email;
+                        currAbonent.PassportSeries = updatedAbonent.PassportSeries!;
+                        currAbonent.PassportNumber = updatedAbonent.PassportNumber!;
+                        currAbonent.PassportRegistration = updatedAbonent.PassportRegistration!;
+                        currAbonent.PassportRegDate = updatedAbonent.PassportRegDate;
+                        currAbonent.RegistrationAddress = updatedAbonent.RegistrationAddress!;
+                        currAbonent.RegistrationZipCode = updatedAbonent.RegistrationZipCode!;
+                        currAbonent.City = updatedAbonent.City!;
+                        currAbonent.Street = updatedAbonent.Street!;
+                        currAbonent.House = updatedAbonent.House!;
+                        currAbonent.Apartment = updatedAbonent.Apartment!;
+                        currAbonent.HouseEntranceNumber = updatedAbonent.HouseEntranceNumber!;
+                        currAbonent.HouseFloorNumber = updatedAbonent.HouseFloorNumber!;
+                        currAbonent.AddressZipCode = updatedAbonent.AddressZipCode;
+                        currAbonent.SecretPhrase = updatedAbonent.SecretPhrase;
+                        currAbonent.SMSSending = updatedAbonent.SMSSending;
 
                         await _abonentRepository.UpdateAbonent(currAbonent);
                         return Ok();

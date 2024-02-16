@@ -17,6 +17,7 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IAbonPageCommentsRepository, AbonPageCommentsRepository>();
 builder.Services.AddScoped<ITariffRepository, TariffRepository>();
 builder.Services.AddScoped<IConnectedTariffsRepository, ConnectedTariffsRepository>();
+builder.Services.AddScoped<IAbonentRequestRepository, AbonentRequestRepository>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

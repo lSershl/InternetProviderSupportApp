@@ -38,6 +38,11 @@ namespace IPSA.Web.Client.Pages.Abonent
             navManager.NavigateTo($"/Abonent/{AbonId}/Reports");
         }
 
+        protected void GoToRequestsPage()
+        {
+            navManager.NavigateTo($"/Abonent/{AbonId}/Requests");
+        }
+
         protected void GoToConnectedTariffsPage()
         {
             navManager.NavigateTo($"/Abonent/{AbonId}/Tariffs/");

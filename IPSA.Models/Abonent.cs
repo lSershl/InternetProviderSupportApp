@@ -32,5 +32,6 @@ namespace IPSA.Models
         public decimal Balance { get; set; } = 0;
 
         public List<ConnectedTariff> ConnectedTariffs { get; set; } = new();
+        public List<AbonentRequest> AbonentRequests { get; set; } = new();
     }
 }

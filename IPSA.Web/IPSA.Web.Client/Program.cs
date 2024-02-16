@@ -9,6 +9,7 @@ builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IAbonPageCommentService, AbonPageCommentService>();
 builder.Services.AddScoped<IConnectedTariffService, ConnectedTariffService>();
+builder.Services.AddScoped<IAbonentRequestService, AbonentRequestService>();
 builder.Services.AddScoped(http => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)

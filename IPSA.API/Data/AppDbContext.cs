@@ -15,8 +15,26 @@ namespace IPSA.API.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Department>()
+                .HasMany(e => e.Employees)
+                .WithOne(e => e.Department)
+                .HasForeignKey(e => e.DepartmentId)
+                .IsRequired();
+
+            modelBuilder.Entity<Employee>()
+                .HasMany(e => e.AbonentRequests)
+                .WithOne(e => e.Employee)
+                .HasForeignKey(e => e.EmployeeId)
+                .IsRequired();
+
             modelBuilder.Entity<Abonent>()
                 .HasMany(e => e.ConnectedTariffs)
+                .WithOne(e => e.Abonent)
+                .HasForeignKey(e => e.AbonentId)
+                .IsRequired();
+
+            modelBuilder.Entity<Abonent>()
+                .HasMany(e => e.AbonentRequests)
                 .WithOne(e => e.Abonent)
                 .HasForeignKey(e => e.AbonentId)
                 .IsRequired();
@@ -26,6 +44,64 @@ namespace IPSA.API.Data
                 .WithOne(e => e.Tariff)
                 .HasForeignKey(e => e.TariffId)
                 .IsRequired();
+
+            // Seed Data
+
+            // Departments
+            modelBuilder.Entity<Department>().HasData(new Department
+            {
+                Id = 1,
+                Name = "Менеджеры сети",
+                EmloyeeRole = "Менеджер сети"
+            });
+
+            modelBuilder.Entity<Department>().HasData(new Department
+            {
+                Id = 2,
+                Name = "Служба технической поддержки",
+                EmloyeeRole = "Техподдержка"
+            });
+
+            modelBuilder.Entity<Department>().HasData(new Department
+            {
+                Id = 3,
+                Name = "Инженеры сети и наладчики",
+                EmloyeeRole = "Наладчик"
+            });
+
+            // Employees
+            modelBuilder.Entity<Employee>().HasData(new Employee
+            {
+                Id = 1,
+                DepartmentId = 1,
+                FullName = "Увалова Александра Николаевна",
+                ShortName = "Увалова А.",
+                RegistrationDateTime = DateTime.UtcNow,
+                Login = "manager",
+                Password = "manager"
+            });
+
+            modelBuilder.Entity<Employee>().HasData(new Employee
+            {
+                Id = 2,
+                DepartmentId = 2,
+                FullName = "Свиридов Иван Петрович",
+                ShortName = "Свиридов И.",
+                RegistrationDateTime = DateTime.UtcNow,
+                Login = "techsup",
+                Password = "techsup"
+            });
+
+            modelBuilder.Entity<Employee>().HasData(new Employee
+            {
+                Id = 3,
+                DepartmentId = 3,
+                FullName = "Донских Александр Иванович",
+                ShortName = "Донских А.",
+                RegistrationDateTime = DateTime.UtcNow,
+                Login = "engineer",
+                Password = "engineer"
+            });
 
             // Abonents
             modelBuilder.Entity<Abonent>().HasData(new Abonent
@@ -55,6 +131,21 @@ namespace IPSA.API.Data
                 SecretPhrase = "Код. слово",
                 SMSSending = false,
                 Balance = 0m
+            });
+
+            // AbonentRequests
+            modelBuilder.Entity<AbonentRequest>().HasData(new AbonentRequest
+            {
+                Id = 1,
+                AbonentId = 1,
+                EmployeeId = 1,
+                CreationDateTime = DateTime.UtcNow,
+                LastUpdateDateTime = DateTime.UtcNow,
+                CompletionDate = new DateOnly(2024, 03, 05),
+                CompletionTimePeriod = "15:00 - 17:00",
+                Type = "Подключение СПД",
+                Description = "Подкл. СПД через роутер абонента, документы выданы, кабеля нет, предв. позвонить",
+                Status = "Открыта"
             });
 
             // AbonPageComments
@@ -246,8 +337,11 @@ namespace IPSA.API.Data
             });
         }
 
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         public DbSet<Abonent> Abonents { get; set; }
         public DbSet<AbonPageComment> AbonPageComments { get; set; }
+        public DbSet<AbonentRequest> AbonentRequests { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<ConnectedTariff> ConnectedTariffs { get; set; }

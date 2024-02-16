@@ -4,7 +4,6 @@ namespace IPSA.Models
 {
     public class AbonPageComment
     {
-        [Key]
         public required int Id { get; set; }
         public required int AbonentId { get; set; }
         public required int EmployeeId { get; set; }

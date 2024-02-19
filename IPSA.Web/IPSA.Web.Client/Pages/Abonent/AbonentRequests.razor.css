@@ -1,0 +1,9 @@
+﻿.clickable_row {
+    -moz-user-select: -moz-none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.clickable_row:hover {
+    background-color: ThreeDLightShadow;
+}

@@ -27,7 +27,7 @@
                 <tbody>
                     @foreach (var payment in abonentPayments)
                     {
-                        <tr style="border: solid 1px;border-style: solid;">
+                        <tr class="clickable_row" style="border: solid 1px;border-style: solid;">
                             <td style="text-align: center;border: solid 1px;border-style: solid;">@payment.PaymentDateTime</td>
                             <td style ="text-align: center;border: solid 1px;border-style: solid;">@payment.PaymentType</td>
                             <td style="text-align: center;border: solid 1px;border-style: solid;">@payment.Amount руб</td>

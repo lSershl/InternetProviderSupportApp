@@ -67,11 +67,11 @@ namespace IPSA.Web.Client.Services
             }
         }
 
-        public async Task<List<AbonentRequestDto>> GetAbonentRequestsByDate(DateOnly date)
+        public async Task<List<AbonentRequestDto>> GetAbonentRequestsByDate(DateDto dateDto)
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{BaseUrl}/{date}");
+                var response = await _httpClient.PutAsync($"{BaseUrl}/Date", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(dateDto)));
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode is HttpStatusCode.NoContent)

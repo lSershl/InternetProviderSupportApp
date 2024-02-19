@@ -7,7 +7,7 @@ namespace IPSA.Shared.Contracts
     {
         Task<List<AbonentRequestDto>> GetAllAbonentsRequests();
         Task<List<AbonentRequestDto>> GetAbonentRequests(int abonId);
-        Task<List<AbonentRequestDto>> GetAbonentRequestsByDate(DateOnly date);
+        Task<List<AbonentRequestDto>> GetAbonentRequestsByDate(DateDto date);
         Task<AbonentRequestDto> GetAbonentRequestById(int requestId);
         Task<ServiceResponse> CreateAbonentRequest(AbonentRequestDto abonentRequestDto);
         Task<ServiceResponse> UpdateAbonentRequest(AbonentRequestDto abonentRequestDto);

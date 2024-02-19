@@ -33,12 +33,12 @@ namespace IPSA.API.Controllers
             }
         }
 
-        [HttpGet("Date/{date}")]
-        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByDate(DateOnly date)
+        [HttpPut("Date")]
+        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByDate(DateDto dateDto)
         {
             try
             {
-                var abonRequests = _abonentRequestRepository.GetRequestsListByDate(date);
+                var abonRequests = _abonentRequestRepository.GetRequestsListByDate(dateDto.DateOnly);
 
                 if (abonRequests is null)
                 {

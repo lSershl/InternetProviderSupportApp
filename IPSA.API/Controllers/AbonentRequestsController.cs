@@ -53,6 +53,26 @@ namespace IPSA.API.Controllers
             }
         }
 
+        [HttpPut("DatePeriod")]
+        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByDatePeriod(DatePeriodDto datePeriodDto)
+        {
+            try
+            {
+                var abonRequests = _abonentRequestRepository.GetRequestsListByDatePeriod(datePeriodDto.StartDate, datePeriodDto.EndDate);
+
+                if (abonRequests is null)
+                {
+                    return NoContent();
+                }
+
+                return Ok(abonRequests);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при получении данных из базы");
+            }
+        }
+
         [HttpGet("Abonent/{abonId:int}")]
         public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByAbonent(int abonId)
         {

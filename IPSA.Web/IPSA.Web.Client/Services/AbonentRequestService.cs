@@ -95,6 +95,34 @@ namespace IPSA.Web.Client.Services
             }
         }
 
+        public async Task<List<AbonentRequestDto>> GetAbonentRequestsByDatePeriod(DatePeriodDto datePeriodDto)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsync($"{BaseUrl}/DatePeriod", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(datePeriodDto)));
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode is HttpStatusCode.NoContent)
+                    {
+                        return null!;
+                    }
+
+                    var result = await response.Content.ReadAsStringAsync();
+                    return [.. JSONSerializer.DeserializeJsonStringList<AbonentRequestDto>(result)];
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
         public async Task<AbonentRequestDto> GetAbonentRequestById(int requestId)
         {
             try

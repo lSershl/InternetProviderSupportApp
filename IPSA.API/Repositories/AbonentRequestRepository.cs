@@ -20,6 +20,12 @@ namespace IPSA.API.Repositories
             return abonRequests;
         }
 
+        public List<AbonentRequest> GetRequestsListByDatePeriod(DateOnly startDate, DateOnly endDate)
+        {
+            var abonRequests = _appDbContext.AbonentRequests.Where(d => d.CompletionDate >= startDate && d.CompletionDate <= endDate).ToList();
+            return abonRequests;
+        }
+
         public List<AbonentRequest> GetRequestsListByAbonent(int abonId)
         {
             var abonRequests = _appDbContext.AbonentRequests.Where(r => r.AbonentId == abonId).ToList();

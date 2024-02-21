@@ -2,6 +2,8 @@ using IPSA.Web.Client.Pages;
 using IPSA.Web.Components;
 using IPSA.Shared.Contracts;
 using IPSA.Web.Client.Services;
+using Microsoft.AspNetCore.Components.Authorization;
+using IPSA.Web.States;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,8 @@ builder.Services.AddScoped(http => new HttpClient
     BaseAddress = new Uri(builder.Configuration.GetSection("BaseAddress").Value!) 
 });
 builder.Services.AddScoped<IAbonentService, AbonentService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();

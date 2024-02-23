@@ -39,6 +39,7 @@ namespace IPSA.API.Repositories
             var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
             var userClaims = new[]
             {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.ShortName),
                 new Claim(ClaimTypes.Role, _appDbContext.Departments.First(x => x.Id == user.DepartmentId).EmloyeeRole)
             };

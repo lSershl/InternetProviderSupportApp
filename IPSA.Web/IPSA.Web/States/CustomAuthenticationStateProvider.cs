@@ -1,22 +1,26 @@
-﻿using IPSA.Shared.Dtos;
+﻿using Blazored.LocalStorage;
+using IPSA.Shared.Dtos;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
 namespace IPSA.Web.States
 {
-    public class CustomAuthenticationStateProvider : AuthenticationStateProvider
+    public class CustomAuthenticationStateProvider(ILocalStorageService localStorageService) : AuthenticationStateProvider
     {
         private readonly ClaimsPrincipal anonymous = new(new ClaimsIdentity());
 
+        private readonly ILocalStorageService? localStorage = localStorageService;
+
         public async override Task<AuthenticationState> GetAuthenticationStateAsync()
         {
+            var token = await localStorage!.GetItemAsync<string>("JWTToken");
             try
             {
-                if (string.IsNullOrEmpty(Constants.JWTToken))
+                if (string.IsNullOrEmpty(token))
                     return await Task.FromResult(new AuthenticationState(anonymous));
 
-                var getUserClaims = DecryptToken(Constants.JWTToken);
+                var getUserClaims = DecryptToken(token);
                 if (getUserClaims is null)
                     return await Task.FromResult(new AuthenticationState(anonymous));
 
@@ -32,16 +36,10 @@ namespace IPSA.Web.States
         public async void UpdateAuthenticationState(string jwtToken)
         {
             var claimsPrincipal = new ClaimsPrincipal();
-            if (!string.IsNullOrEmpty(jwtToken))
-            {
-                Constants.JWTToken = jwtToken;
-                var getUserClaims = DecryptToken(jwtToken);
-                claimsPrincipal = SetClaimPrincipal(getUserClaims);
-            }
-            else
-            {
-                Constants.JWTToken = null!;
-            }
+
+            var getUserClaims = DecryptToken(jwtToken);
+            claimsPrincipal = SetClaimPrincipal(getUserClaims);
+
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(claimsPrincipal)));
         }
 
@@ -51,6 +49,7 @@ namespace IPSA.Web.States
             return new ClaimsPrincipal(new ClaimsIdentity(
                 new List<Claim>
                 {
+                    new(ClaimTypes.NameIdentifier, claims.Id),
                     new(ClaimTypes.Name, claims.Name),
                     new(ClaimTypes.Role, claims.Role)
                 }, "JwtAuth"));
@@ -64,9 +63,10 @@ namespace IPSA.Web.States
             var handler = new JwtSecurityTokenHandler();
             var token = handler.ReadJwtToken(jwtToken);
 
+            var id = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.NameIdentifier);
             var name = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Name);
             var role = token.Claims.FirstOrDefault(_ => _.Type == ClaimTypes.Role);
-            return new CustomUserClaims(name!.Value, role!.Value);
+            return new CustomUserClaims(id!.Value, name!.Value, role!.Value);
         }
     }
 }

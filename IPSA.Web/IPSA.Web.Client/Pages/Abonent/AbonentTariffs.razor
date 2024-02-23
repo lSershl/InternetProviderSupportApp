@@ -2,75 +2,81 @@
 @inherits AbonentTariffsBase
 @rendermode InteractiveServer
 
-<PageTitle>Услуги</PageTitle>
-
-<div>
-    <div class="col-12 col-lg-12 p-4 justify-content-space-between">
-        <div class="col-12 col-lg-12 p-0 justify-content-space-between">
-            <h3>Услуги абонента</h3>
-            <div class="row">
-                <div class="mb-3">
-                    <button class="btn btn-primary">Подключить услугу</button>
-                    <button class="btn btn-primary">Заблокировать все услуги</button>
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Услуги</PageTitle>
+        <div>
+            <div class="col-12 col-lg-12 p-4 justify-content-space-between">
+                <div class="col-12 col-lg-12 p-0 justify-content-space-between">
+                    <h3>Услуги абонента</h3>
+                    <div class="row">
+                        <div class="mb-3">
+                            <button class="btn btn-primary">Подключить услугу</button>
+                            <button class="btn btn-primary">Заблокировать все услуги</button>
+                        </div>
+                    </div>
+                    <div>
+                        @foreach (var tariff in connectedTariffs!)
+                        {
+                            <div class="mb-3">
+                                <table>
+                                    <thead>
+                                        <tr style="border: solid 1px;border-style: solid;">
+                                            <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Управление</th>
+                                            <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Название тарифа</th>
+                                            <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Модель оплаты</th>
+                                            <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Плата</th>
+                                            <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Статус</th>
+                                        </tr>
+                                    </thead>
+                                    @if (tariff.IsBlocked)
+                                    {
+                                        <tbody>
+                                            <tr style="border: solid 1px;border-style: solid;background-color:palevioletred;">
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">[Разблокировать]</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
+                                                @if (tariff.PricingModel == "Месячный")
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
+                                                }
+                                                else if (tariff.PricingModel == "Посуточный")
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
+                                                }
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">Заблокирован</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                    else
+                                    {
+                                        <tbody>
+                                            <tr style="border: solid 1px;border-style: solid;">
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">[Кнопки управления тарифом]</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
+                                                @if (tariff.PricingModel == "Месячный")
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
+                                                }
+                                                else if (tariff.PricingModel == "Посуточный")
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
+                                                }
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;">Активен</td>
+                                            </tr>
+                                        </tbody>
+                                    }
+                                </table>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-            <div>
-                @foreach (var tariff in connectedTariffs!)
-                {
-                    <div class="mb-3">
-                        <table>
-                            <thead>
-                                <tr style="border: solid 1px;border-style: solid;">
-                                    <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Управление</th>
-                                    <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Название тарифа</th>
-                                    <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Модель оплаты</th>
-                                    <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Плата</th>
-                                    <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Статус</th>
-                                </tr>
-                            </thead>
-                            @if (tariff.IsBlocked)
-                            {
-                                <tbody>
-                                    <tr style="border: solid 1px;border-style: solid;background-color:palevioletred;">
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">[Разблокировать]</td>
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
-                                        @if (tariff.PricingModel == "Месячный")
-                                        {
-                                            <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
-                                        }
-                                        else if (tariff.PricingModel == "Посуточный")
-                                        {
-                                            <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
-                                        }
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">Заблокирован</td>
-                                    </tr>
-                                </tbody>
-                            }
-                            else
-                            {
-                                <tbody>
-                                    <tr style="border: solid 1px;border-style: solid;">
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">[Кнопки управления тарифом]</td>
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
-                                        @if (tariff.PricingModel == "Месячный")
-                                        {
-                                            <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
-                                        }
-                                        else if (tariff.PricingModel == "Посуточный")
-                                        {
-                                            <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
-                                        }
-                                        <td style="text-align: center;border: solid 1px;border-style: solid;">Активен</td>
-                                    </tr>
-                                </tbody>
-                            }
-                        </table>
-                    </div>
-                }
-            </div>
         </div>
-    </div>
-</div>
+    </Authorized>
+    <NotAuthorized>
+        <NotAllowed></NotAllowed>
+    </NotAuthorized>
+</AuthorizeView>
 

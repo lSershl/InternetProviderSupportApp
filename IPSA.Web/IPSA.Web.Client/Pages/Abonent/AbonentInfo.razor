@@ -2,305 +2,313 @@
 @inherits AbonentInfoBase
 @rendermode InteractiveServer
 
-<PageTitle>@AbonId | Информация об абоненте</PageTitle>
-
-@if(abonent is null)
-{
-    <div class="lds-facebook"><div></div><div></div><div></div></div>
-}
-else
-{
-    <div class="col-12 col-lg-12 p-0 justify-content-space-between">
-        <div class="row">
-            <div class="mb-3">
-                <button class="button" type="submit" @onclick="ShowPaymentPopup">Платёж</button>
-                <button class="button" type="submit" @onclick="GoToEditPage">Редактировать ПД</button>
-                <button class="button" type="submit" @onclick="GoToReportsPage">Отчёты</button>
-                <button class="button" type="submit" @onclick="GoToRequestsPage">Заявки</button>
-                <button class="button" type="submit" @onclick="GoToConnectedTariffsPage">Услуги</button>
-                <button class="button" type="submit">Отключить услуги</button>
-            </div>
-        </div>
-    </div>
-    @if (paymentPopup == true)
-    {
-        <div class="modal" tabindex="-1" style="display:block;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Внесение платежа</h5>
-                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="ClosePaymentPopup">
-                            <span aria-hidden="true"></span>
-                        </button>
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>@AbonId | Информация об абоненте</PageTitle>
+        @if (abonent is null)
+        {
+            <div class="lds-facebook"><div></div><div></div><div></div></div>
+        }
+        else
+        {
+            <div class="col-12 col-lg-12 p-0 justify-content-space-between">
+                <div class="row">
+                    <div class="mb-3">
+                        <AuthorizeView Roles="Менеджер сети" Context="managerButtons">
+                            <button class="button" type="submit" @onclick="ShowPaymentPopup">Платёж</button>
+                            <button class="button" type="submit" @onclick="GoToEditPage">Редактировать ПД</button>
+                        </AuthorizeView>
+                        <button class="button" type="submit" @onclick="GoToReportsPage">Отчёты</button>
+                        <button class="button" type="submit" @onclick="GoToRequestsPage">Заявки</button>
+                        <button class="button" type="submit" @onclick="GoToConnectedTariffsPage">Услуги</button>
+                        <button class="button" type="submit">Отключить услуги</button>
                     </div>
-                    <div class="modal-body">
+                </div>
+            </div>
+            @if (paymentPopup == true)
+            {
+                <div class="modal" tabindex="-1" style="display:block;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Внесение платежа</h5>
+                                <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="ClosePaymentPopup">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <table>
+                                    <tr>
+                                        <td class="head">Сумма платежа</td>
+                                        <td><input type="text" @bind="paymentAmount" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="head">Тип платежа</td>
+                                        <td style="vertical-align:top; text-align:left;">
+                                            <select @bind="payment.PaymentType">
+                                                <option selected value="Наличными в офисе">Наличными в офисе</option>
+                                                <option value="Банковской картой">Банковской картой</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="head">Комментарий платежа</td>
+                                        <td><input class="text" type="text" size="1" @bind="paymentComment" /></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" @onclick="ClosePaymentPopup">Отмена</button>
+                                <button class="btn btn-primary" data-dismiss="modal" @onclick="() => AcceptPayment(paymentAmount, paymentComment)">Внести платёж</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="row">
+                <div class="col-lg-4">
+                    <div>
+                        <h5>Карточка абонента</h5>
                         <table>
                             <tr>
-                                <td class="head">Сумма платежа</td>
-                                <td><input type="text" @bind="paymentAmount" /></td>
+                                <td class="head">ФИО</td>
+                                <td>@abonent.LastName @abonent.FirstName @abonent.Surname</td>
                             </tr>
                             <tr>
-                                <td class="head">Тип платежа</td>
-                                <td style="vertical-align:top; text-align:left;">
-                                    <select @bind="payment.PaymentType">
-                                        <option selected value="Наличными в офисе">Наличными в офисе</option>
-                                        <option value="Банковской картой">Банковской картой</option>
-                                    </select>
-                                </td>
+                                <td class="head">Адрес</td>
+                                <td>@abonent.Street @abonent.House-@abonent.Apartment</td>
                             </tr>
                             <tr>
-                                <td class="head">Комментарий платежа</td>
-                                <td><input class="text" type="text" size="1" @bind="paymentComment" /></td>
+                                <td class="head">Город</td>
+                                <td>@abonent.City</td>
+                            </tr>
+                            <tr>
+                                <td class="head">Телефон</td>
+                                <td>@abonent.PhoneNumber</td>
+                            </tr>
+                            <tr>
+                                <td class="head">E-mail</td>
+                                <td>@abonent.Email</td>
+                            </tr>
+                            <tr>
+                                <td class="head">Лицевой счёт</td>
+                                <td>@abonent.Id</td>
+                            </tr>
+                            <tr>
+                                <td class="head">Кодовое слово</td>
+                                <td>@abonent.SecretPhrase</td>
+                            </tr>
+                            <tr>
+                                <td class="head">Статус</td>
+                                <td>(Статус абонента)</td>
                             </tr>
                         </table>
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="ClosePaymentPopup">Отмена</button>
-                        <button class="btn btn-primary" data-dismiss="modal" @onclick="() => AcceptPayment(paymentAmount, paymentComment)">Внести платёж</button>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Суммарная абонентская плата</h5>
+                    <table>
+                        <tr>
+                            <td class="head"></td>
+                            <td class="head">Текущий месяц</td>
+                            <td class="head">Следующий месяц</td>
+                        </tr>
+                        <tr>
+                            <td class="head">Всего</td>
+                            <td>(Текущая плата)</td>
+                            <td>(Плата за след. месяц)</td>
+                        </tr>
+                        <tr>
+                            <td class="head">Скидка</td>
+                            <td colspan="2">(Размер скидки)</td>
+                        </tr>
+                        <tr>
+                            <td class="head">Итого со скидкой</td>
+                            <td>(Текущая плата со скидкой)</td>
+                            <td>(Плата за след. месяц со скидкой)</td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-lg-4">
+                    <h5>Баланс</h5>
+                    <table>
+                        <tr>
+                            <td class="head">Текущий баланс</td>
+                            @if (abonent.Balance >= 0)
+                            {
+                                <td><label style="color: green">@abonent.Balance руб</label></td>
+                            }
+                            else
+                            {
+                                <td><label style="color: red">@abonent.Balance руб</label></td>
+                            }
+                        </tr>
+                        <tr>
+                            <td class="head">Схема оплаты</td>
+                            <td>Авансовая</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="comments-collapsible">
+                <input id="collapsible" type="checkbox" class="toggle" />
+                <label for="collapsible" class="lbl-toggle">Комментарии сотрудников</label>
+                <div class="collapsible-content">
+                    <div class="content-inner">
+                        <div>
+                            <label class="comment_btn" @onclick="ShowAddCommentPopup">[Добавить]</label>
+                        </div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <td>Дата создания комментария</td>
+                                    <td>Текст комментария</td>
+                                    <td>Сотрудник</td>
+                                    <td>Редактировать</td>
+                                    <td>Удалить</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var comment in abonPageComments!)
+                                {
+                                    <tr>
+                                        <td>@comment.CommentDateTime</td>
+                                        <td>@comment.Text</td>
+                                        <td>(Имя менеджера)</td>
+                                        <td><label class="comment_btn" @onclick="() => ShowEditCommentPopup(comment.Id)">[Редактировать]</label></td>
+                                        <td><label class="comment_btn" @onclick="() => ShowDeleteCommentPopup(comment.Id)">[Удалить]</label></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
-    }
-    <div class="row">
-        <div class="col-lg-4">
+            @if (addCommentPopup == true)
+            {
+                <div class="modal" tabindex="-1" style="display:block;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Добавить комментарий</h5>
+                                <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseAddCommentPopup">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input @bind="newCommentText" />
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseAddCommentPopup">Отмена</button>
+                                <button class="btn btn-primary" data-dismiss="modal" @onclick="() => AddNewComment(newComment)">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (editCommentPopup == true)
+            {
+                <div class="modal" tabindex="-1" style="display:block;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Редактирование комментария</h5>
+                                <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseEditCommentPopup">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input @bind="editCommentText" />
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseEditCommentPopup">Отмена</button>
+                                <button class="btn btn-primary" data-dismiss="modal" @onclick="() => SaveEditedComment(commentToEdit)">Сохранить</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @if (deleteCommentPopup == true)
+            {
+                <div class="modal" tabindex="-1" style="display:block;">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Удалить комментарий</h5>
+                                <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">
+                                    <span aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h6>Вы действительно хотите удалить этот комментарий?</h6>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">Нет</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="() => DeleteComment(commentToDelete)">Да</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
             <div>
-                <h5>Карточка абонента</h5>
-                <table>
-                    <tr>
-                        <td class="head">ФИО</td>
-                        <td>@abonent.LastName @abonent.FirstName @abonent.Surname</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Адрес</td>
-                        <td>@abonent.Street @abonent.House-@abonent.Apartment</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Город</td>
-                        <td>@abonent.City</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Телефон</td>
-                        <td>@abonent.PhoneNumber</td>
-                    </tr>
-                    <tr>
-                        <td class="head">E-mail</td>
-                        <td>@abonent.Email</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Лицевой счёт</td>
-                        <td>@abonent.Id</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Кодовое слово</td>
-                        <td>@abonent.SecretPhrase</td>
-                    </tr>
-                    <tr>
-                        <td class="head">Статус</td>
-                        <td>(Статус абонента)</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <h5>Суммарная абонентская плата</h5>
-            <table>
-                <tr>
-                    <td class="head"></td>
-                    <td class="head">Текущий месяц</td>
-                    <td class="head">Следующий месяц</td>
-                </tr>
-                <tr>
-                    <td class="head">Всего</td>
-                    <td>(Текущая плата)</td>
-                    <td>(Плата за след. месяц)</td>
-                </tr>
-                <tr>
-                    <td class="head">Скидка</td>
-                    <td colspan="2">(Размер скидки)</td>
-                </tr>
-                <tr>
-                    <td class="head">Итого со скидкой</td>
-                    <td>(Текущая плата со скидкой)</td>
-                    <td>(Плата за след. месяц со скидкой)</td>
-                </tr>
-            </table>
-        </div>
-        <div class="col-lg-4">
-            <h5>Баланс</h5>
-            <table>
-                <tr>
-                    <td class="head">Текущий баланс</td>
-                    @if (abonent.Balance >= 0)
-                    {
-                        <td><label style="color: green">@abonent.Balance руб</label></td>
-                    }
-                    else
-                    {
-                        <td><label style="color: red">@abonent.Balance руб</label></td>
-                    }
-                </tr>
-                <tr>
-                    <td class="head">Схема оплаты</td>
-                    <td>Авансовая</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div class="comments-collapsible">
-        <input id="collapsible" type="checkbox" class="toggle" />
-        <label for="collapsible" class="lbl-toggle">Комментарии сотрудников</label>
-        <div class="collapsible-content">
-            <div class="content-inner">
-                <div>
-                    <label class="comment_btn" @onclick="ShowAddCommentPopup">[Добавить]</label>
+                <div class="mb-1">
+                    <h4>Интернет</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:5%">Link</th>
+                                <th style="width:10%">IP-адрес</th>
+                                <th style="width:10%">Скорость (Мб/сек)</th>
+                                <th style="width:15%">Трафик за текущий период (МБ)</th>
+                                <th style="width:10%">Текущий тариф</th>
+                                <th style="width:10%">Следующий тариф</th>
+                                <th style="width:5%">Блокировка</th>
+                                <th style="width:5%">Тип блокировки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>(Линк услуги)</td>
+                                <td>(IP-адрес услуги)</td>
+                                <td>(Скорость по тарифу)</td>
+                                <td>(Трафик)</td>
+                                <td>(Текущий тариф)</td>
+                                <td>(Следующий тариф)</td>
+                                <td>(Нет)</td>
+                                <td>(Нет)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Дата создания комментария</td>
-                            <td>Текст комментария</td>
-                            <td>Сотрудник</td>
-                            <td>Редактировать</td>
-                            <td>Удалить</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var comment in abonPageComments!)
-                    {
-                        <tr>
-                            <td>@comment.CommentDateTime</td>
-                            <td>@comment.Text</td>
-                            <td>(Имя менеджера)</td>
-                            <td><label class="comment_btn" @onclick="() => ShowEditCommentPopup(comment.Id)">[Редактировать]</label></td>
-                            <td><label class="comment_btn" @onclick="() => ShowDeleteCommentPopup(comment.Id)">[Удалить]</label></td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    @if (addCommentPopup == true)
-    {
-        <div class="modal" tabindex="-1" style="display:block;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Добавить комментарий</h5>
-                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseAddCommentPopup">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input @bind="newCommentText" />
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseAddCommentPopup">Отмена</button>
-                        <button class="btn btn-primary" data-dismiss="modal" @onclick="() => AddNewComment(newComment)">Сохранить</button>
-                    </div>
+                <div class="mb-3">
+                    <h4>Цифровое КТВ</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:5%">Link</th>
+                                <th style="width:10%">Приставка</th>
+                                <th style="width:10%">Пакеты каналов тек. месяца</th>
+                                <th style="width:15%">Пакеты каналов след. месяца</th>
+                                <th style="width:5%">Блокировка</th>
+                                <th style="width:5%">Тип блокировки</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>(Линк услуги)</td>
+                                <td>(Номер приставки, если есть)</td>
+                                <td>(Пакеты каналов тек. месяца)</td>
+                                <td>(Пакеты каналов след. месяца)</td>
+                                <td>(Нет)</td>
+                                <td>(Нет)</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>
-    }
-    @if (editCommentPopup == true)
-    {
-        <div class="modal" tabindex="-1" style="display:block;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Редактирование комментария</h5>
-                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseEditCommentPopup">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <input @bind="editCommentText" />
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseEditCommentPopup">Отмена</button>
-                        <button class="btn btn-primary" data-dismiss="modal" @onclick="() => SaveEditedComment(commentToEdit)">Сохранить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-    @if (deleteCommentPopup == true)
-    {
-        <div class="modal" tabindex="-1" style="display:block;">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Удалить комментарий</h5>
-                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">
-                            <span aria-hidden="true"></span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <h6>Вы действительно хотите удалить этот комментарий?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="CloseDeleteCommentPopup">Нет</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal" @onclick="() => DeleteComment(commentToDelete)">Да</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-    <div>
-        <div class="mb-1">
-            <h4>Интернет</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width:5%">Link</th>
-                        <th style="width:10%">IP-адрес</th>
-                        <th style="width:10%">Скорость (Мб/сек)</th>
-                        <th style="width:15%">Трафик за текущий период (МБ)</th>
-                        <th style="width:10%">Текущий тариф</th>
-                        <th style="width:10%">Следующий тариф</th>
-                        <th style="width:5%">Блокировка</th>
-                        <th style="width:5%">Тип блокировки</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>(Линк услуги)</td>
-                        <td>(IP-адрес услуги)</td>
-                        <td>(Скорость по тарифу)</td>
-                        <td>(Трафик)</td>
-                        <td>(Текущий тариф)</td>
-                        <td>(Следующий тариф)</td>
-                        <td>(Нет)</td>
-                        <td>(Нет)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="mb-3">
-            <h4>Цифровое КТВ</h4>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width:5%">Link</th>
-                        <th style="width:10%">Приставка</th>
-                        <th style="width:10%">Пакеты каналов тек. месяца</th>
-                        <th style="width:15%">Пакеты каналов след. месяца</th>
-                        <th style="width:5%">Блокировка</th>
-                        <th style="width:5%">Тип блокировки</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>(Линк услуги)</td>
-                        <td>(Номер приставки, если есть)</td>
-                        <td>(Пакеты каналов тек. месяца)</td>
-                        <td>(Пакеты каналов след. месяца)</td>
-                        <td>(Нет)</td>
-                        <td>(Нет)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-}
+        }
+    </Authorized>
+    <NotAuthorized>
+        <NotAllowed></NotAllowed>
+    </NotAuthorized>
+</AuthorizeView>

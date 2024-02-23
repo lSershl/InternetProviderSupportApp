@@ -1,12 +1,11 @@
 ﻿@page "/"
 
-<PageTitle>Главная страница</PageTitle>
-
 <AuthorizeView>
     <Authorized>
+        <PageTitle>Главная страница</PageTitle>
         <h3>Здравствуйте, @context.User.Identity!.Name, ваша должность: @context.User.Claims.FirstOrDefault(x => x.Type.Contains("role"))!.Value</h3>
     </Authorized>
     <NotAuthorized>
-        <h3 style="text-align:center; align-self: center;">Вы не авторизованы в системе, нажмите <a href="Login">здесь</a> для входа</h3>
+        <IPSA.Web.Client.Pages.NotAllowed></IPSA.Web.Client.Pages.NotAllowed>
     </NotAuthorized>
 </AuthorizeView>

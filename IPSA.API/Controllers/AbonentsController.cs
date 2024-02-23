@@ -4,6 +4,7 @@ using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace IPSA.API.Controllers

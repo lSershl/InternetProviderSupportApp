@@ -2,80 +2,88 @@
 @inherits CreateRequestBase
 @rendermode InteractiveServer
 
-<div class="col-lg-12 p-1">
-    <h4>Создание заявки</h4>
-    <div class="mb-3">
-        <EditForm Model="abonentRequest" OnValidSubmit="SaveNewRequest">
-            <DataAnnotationsValidator />
+<AuthorizeView Context="authContext">
+    <Authorized>
+        <PageTitle>Создание заявки</PageTitle>
+        <div class="col-lg-12 p-1">
+            <h4>Создание заявки</h4>
             <div class="mb-3">
-                <div class="mb-3">
-                    <label class="form-label" for="completion_date">Дата: </label>
-                    <InputDate class="form-control" id="completion_date" style="max-width: 150px;" @bind-Value="abonentRequest!.CompletionDate" @bind-Value:after="RefreshRequestsList"></InputDate>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="completion_time">Время: </label>
-                    <InputSelect class="form-select" id="completion_time" style="max-width: 150px;" @bind-Value="abonentRequest.CompletionTimePeriod">
-                        <option selected value="10:00 - 12:00">10:00 - 12:00</option>
-                        <option value="11:00 - 13:00">11:00 - 13:00</option>
-                        <option value="12:00 - 14:00">12:00 - 14:00</option>
-                        <option value="13:00 - 15:00">13:00 - 15:00</option>
-                        <option value="14:00 - 16:00">14:00 - 16:00</option>
-                        <option value="15:00 - 17:00">15:00 - 17:00</option>
-                        <option value="16:00 - 18:00">16:00 - 18:00</option>
-                        <option value="17:00 - 18:00">17:00 - 18:00</option>
-                    </InputSelect>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="request_type">Тип заявки: </label>
-                    <InputSelect class="form-select" id="request_type" style="max-width: 200px;" @bind-Value="abonentRequest.Type">
-                        <option selected value="Подключение СПД">Подключение СПД</option>
-                        <option value="Подключение КТВ">Подключение КТВ</option>
-                        <option value="СПД неполадка">СПД неполадка</option>
-                        <option value="КТВ неполадка">КТВ неполадка</option>
-                    </InputSelect>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label" for="description">Описание: </label>
-                    <InputText class="form-control" id="description" @bind-Value="abonentRequest!.Description" />
-                    <ValidationMessage For="@(() => abonentRequest.Description)" />
-                </div>
+                <EditForm Model="abonentRequest" OnValidSubmit="SaveNewRequest" Context="edit">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label class="form-label" for="completion_date">Дата: </label>
+                            <InputDate class="form-control" id="completion_date" style="max-width: 150px;" @bind-Value="abonentRequest!.CompletionDate" @bind-Value:after="RefreshRequestsList"></InputDate>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="completion_time">Время: </label>
+                            <InputSelect class="form-select" id="completion_time" style="max-width: 150px;" @bind-Value="abonentRequest.CompletionTimePeriod">
+                                <option selected value="10:00 - 12:00">10:00 - 12:00</option>
+                                <option value="11:00 - 13:00">11:00 - 13:00</option>
+                                <option value="12:00 - 14:00">12:00 - 14:00</option>
+                                <option value="13:00 - 15:00">13:00 - 15:00</option>
+                                <option value="14:00 - 16:00">14:00 - 16:00</option>
+                                <option value="15:00 - 17:00">15:00 - 17:00</option>
+                                <option value="16:00 - 18:00">16:00 - 18:00</option>
+                                <option value="17:00 - 18:00">17:00 - 18:00</option>
+                            </InputSelect>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="request_type">Тип заявки: </label>
+                            <InputSelect class="form-select" id="request_type" style="max-width: 200px;" @bind-Value="abonentRequest.Type">
+                                <option selected value="Подключение СПД">Подключение СПД</option>
+                                <option value="Подключение КТВ">Подключение КТВ</option>
+                                <option value="СПД неполадка">СПД неполадка</option>
+                                <option value="КТВ неполадка">КТВ неполадка</option>
+                            </InputSelect>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="description">Описание: </label>
+                            <InputText class="form-control" id="description" @bind-Value="abonentRequest!.Description" />
+                            <ValidationMessage For="@(() => abonentRequest.Description)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1 mb-1">
+                            <button class="btn btn-primary" type="submit">Сохранить</button>
+                        </div>
+                    </div>
+                </EditForm>
             </div>
-            <div class="row">
-                <div class="col-md-1 mb-1">
-                    <button class="btn btn-primary" type="submit">Сохранить</button>
-                </div>
+            <div class="mb-3">
+                @if (dayRequests!.Count == 0)
+                {
+                    <h6>На выбранную дату заявок нет</h6>
+                }
+                else
+                {
+                    <h6>Заявки на выбранную дату</h6>
+                    <table>
+                        <thead>
+                            <tr style="border: solid 1px;border-style: solid;">
+                                <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Дата заявки</th>
+                                <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Время заявки</th>
+                                <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Тип заявки</th>
+                                <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Описание</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var request in dayRequests!)
+                            {
+                                <tr style="border: solid 1px;border-style: solid;">
+                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionDate</td>
+                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionTimePeriod</td>
+                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@request.Type</td>
+                                    <td style="text-align: center;border: solid 1px;border-style: solid;">@request.Description</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
             </div>
-        </EditForm>
-    </div>
-    <div class="mb-3">
-        @if(dayRequests!.Count == 0)
-        {
-            <h6>На выбранную дату заявок нет</h6>
-        }
-        else
-        {
-            <h6>Заявки на выбранную дату</h6>
-            <table>
-                <thead>
-                    <tr style="border: solid 1px;border-style: solid;">
-                        <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Дата заявки</th>
-                        <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Время заявки</th>
-                        <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Тип заявки</th>
-                        <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Описание</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var request in dayRequests!)
-                    {
-                        <tr style="border: solid 1px;border-style: solid;">
-                            <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionDate</td>
-                            <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionTimePeriod</td>
-                            <td style="text-align: center;border: solid 1px;border-style: solid;">@request.Type</td>
-                            <td style="text-align: center;border: solid 1px;border-style: solid;">@request.Description</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
-    </div>
-</div>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <NotAllowed></NotAllowed>
+    </NotAuthorized>
+</AuthorizeView>

@@ -2,103 +2,108 @@
 @inherits AbonentsBase
 @rendermode InteractiveServer
 
-<PageTitle>Список абонентов</PageTitle>
-
-
-<div id="search_filters">
-    <div class="col-12 col-lg-12 p-4 justify-content-space-between">
-        <h3 class="mb-3">Поиск абонентов в базе</h3>
-        <div class="row">
-            <div class="mb-3">
-                <label class="form-label" for="abon_id">Лицевой счёт:</label>
-                <InputNumber class="col-md-1" id="abon_id" @bind-Value="filter!.AbonentId" />
-                <label class="form-label" for="last_name">Фамилия:</label>
-                <InputText id="last_name" @bind-Value="filter!.LastName" />
-                <label class="form-label" for="first_name">Имя:</label>
-                <InputText id="first_name" @bind-Value="filter!.FirstName" />
-                <label class="form-label" for="surname">Отчество:</label>
-                <InputText id="surname" @bind-Value="filter!.Surname" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="mb-3">
-                <label class="form-label" for="select_city">Город:</label>
-                <InputSelect class="col-md-2" style="max-width: 200px;" id="select_city" @bind-Value="selectedCity">
-                    <option selected value="@selectAllCities">Все доступные</option>
-                    @foreach (var city in citiesList!)
-                    {
-                        <option value="@city.Name">@city.Name</option>
-                    }
-                </InputSelect>
-                <label class="form-label" for="street">Улица:</label>
-                <InputText class="col-sm-1" id="street" @bind-Value="filter!.Street" />
-                <label class="form-label" for="house">Дом:</label>
-                <InputText id="house" @bind-Value="filter!.House" />
-                <label class="form-label" for="apartment">Квартира:</label>
-                <InputText id="apartment" @bind-Value="filter!.Apartment" />
-                <label class="form-label" for="phone_number">Телефон:</label>
-                <InputText id="phone_number" @bind-Value="filter!.PhoneNumber" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="mb-3">
-                <label class="form-label" for="max_results">Максимум результатов (если равно 0, будут показаны все результаты):</label>
-                <InputNumber class="col-md-1" id="max_results" @bind-Value="max_results" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-1">
-                <button class="button">Найти</button>
-            </div>
-            <div class="col-md-1">
-                <button class="button" @onclick="ClearFilter">Очистить</button>
-            </div>
-        </div>
-    </div>
-    <div id="abonents_list">
-        <div class="col-12 col-lg-12 p-4">
-            @if (abonentsList is null)
-            {
-                <div class="lds-facebook"><div></div><div></div><div></div></div>
-            }
-            else
-            {
-                <div>
-                    <table class="col-lg-9">
-                        <tr>
-                            <th>Лицевой счёт</th>
-                            <th>Город</th>
-                            <th>ФИО</th>
-                            <th>Адрес</th>
-                            <th>Баланс</th>
-                            <th>Статус</th>
-                        </tr>
-                        @foreach (var abon in abonentsList)
-                        {
-                            <tr class="clickable_row" @onclick="() => GoToAbonPage(abon.Id)">
-                                <td>@abon.Id</td>
-                                <td>@abon.City</td>
-                                <td>@abon.LastName @abon.FirstName @abon.Surname</td>
-                                <td>@abon.Street @abon.House-@abon.Apartment</td>
-                                @if (abon.Balance >= 0)
-                                {
-                                    <td>
-                                        <label style="color: green">@abon.Balance</label>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        <label style="color: red">@abon.Balance</label>
-                                    </td>
-                                }
-                                <td>Активный</td>
-                            </tr>
-                        }
-                    </table>
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Список абонентов</PageTitle>
+        <div id="search_filters">
+            <div class="col-12 col-lg-12 p-4 justify-content-space-between">
+                <h3 class="mb-3">Поиск абонентов в базе</h3>
+                <div class="row">
+                    <div class="mb-3">
+                        <label class="form-label" for="abon_id">Лицевой счёт:</label>
+                        <InputNumber class="col-md-1" id="abon_id" @bind-Value="filter!.AbonentId" />
+                        <label class="form-label" for="last_name">Фамилия:</label>
+                        <InputText id="last_name" @bind-Value="filter!.LastName" />
+                        <label class="form-label" for="first_name">Имя:</label>
+                        <InputText id="first_name" @bind-Value="filter!.FirstName" />
+                        <label class="form-label" for="surname">Отчество:</label>
+                        <InputText id="surname" @bind-Value="filter!.Surname" />
+                    </div>
                 </div>
-            }
+                <div class="row">
+                    <div class="mb-3">
+                        <label class="form-label" for="select_city">Город:</label>
+                        <InputSelect class="col-md-2" style="max-width: 200px;" id="select_city" @bind-Value="selectedCity">
+                            <option selected value="@selectAllCities">Все доступные</option>
+                            @foreach (var city in citiesList!)
+                            {
+                                <option value="@city.Name">@city.Name</option>
+                            }
+                        </InputSelect>
+                        <label class="form-label" for="street">Улица:</label>
+                        <InputText class="col-sm-1" id="street" @bind-Value="filter!.Street" />
+                        <label class="form-label" for="house">Дом:</label>
+                        <InputText id="house" @bind-Value="filter!.House" />
+                        <label class="form-label" for="apartment">Квартира:</label>
+                        <InputText id="apartment" @bind-Value="filter!.Apartment" />
+                        <label class="form-label" for="phone_number">Телефон:</label>
+                        <InputText id="phone_number" @bind-Value="filter!.PhoneNumber" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3">
+                        <label class="form-label" for="max_results">Максимум результатов (если равно 0, будут показаны все результаты):</label>
+                        <InputNumber class="col-md-1" id="max_results" @bind-Value="max_results" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-1">
+                        <button class="button">Найти</button>
+                    </div>
+                    <div class="col-md-1">
+                        <button class="button" @onclick="ClearFilter">Очистить</button>
+                    </div>
+                </div>
+            </div>
+            <div id="abonents_list">
+                <div class="col-12 col-lg-12 p-4">
+                    @if (abonentsList is null)
+                    {
+                        <div class="lds-facebook"><div></div><div></div><div></div></div>
+                    }
+                    else
+                    {
+                        <div>
+                            <table class="col-lg-9">
+                                <tr>
+                                    <th>Лицевой счёт</th>
+                                    <th>Город</th>
+                                    <th>ФИО</th>
+                                    <th>Адрес</th>
+                                    <th>Баланс</th>
+                                    <th>Статус</th>
+                                </tr>
+                                @foreach (var abon in abonentsList)
+                                {
+                                    <tr class="clickable_row" @onclick="() => GoToAbonPage(abon.Id)">
+                                        <td>@abon.Id</td>
+                                        <td>@abon.City</td>
+                                        <td>@abon.LastName @abon.FirstName @abon.Surname</td>
+                                        <td>@abon.Street @abon.House-@abon.Apartment</td>
+                                        @if (abon.Balance >= 0)
+                                        {
+                                            <td>
+                                                <label style="color: green">@abon.Balance</label>
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <label style="color: red">@abon.Balance</label>
+                                            </td>
+                                        }
+                                        <td>Активный</td>
+                                    </tr>
+                                }
+                            </table>
+                        </div>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
+    </Authorized>
+    <NotAuthorized>
+        <NotAllowed></NotAllowed>
+        @* <h3 style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">У вас нет доступа к этой странице!</h3> *@
+    </NotAuthorized>
+</AuthorizeView>

@@ -36,7 +36,7 @@ namespace IPSA.Web.Client.Pages
             streetsList = streetsList.OrderBy(x => x.Name).ToList();
         }
 
-        protected async Task Save_New_Abonent()
+        protected async Task SaveNewAbonent()
         {
             await AbonentService.AddNewAbonent(newAbonent);
 

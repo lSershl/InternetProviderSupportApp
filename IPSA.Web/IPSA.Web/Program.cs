@@ -4,6 +4,7 @@ using IPSA.Shared.Contracts;
 using IPSA.Web.Client.Services;
 using Microsoft.AspNetCore.Components.Authorization;
 using IPSA.Web.States;
+using Blazored.LocalStorage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,7 @@ builder.Services.AddScoped(http => new HttpClient
 });
 builder.Services.AddScoped<IAbonentService, AbonentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();

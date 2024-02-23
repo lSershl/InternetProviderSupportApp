@@ -5,8 +5,8 @@
 
 <PageTitle>Вход в систему</PageTitle>
 
-<div>
-    <div class="col-12 col-lg-12 p-4">
+<div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="col-12 col-lg-12 p-0">
         <h3>Вход в систему</h3>
         <EditForm Model="@Login" OnValidSubmit="LoginClicked">
             <DataAnnotationsValidator />
@@ -19,7 +19,7 @@
                 <InputText @bind-Value="Login.Password" class="form-control" style="max-width: 300px;"></InputText>
             </div>
             <div class="form-group mt-3">
-                <button type="submit">Войти</button>
+                <button class="btn btn-primary" type="submit">Войти</button>
             </div>
         </EditForm>
     </div>

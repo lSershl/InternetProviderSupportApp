@@ -1,6 +1,7 @@
 ﻿using IPSA.API.Repositories.Contracts;
 using IPSA.Shared.Dtos;
 using IPSA.Shared.Responses;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IPSA.API.Controllers
@@ -12,6 +13,7 @@ namespace IPSA.API.Controllers
         private readonly IAccountRepository _accountRepository = accountRepository;
 
         [HttpPost("Login")]
+        [AllowAnonymous]
         public async Task<ActionResult<LoginResponse>> Login(LoginDto loginDto)
         {
             var result = _accountRepository.Login(loginDto);

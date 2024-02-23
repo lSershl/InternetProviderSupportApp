@@ -1,13 +1,17 @@
-﻿using IPSA.Shared.Contracts;
+﻿using Blazored.LocalStorage;
+using IPSA.Shared.Contracts;
 using IPSA.Shared.Dtos;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace IPSA.Web.Client.Pages.Abonent
 {
     public class AbonentInfoBase : ComponentBase
     {
         [Parameter]
-        public int AbonId { get; set; }
+        public int AbonId { get; init; }
+        [CascadingParameter]
+        protected Task<AuthenticationState>? authStateTask { get; set; }
         [Inject]
         public required IAbonentService AbonentService { get; init; }
         [Inject]
@@ -15,13 +19,24 @@ namespace IPSA.Web.Client.Pages.Abonent
         [Inject]
         public required IAbonPageCommentService CommentService { get; init; }
         [Inject]
+        public required ILocalStorageService localStorage { get; init; }
+        [Inject]
         public required NavigationManager navManager { get; init; }
 
         protected AbonentReadDto abonent = new AbonentReadDto();
         protected List<AbonPageCommentDto>? abonPageComments = new List<AbonPageCommentDto>();
+        protected string userId = string.Empty;
 
         protected override async Task OnInitializedAsync()
         {
+            if (authStateTask is not null)
+            {
+                var authState = await authStateTask;
+                var user = authState.User;
+                if (user.Identity!.IsAuthenticated)
+                    userId = user.Claims.FirstOrDefault(x => x.Type.Contains("identifier"))!.Value;
+            }
+
             abonent = await AbonentService.GetAbonent(AbonId);
             abonPageComments = await CommentService.GetAbonentPageComments(AbonId);
             abonPageComments.OrderByDescending(d => d.CommentDateTime);
@@ -50,13 +65,14 @@ namespace IPSA.Web.Client.Pages.Abonent
 
         protected bool paymentPopup { get; set; }
         protected PaymentDto payment = new PaymentDto();
+
         protected decimal paymentAmount = 0;
         protected string? paymentComment;
         
         protected void AcceptPayment(decimal paymentAmount, string paymentComment)
         {
             payment.AbonentId = AbonId;
-            payment.ManagerId = 1;
+            payment.ManagerId = Int32.Parse(userId);
             payment.PaymentDateTime = DateTime.UtcNow;
             payment.Comment = paymentComment;
             payment.Amount = paymentAmount;
@@ -85,7 +101,7 @@ namespace IPSA.Web.Client.Pages.Abonent
         {
             newComment.Id = 0;
             newComment.AbonentId = AbonId;
-            newComment.EmployeeId = 1;
+            newComment.EmployeeId = Int32.Parse(userId);
             newComment.Text = newCommentText;
             newComment.CommentDateTime = DateTime.UtcNow;
             CommentService.AddNewAbonentPageComment(newComment);

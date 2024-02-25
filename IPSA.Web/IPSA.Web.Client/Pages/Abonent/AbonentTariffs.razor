@@ -2,7 +2,7 @@
 @inherits AbonentTariffsBase
 @rendermode InteractiveServer
 
-<AuthorizeView>
+<AuthorizeView Context="authContext">
     <Authorized>
         <PageTitle>Услуги</PageTitle>
         <div>
@@ -11,10 +11,87 @@
                     <h3>Услуги абонента</h3>
                     <div class="row">
                         <div class="mb-3">
-                            <button class="btn btn-primary">Подключить услугу</button>
+                            <button class="btn btn-primary" @onclick="ShowNewTariffPopup">Подключить услугу</button>
                             <button class="btn btn-primary">Заблокировать все услуги</button>
                         </div>
                     </div>
+                    @if (newTariffPopup is true)
+                    {
+                        <div class="modal" tabindex="-1" style="display:block;">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Подключить новый тариф</h5>
+                                        <button type="button" class="btn btn-close" data-dismiss="modal" @onclick="CloseNewTariffPopup">
+                                            <span aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @* <label class="form-label" for="select_tariff">Тариф (услуга): </label>
+                                        <InputSelect class="form-select" id="select_tariff" @bind-Value="newConnTariff.Name" @bind-Value:after="ChangeSelectedTariff">
+                                            @if (newConnTariff.Name is null)
+                                            {
+                                                <option selected disabled>Выберите тариф из списка</option>
+                                            }
+                                            @foreach (var tariff in tariffsList!)
+                                            {
+                                                <option value="@tariff.Name">@tariff.Name</option>
+                                            }
+                                        </InputSelect>
+                                        @if (selectedTariff is not null)
+                                        {
+                                            <label class="form-label" for="tariff_description">Описание: </label>
+                                            <InputTextArea class="form-select" id="tariff_description">@selectedTariff!.Description</InputTextArea>
+                                            <label>Метод списания платы: @selectedTariff!.PricingModel</label>
+                                            @if (selectedTariff.PricingModel == "Месячный")
+                                            {
+                                                <label>Цена тарифа: @selectedTariff.MonthlyPrice руб/мес</label>
+                                            }
+                                            else
+                                            {
+                                                <label>Цена тарифа: @selectedTariff.DailyPrice руб/сутки</label>
+                                            }
+                                        } *@
+                                        <div class="mb-3">
+                                            <label class="form-label" for="select_tariff">Тариф (услуга): </label>
+                                            <select class="form-select" id="select_tariff" @bind=newConnTariff.Name @bind:after="ChangeSelectedTariff">
+                                                @if (newConnTariff.Name is null)
+                                                {
+                                                    <option selected disabled>Выберите тариф из списка</option>
+                                                }
+                                                @foreach (var tariff in tariffsList!)
+                                                {
+                                                    <option value="@tariff.Name">@tariff.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                        @if (newConnTariff.Name is not null)
+                                        {
+                                            <div class="mb-3">
+                                                <label class="form-label" for="tariff_description">Описание: </label>
+                                                <label id="tariff_description">@selectedTariff!.Description</label>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label>Метод списания платы: @selectedTariff!.PricingModel</label>
+                                                @if (selectedTariff.PricingModel == "Месячный")
+                                                {
+                                                    <label>Цена тарифа: @selectedTariff.MonthlyPrice руб/мес</label>
+                                                }
+                                                else
+                                                {
+                                                    <label>Цена тарифа: @selectedTariff.DailyPrice руб/сутки</label>
+                                                }
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-secondary" data-dismiss="modal" @onclick="CloseNewTariffPopup">Отмена</button>
+                                        <button class="btn btn-primary" data-dismiss="modal" @onclick="ConnectNewTariff">Подключить</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                     <div>
                         @foreach (var tariff in connectedTariffs!)
                         {

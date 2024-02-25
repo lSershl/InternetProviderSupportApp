@@ -181,7 +181,7 @@ namespace IPSA.API.Data
                 PricingModel = "Месячный",
                 MonthlyPrice = 400m,
                 DailyPrice = 13.4m,
-                Description = "Безлимитный Интернет со скоростью 100 Мбит/сек",
+                Description = "Безлимитный Интернет со скоростью 100 Мбит/сек с ежемесячной платой",
                 Archived = false
             });
 
@@ -194,7 +194,20 @@ namespace IPSA.API.Data
                 PricingModel = "Месячный",
                 MonthlyPrice = 200m,
                 DailyPrice = 6.7m,
-                Description = "Базовый пакет каналов цифрового телевидения",
+                Description = "Базовый пакет каналов цифрового телевидения с ежемесячной платой",
+                Archived = false
+            });
+
+            modelBuilder.Entity<Tariff>().HasData(new Tariff
+            {
+                Id = 3,
+                CreationDateTime = DateTime.UtcNow,
+                Name = "Посуточный Безлимит 100",
+                Type = "Интернет",
+                PricingModel = "Посуточный",
+                MonthlyPrice = 0,
+                DailyPrice = 50m,
+                Description = "Безлимитный Интернет со скоростью до 100 Мбит/сек с посуточным списанием платы",
                 Archived = false
             });
 

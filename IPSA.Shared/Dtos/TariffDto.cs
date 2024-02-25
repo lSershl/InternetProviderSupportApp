@@ -2,24 +2,20 @@
 
 namespace IPSA.Shared.Dtos
 {
-    public class ConnectedTariffDto
+    public class TariffDto
     {
         [Required]
         public int Id { get; set; }
         [Required]
-        public int AbonentId { get; set; }
-        [Required]
-        public int TariffId { get; set; }
-        [Required]
         public string? Name { get; set; }
         [Required]
-        public string? IpAddress { get; set; }
-        [Required]
-        public string? LinkToHardware { get; set; }
+        public string? Type { get; set; }
         [Required]
         public string? PricingModel { get; set; }
+        [Required]
         public decimal MonthlyPrice { get; set; }
+        [Required]
         public decimal DailyPrice { get; set; }
-        public bool IsBlocked { get; set; } = false;
+        public string? Description { get; set; }
     }
 }

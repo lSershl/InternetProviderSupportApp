@@ -13,6 +13,7 @@ namespace IPSA.API.Profiles
             CreateMap<PaymentDto, Payment>();
             CreateMap<AbonPageCommentDto, AbonPageComment>();
             CreateMap<AbonentRequestDto, AbonentRequest>();
+            CreateMap<ConnectedTariffDto, ConnectedTariff>();
         }
     }
 }

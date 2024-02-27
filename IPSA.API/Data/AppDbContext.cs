@@ -234,6 +234,16 @@ namespace IPSA.API.Data
                 IsBlocked = false
             });
 
+            // MonthlyFees
+            modelBuilder.Entity<MonthlyFee>().HasData(new MonthlyFee
+            {
+                Id = 1,
+                ConnectedTariffId = 1,
+                Amount = 400m,
+                ScheduledDay = new DateOnly(2024, 03, 05),
+                IsCompleted = false
+            });
+
             // Cities
             modelBuilder.Entity<City>().HasData(new City
             {
@@ -358,6 +368,7 @@ namespace IPSA.API.Data
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<ConnectedTariff> ConnectedTariffs { get; set; }
+        public DbSet<MonthlyFee> MonthlyFees { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Street> Streets { get; set; }
     }

@@ -1,0 +1,8 @@
+﻿.block_button {
+    color: mediumblue;
+}
+
+    .block_button:hover {
+        color: royalblue;
+        cursor: pointer;
+    }

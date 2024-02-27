@@ -27,31 +27,6 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        @* <label class="form-label" for="select_tariff">Тариф (услуга): </label>
-                                        <InputSelect class="form-select" id="select_tariff" @bind-Value="newConnTariff.Name" @bind-Value:after="ChangeSelectedTariff">
-                                            @if (newConnTariff.Name is null)
-                                            {
-                                                <option selected disabled>Выберите тариф из списка</option>
-                                            }
-                                            @foreach (var tariff in tariffsList!)
-                                            {
-                                                <option value="@tariff.Name">@tariff.Name</option>
-                                            }
-                                        </InputSelect>
-                                        @if (selectedTariff is not null)
-                                        {
-                                            <label class="form-label" for="tariff_description">Описание: </label>
-                                            <InputTextArea class="form-select" id="tariff_description">@selectedTariff!.Description</InputTextArea>
-                                            <label>Метод списания платы: @selectedTariff!.PricingModel</label>
-                                            @if (selectedTariff.PricingModel == "Месячный")
-                                            {
-                                                <label>Цена тарифа: @selectedTariff.MonthlyPrice руб/мес</label>
-                                            }
-                                            else
-                                            {
-                                                <label>Цена тарифа: @selectedTariff.DailyPrice руб/сутки</label>
-                                            }
-                                        } *@
                                         <div class="mb-3">
                                             <label class="form-label" for="select_tariff">Тариф (услуга): </label>
                                             <select class="form-select" id="select_tariff" @bind=newConnTariff.Name @bind:after="ChangeSelectedTariff">
@@ -110,7 +85,7 @@
                                     {
                                         <tbody>
                                             <tr style="border: solid 1px;border-style: solid;background-color:palevioletred;">
-                                                <td style="text-align: center;border: solid 1px;border-style: solid;">[Разблокировать]</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => UnblockConnectedTariff(tariff.Id)">[Разблокировать]</label></td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
                                                 @if (tariff.PricingModel == "Месячный")
@@ -129,7 +104,7 @@
                                     {
                                         <tbody>
                                             <tr style="border: solid 1px;border-style: solid;">
-                                                <td style="text-align: center;border: solid 1px;border-style: solid;">[Кнопки управления тарифом]</td>
+                                                <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => BlockConnectedTariff(tariff.Id)">[Заблокировать]</label></td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
                                                 @if (tariff.PricingModel == "Месячный")

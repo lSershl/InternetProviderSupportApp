@@ -65,6 +65,7 @@ namespace IPSA.API.Controllers
                 }
 
                 var newConnTariff = _mapper.Map<ConnectedTariff>(connTariffDto);
+                newConnTariff.CreationDateTime = DateTime.UtcNow;
                 _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
                 return Ok();
             }

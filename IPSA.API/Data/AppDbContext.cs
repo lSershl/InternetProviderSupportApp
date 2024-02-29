@@ -133,6 +133,35 @@ namespace IPSA.API.Data
                 Balance = 0m
             });
 
+            modelBuilder.Entity<Abonent>().HasData(new Abonent
+            {
+                Id = 2,
+                LastName = "Петров",
+                FirstName = "Сергей",
+                Surname = "Николаевич",
+                DateOfBirth = new DateOnly(1989, 05, 09),
+                BirthPlace = "гор. Братск",
+                PhoneNumber = "+78005553535",
+                PhoneNumberForSending = "+78005553535",
+                Email = "petrov_s@gmail.com",
+                PassportSeries = "1589",
+                PassportNumber = "456123",
+                PassportRegistration = "ГУ МВД России по Иркутской обл.",
+                PassportRegDate = new DateOnly(2018, 01, 08),
+                RegistrationAddress = "гор. Братск, ул. Мира 1-1",
+                RegistrationZipCode = "",
+                City = "Братск",
+                Street = "Советская",
+                House = "5а",
+                Apartment = "1",
+                HouseEntranceNumber = "1",
+                HouseFloorNumber = "1",
+                AddressZipCode = "",
+                SecretPhrase = "Петров",
+                SMSSending = false,
+                Balance = 300m
+            });
+
             // AbonentRequests
             modelBuilder.Entity<AbonentRequest>().HasData(new AbonentRequest
             {
@@ -234,13 +263,24 @@ namespace IPSA.API.Data
                 IsBlocked = false
             });
 
+            modelBuilder.Entity<ConnectedTariff>().HasData(new ConnectedTariff
+            {
+                Id = 3,
+                CreationDateTime = DateTime.UtcNow,
+                AbonentId = 2,
+                TariffId = 3,
+                IpAddress = "127.0.0.1",
+                LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
+                IsBlocked = false
+            });
+
             // MonthlyFees
             modelBuilder.Entity<MonthlyFee>().HasData(new MonthlyFee
             {
                 Id = 1,
                 ConnectedTariffId = 1,
                 Amount = 400m,
-                ScheduledDay = new DateOnly(2024, 03, 05),
+                ScheduledDate = new DateOnly(2024, 03, 05),
                 IsCompleted = false
             });
 

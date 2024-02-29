@@ -11,7 +11,7 @@ namespace IPSA.Models
         public required int Id { get; set; }
         public required int ConnectedTariffId { get; set; }
         public decimal Amount { get; set; }
-        public DateOnly ScheduledDay { get; set; }
+        public DateOnly ScheduledDate { get; set; }
         public bool IsCompleted { get; set; }
 
         public ConnectedTariff ConnectedTariff { get; set; } = null!;

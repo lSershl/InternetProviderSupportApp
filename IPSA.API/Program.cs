@@ -1,6 +1,8 @@
 using IPSA.API.Data;
 using IPSA.API.Repositories;
 using IPSA.API.Repositories.Contracts;
+using IPSA.API.Services;
+using IPSA.API.Services.Contarcts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -22,6 +24,10 @@ builder.Services.AddScoped<IAbonPageCommentsRepository, AbonPageCommentsReposito
 builder.Services.AddScoped<ITariffRepository, TariffRepository>();
 builder.Services.AddScoped<IConnectedTariffsRepository, ConnectedTariffsRepository>();
 builder.Services.AddScoped<IAbonentRequestRepository, AbonentRequestRepository>();
+builder.Services.AddScoped<IScheduledMonthlyFeesRepository, ScheduledMonthlyFeesRepository>();
+builder.Services.AddScoped<IDailyFeesRepository, DailyFeesRepository>();
+builder.Services.AddScoped<ITariffFeeService, TariffFeeService>();
+builder.Services.AddHostedService<FeeCollectionBackgroundService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

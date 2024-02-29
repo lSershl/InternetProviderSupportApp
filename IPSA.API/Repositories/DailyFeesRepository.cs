@@ -10,7 +10,7 @@ namespace IPSA.API.Repositories
         public Task CompleteDailyFees()
         {
             var listOfConnectedTariffs = _appDbContext.ConnectedTariffs
-                .Where(c => c.IsBlocked.Equals(false) && (c.TariffId == _appDbContext.Tariffs.First(t => t.Id == c.TariffId && t.Type.Equals("Посуточный")).Id)).ToList();
+                .Where(c => c.IsBlocked.Equals(false) && (c.TariffId == _appDbContext.Tariffs.First(t => t.Id == c.TariffId && t.PricingModel.Equals("Посуточный")).Id)).ToList();
 
             foreach (var ct in listOfConnectedTariffs)
             {

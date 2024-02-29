@@ -10,15 +10,13 @@
             <div class="row">
                 <div class="mb-3">
                     <label class="form-label" for="start_date">С: </label>
-                    <InputDate class="form-control" id="start_date" style="max-width: 150px;" @bind-Value="datePeriod.StartDate"></InputDate>
-                </div>
-                <div class="mb-3">
+                    <InputDate id="start_date" style="max-width: 150px;" @bind-Value="datePeriod.StartDate"></InputDate>
                     <label class="form-label" for="end_date">По: </label>
-                    <InputDate class="form-control" id="end_date" style="max-width: 150px;" @bind-Value="datePeriod.EndDate"></InputDate>
+                    <InputDate id="end_date" style="max-width: 150px;" @bind-Value="datePeriod.EndDate"></InputDate>
                 </div>
             </div>
             <div class="mb-3">
-                <button class="b" @onclick="RefreshRequestsList">Обновить список</button>
+                <button class="btn btn-primary" @onclick="RefreshRequestsList">Обновить список</button>
             </div>
             <div>
                 <div class="mb-3">

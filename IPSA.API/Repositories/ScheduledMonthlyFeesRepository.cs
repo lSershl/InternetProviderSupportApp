@@ -1,7 +1,6 @@
 ﻿using IPSA.API.Data;
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
-using System.ComponentModel.Design;
 
 namespace IPSA.API.Repositories
 {
@@ -11,8 +10,15 @@ namespace IPSA.API.Repositories
 
         public List<MonthlyFee> GetScheduledFeesListForToday()
         {
-            var monthlyFeesList = _appDbContext.MonthlyFees.Where(x => x.ScheduledDay == DateOnly.FromDateTime(DateTime.UtcNow)).ToList();
+            var monthlyFeesList = _appDbContext.MonthlyFees.Where(x => x.ScheduledDate == DateOnly.FromDateTime(DateTime.UtcNow)).ToList();
             return monthlyFeesList;
+        }
+
+        public List<MonthlyFee> GetCompletedMonthlyFeesOfLastMonth()
+        {
+            var lastMonth = DateOnly.FromDateTime(DateTime.UtcNow).AddMonths(-1).Month;
+            var oldMonthlyFeesList = _appDbContext.MonthlyFees.Where(x => x.ScheduledDate.Month.Equals(lastMonth)).ToList();
+            return oldMonthlyFeesList;
         }
 
         public Task CompleteScheduledMonthlyFees(List<MonthlyFee> scheduledFees)
@@ -22,11 +28,22 @@ namespace IPSA.API.Repositories
                 if (fee.IsCompleted is false)
                 {
                     var abonentForFeeCollection = _appDbContext.Abonents.First(a => a.Id == _appDbContext.ConnectedTariffs.First(t => t.Id == fee.ConnectedTariffId).AbonentId);
-                    abonentForFeeCollection.Balance -= fee.Amount;
-                    if (abonentForFeeCollection.Balance >= 0)
+                    if (abonentForFeeCollection.Balance >= fee.Amount)
                     {
+                        abonentForFeeCollection.Balance -= fee.Amount;
                         _appDbContext.Abonents.Update(abonentForFeeCollection);
                         fee.IsCompleted = true;
+                        var nextFee = fee;
+                        nextFee.Id = 0;
+                        nextFee.IsCompleted = false;
+                        nextFee.ScheduledDate = fee.ScheduledDate.AddMonths(1);
+                        AddNewScheduledMonthlyFee(nextFee);
+                    }
+                    else
+                    {
+                        var connTariffForBlock = _appDbContext.ConnectedTariffs.First(ct => ct.Id == fee.ConnectedTariffId);
+                        connTariffForBlock.IsBlocked = true;
+                        _appDbContext.ConnectedTariffs.Update(connTariffForBlock);
                     }
                     _appDbContext.MonthlyFees.Update(fee);
                 }
@@ -53,7 +70,7 @@ namespace IPSA.API.Repositories
             }
             else
             {
-                throw new NullReferenceException("Запланированного списание с данным Id не существует");
+                throw new NullReferenceException("Запланированного списание платы с данным Id не существует");
             }
         }
 

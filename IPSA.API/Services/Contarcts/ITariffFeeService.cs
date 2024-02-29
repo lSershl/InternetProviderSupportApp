@@ -5,7 +5,9 @@ namespace IPSA.API.Services.Contarcts
     public interface ITariffFeeService
     {
         List<MonthlyFee> CheckIncompleteMonthlyFees();
-        Task CheckDailyFees();
-        Task CollectFees();
+        Task CollectMonthlyFees(List<MonthlyFee> monthlyFees);
+        List<MonthlyFee> CheckCompletedMonthlyFeesForRemoval();
+        Task RemoveCompletedMonthlyFeesOfLastMonth(List<MonthlyFee> oldMonthlyFees);
+        Task CollectDailyFees();
     }
 }

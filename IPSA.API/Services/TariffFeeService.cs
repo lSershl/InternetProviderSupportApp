@@ -21,12 +21,6 @@ namespace IPSA.API.Services
             return Task.CompletedTask;
         }
 
-        public Task CollectDailyFees()
-        {
-            _dailyFeesRepository.CompleteDailyFees();
-            return Task.CompletedTask;
-        }
-
         public List<MonthlyFee> CheckCompletedMonthlyFeesForRemoval()
         {
             var oldMonthlyFees = _monthlyFeesRepository.GetCompletedMonthlyFeesOfLastMonth();
@@ -39,6 +33,39 @@ namespace IPSA.API.Services
             {
                 _monthlyFeesRepository.RemoveScheduledMonthlyFee(fee.Id);
             }
+            return Task.CompletedTask;
+        }
+
+        public Task FormDailyFeesForToday()
+        {
+            _dailyFeesRepository.FormDailyFeesForToday();
+            return Task.CompletedTask;
+        }
+
+        public List<DailyFee> CheckIncompleteDailyFees()
+        {
+            var dailyFees = _dailyFeesRepository.GetDailyFeesForToday().Where(f => f.IsCompleted.Equals(false)).ToList();
+            return dailyFees;
+        }
+
+        public List<DailyFee> CheckCompletedDailyFeesForRemoval()
+        {
+            var oldDailyFees = _dailyFeesRepository.GetOldCompletedDailyFees();
+            return oldDailyFees;
+        }
+
+        public Task RemoveCompletedDailyFees(List<DailyFee> oldDailyFees)
+        {
+            foreach (var fee in oldDailyFees)
+            {
+                _dailyFeesRepository.RemoveDailyFee(fee.Id);
+            }
+            return Task.CompletedTask;
+        }
+
+        public Task CollectDailyFees(List<DailyFee> dailyFees)
+        {
+            _dailyFeesRepository.CompleteDailyFees(dailyFees);
             return Task.CompletedTask;
         }
     }

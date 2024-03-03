@@ -24,5 +24,10 @@ namespace IPSA.Web.Client.Pages.Abonent
         {
             NavManager.NavigateTo($"/Abonent/{AbonId}/CreateRequest/");
         }
+
+        protected void EditRequest(int requestId)
+        {
+            NavManager.NavigateTo($"/Abonent/{AbonId}/EditRequest/{requestId}");
+        }
     }
 }

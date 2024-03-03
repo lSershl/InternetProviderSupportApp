@@ -21,7 +21,7 @@ namespace IPSA.API.Controllers
         {
             try
             {
-                var abonents = await _abonentRepository.GetAllAbonents();
+                var abonents = _abonentRepository.GetAllAbonents();
 
                 if (abonents is null)
                 {
@@ -43,7 +43,7 @@ namespace IPSA.API.Controllers
         {
             try
             {
-                var abonent = await _abonentRepository.GetAbonent(id);
+                var abonent = _abonentRepository.GetAbonent(id);
 
                 if (abonent == null)
                 {
@@ -91,7 +91,7 @@ namespace IPSA.API.Controllers
                 }
                 else
                 {
-                    var currAbonent = await _abonentRepository.GetAbonent(abonId);
+                    var currAbonent = _abonentRepository.GetAbonent(abonId);
                     if (currAbonent is not null)
                     {
                         currAbonent.FirstName = updatedAbonent.FirstName!;
@@ -140,7 +140,7 @@ namespace IPSA.API.Controllers
                     return BadRequest("Ошибка. Платёж не содержит данных.");
                 }
 
-                var abonToUpdate = await _abonentRepository.GetAbonent(paymentDto.AbonentId);
+                var abonToUpdate = _abonentRepository.GetAbonent(paymentDto.AbonentId);
                 if (abonToUpdate is not null)
                 {
                     abonToUpdate.Balance = abonToUpdate.Balance + paymentDto.Amount;

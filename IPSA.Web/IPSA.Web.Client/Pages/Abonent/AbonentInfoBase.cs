@@ -11,7 +11,7 @@ namespace IPSA.Web.Client.Pages.Abonent
         [Parameter]
         public int AbonId { get; init; }
         [CascadingParameter]
-        protected Task<AuthenticationState>? authStateTask { get; set; }
+        protected Task<AuthenticationState>? authStateTask { get; init; }
         [Inject]
         public required IAbonentService AbonentService { get; init; }
         [Inject]
@@ -19,13 +19,18 @@ namespace IPSA.Web.Client.Pages.Abonent
         [Inject]
         public required IAbonPageCommentService CommentService { get; init; }
         [Inject]
+        public required IConnectedTariffService TariffService { get; init; }
+        [Inject]
         public required ILocalStorageService localStorage { get; init; }
         [Inject]
         public required NavigationManager navManager { get; init; }
 
         protected AbonentReadDto abonent = new AbonentReadDto();
         protected List<AbonPageCommentDto>? abonPageComments = new List<AbonPageCommentDto>();
+        protected List<ConnectedTariffDto>? connectedTariffs = new List<ConnectedTariffDto>();
         protected string userId = string.Empty;
+        protected decimal monthlyTariffSum = 0;
+        protected decimal dailyTariffSum = 0;
 
         protected override async Task OnInitializedAsync()
         {
@@ -40,6 +45,21 @@ namespace IPSA.Web.Client.Pages.Abonent
             abonent = await AbonentService.GetAbonent(AbonId);
             abonPageComments = await CommentService.GetAbonentPageComments(AbonId);
             abonPageComments.OrderByDescending(d => d.CommentDateTime);
+            connectedTariffs = await TariffService.GetConnectedTariffsListByAbonent(AbonId);
+            foreach(var ct in connectedTariffs)
+            {
+                if (ct.IsBlocked == false)
+                {
+                    if (ct.PricingModel == "Месячный")
+                    {
+                        monthlyTariffSum += ct.MonthlyPrice;
+                    }
+                    else
+                    {
+                        dailyTariffSum += ct.DailyPrice;
+                    }
+                }
+            }
             payment.PaymentType = "Наличными в офисе";
         }
 

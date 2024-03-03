@@ -22,7 +22,7 @@ namespace IPSA.API.Controllers
                 var payments = _paymentRepository.GetAllPaymentsList();
                 if (payments is null)
                 {
-                    return NotFound("Список городов пуст");
+                    return NotFound("Список платежей пуст");
                 }
                 else
                 {

@@ -27,7 +27,7 @@
                         <tbody>
                             @foreach (var request in abonRequests!)
                             {
-                                <tr style="border: solid 1px;border-style: solid;">
+                                <tr class="clickable_row" style="border: solid 1px;border-style: solid;" @onclick="() => EditRequest(request.Id)">
                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionDate</td>
                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@request.CompletionTimePeriod</td>
                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@request.Type</td>

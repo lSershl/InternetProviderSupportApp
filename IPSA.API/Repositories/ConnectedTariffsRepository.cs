@@ -14,7 +14,7 @@ namespace IPSA.API.Repositories
             return connectedTariffs;
         }
 
-        public ConnectedTariff GetConnectedTariffsById(int connTariffId)
+        public ConnectedTariff GetConnectedTariffById(int connTariffId)
         {
             var connectedTariff = _appDbContext.ConnectedTariffs.First(p => p.Id == connTariffId);
             return connectedTariff!;

@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="col-lg-4">
-                    <h5>Суммарная абонентская плата</h5>
+                    <h5>Суммарная плата по месячным тарифам</h5>
                     <table>
                         <tr>
                             <td class="head"></td>
@@ -115,21 +115,21 @@
                         </tr>
                         <tr>
                             <td class="head">Всего</td>
-                            <td>(Текущая плата)</td>
-                            <td>(Плата за след. месяц)</td>
+                            <td>@monthlyTariffSum руб/месяц</td>
+                            <td>@monthlyTariffSum руб/месяц</td>
                         </tr>
                         <tr>
-                            <td class="head">Скидка</td>
-                            <td colspan="2">(Размер скидки)</td>
+                            <td class="head">Плата по посуточным тарифам:</td>
+                            <td colspan="2">@dailyTariffSum руб/сутки</td>
                         </tr>
-                        <tr>
+                      @* <tr>
                             <td class="head">Итого со скидкой</td>
                             <td>(Текущая плата со скидкой)</td>
                             <td>(Плата за след. месяц со скидкой)</td>
-                        </tr>
+                        </tr> *@
                     </table>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-2">
                     <h5>Баланс</h5>
                     <table>
                         <tr>
@@ -143,10 +143,10 @@
                                 <td><label style="color: red">@abonent.Balance руб</label></td>
                             }
                         </tr>
-                        <tr>
+                        @* <tr>
                             <td class="head">Схема оплаты</td>
                             <td>Авансовая</td>
-                        </tr>
+                        </tr> *@
                     </table>
                 </div>
             </div>
@@ -252,7 +252,7 @@
             }
             <div>
                 <div class="mb-1">
-                    <h4>Интернет</h4>
+                    <h4>Список подключенных услуг</h4>
                     <table>
                         <thead>
                             <tr>
@@ -267,20 +267,40 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>(Линк услуги)</td>
-                                <td>(IP-адрес услуги)</td>
-                                <td>(Скорость по тарифу)</td>
-                                <td>(Трафик)</td>
-                                <td>(Текущий тариф)</td>
-                                <td>(Следующий тариф)</td>
-                                <td>(Нет)</td>
-                                <td>(Нет)</td>
-                            </tr>
+                            @foreach (var ct in connectedTariffs!)
+                            {
+                                @if (ct.IsBlocked)
+                                {
+                                    <tr>
+                                        <td style="background-color: palevioletred;">@ct.LinkToHardware</td>
+                                        <td style="background-color: palevioletred;">@ct.IpAddress</td>
+                                        <td style="background-color: palevioletred;">(Скорость по тарифу)</td>
+                                        <td style="background-color: palevioletred;">(Трафик)</td>
+                                        <td style="background-color: palevioletred;">@ct.Name</td>
+                                        <td style="background-color: palevioletred;">@ct.Name</td>
+                                        <td style="background-color: palevioletred;">Да</td>
+                                        <td style="background-color: palevioletred;">(Автоматическая)</td>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>@ct.LinkToHardware</td>
+                                        <td>@ct.IpAddress</td>
+                                        <td>(Скорость по тарифу)</td>
+                                        <td>(Трафик)</td>
+                                        <td>@ct.Name</td>
+                                        <td>@ct.Name</td>
+                                        <td>Нет</td>
+                                        <td>-</td>
+                                    </tr>
+                                }
+                            }
+                            
                         </tbody>
                     </table>
                 </div>
-                <div class="mb-3">
+                @* <div class="mb-3">
                     <h4>Цифровое КТВ</h4>
                     <table>
                         <thead>
@@ -304,7 +324,7 @@
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                </div> *@
             </div>
         }
     </Authorized>

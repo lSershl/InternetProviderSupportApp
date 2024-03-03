@@ -23,6 +23,14 @@ namespace IPSA.Web.Client.Pages.Abonent
         protected void ShowPaymentsReport()
         {
             paymentsReportVisible = true;
+            tariffsReportVisible = !paymentsReportVisible;
+        }
+
+        protected bool tariffsReportVisible = false;
+        protected void ShowTariffsReport()
+        {
+            tariffsReportVisible = true;
+            paymentsReportVisible = !tariffsReportVisible;
         }
     }
 }

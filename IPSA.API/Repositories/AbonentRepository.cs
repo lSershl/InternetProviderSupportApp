@@ -9,15 +9,15 @@ namespace IPSA.API.Repositories
     {
         private readonly AppDbContext _appDbContext = appDbContext;
 
-        public async Task<IEnumerable<Abonent>> GetAllAbonents()
+        public IEnumerable<Abonent> GetAllAbonents()
         {
-            var abonents = await _appDbContext.Abonents.ToListAsync();
+            var abonents = _appDbContext.Abonents.ToList();
             return abonents;
         }
 
-        public async Task<Abonent> GetAbonent(int id)
+        public Abonent GetAbonent(int id)
         {
-            var abonent = await _appDbContext.Abonents.SingleOrDefaultAsync(a => a.Id == id);
+            var abonent = _appDbContext.Abonents.First(a => a.Id == id);
             return abonent;
         }
 

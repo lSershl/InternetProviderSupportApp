@@ -25,5 +25,10 @@ namespace IPSA.Web.Client.Pages
         {
             abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
         }
+
+        protected void EditRequest(int abonentId, int requestId)
+        {
+            NavManager.NavigateTo($"/Abonent/{abonentId}/EditRequest/{requestId}");
+        }
     }
 }

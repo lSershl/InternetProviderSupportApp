@@ -21,6 +21,11 @@ namespace IPSA.API.Repositories
             return oldMonthlyFeesList;
         }
 
+        public MonthlyFee GetNextScheduledMonthlyFeeForConnectedTariff(int connTariffId)
+        {
+            return _appDbContext.MonthlyFees.First(x => x.ConnectedTariffId == connTariffId && x.IsCompleted.Equals(false));
+        }
+
         public Task CompleteScheduledMonthlyFees(List<MonthlyFee> scheduledFees)
         {
             foreach (var fee in scheduledFees)
@@ -70,7 +75,7 @@ namespace IPSA.API.Repositories
             }
             else
             {
-                throw new NullReferenceException("Запланированного списание платы с данным Id не существует");
+                throw new NullReferenceException("Запланированного списания платы с данным Id не существует");
             }
         }
 

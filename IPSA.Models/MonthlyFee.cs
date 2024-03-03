@@ -8,7 +8,7 @@ namespace IPSA.Models
 {
     public class MonthlyFee
     {
-        public required int Id { get; set; }
+        public int Id { get; set; }
         public required int ConnectedTariffId { get; set; }
         public decimal Amount { get; set; }
         public DateOnly ScheduledDate { get; set; }

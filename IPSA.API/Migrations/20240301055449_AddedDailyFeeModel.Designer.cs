@@ -4,6 +4,7 @@ using IPSA.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IPSA.API.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240301055449_AddedDailyFeeModel")]
+    partial class AddedDailyFeeModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             AbonentId = 1,
-                            CommentDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5786),
+                            CommentDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6894),
                             EmployeeId = 1,
                             Text = "Тестовый комментарий"
                         });
@@ -271,10 +274,10 @@ namespace IPSA.API.Migrations
                             AbonentId = 1,
                             CompletionDate = new DateOnly(2024, 3, 5),
                             CompletionTimePeriod = "15:00 - 17:00",
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5720),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6868),
                             Description = "Подкл. СПД через роутер абонента, документы выданы, кабеля нет, предв. позвонить",
                             EmployeeId = 1,
-                            LastUpdateDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5721),
+                            LastUpdateDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6869),
                             Status = "Открыта",
                             Type = "Подключение СПД"
                         });
@@ -365,7 +368,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             AbonentId = 1,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5900),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(7006),
                             IpAddress = "127.0.0.1",
                             IsBlocked = false,
                             LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
@@ -375,7 +378,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 2,
                             AbonentId = 1,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5921),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(7025),
                             IpAddress = "127.0.0.1",
                             IsBlocked = false,
                             LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
@@ -385,7 +388,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 3,
                             AbonentId = 2,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5938),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(7041),
                             IpAddress = "127.0.0.1",
                             IsBlocked = false,
                             LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
@@ -505,7 +508,7 @@ namespace IPSA.API.Migrations
                             FullName = "Увалова Александра Николаевна",
                             Login = "manager",
                             Password = "manager",
-                            RegistrationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5607),
+                            RegistrationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6714),
                             ShortName = "Увалова А."
                         },
                         new
@@ -515,7 +518,7 @@ namespace IPSA.API.Migrations
                             FullName = "Свиридов Иван Петрович",
                             Login = "techsup",
                             Password = "techsup",
-                            RegistrationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5626),
+                            RegistrationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6735),
                             ShortName = "Свиридов И."
                         },
                         new
@@ -525,70 +528,8 @@ namespace IPSA.API.Migrations
                             FullName = "Донских Александр Иванович",
                             Login = "engineer",
                             Password = "engineer",
-                            RegistrationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5642),
+                            RegistrationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6751),
                             ShortName = "Донских А."
-                        });
-                });
-
-            modelBuilder.Entity("IPSA.Models.FeeWithdraw", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AbonentId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CompletionDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ConnectedTariffId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AbonentId");
-
-                    b.HasIndex("ConnectedTariffId");
-
-                    b.ToTable("FeeWithdraws");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            AbonentId = 1,
-                            Amount = 400m,
-                            CompletionDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5958),
-                            ConnectedTariffId = 1,
-                            Type = "Месячный"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            AbonentId = 1,
-                            Amount = 200m,
-                            CompletionDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5976),
-                            ConnectedTariffId = 2,
-                            Type = "Месячный"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            AbonentId = 2,
-                            Amount = 50m,
-                            CompletionDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5991),
-                            ConnectedTariffId = 3,
-                            Type = "Посуточный"
                         });
                 });
 
@@ -672,7 +613,7 @@ namespace IPSA.API.Migrations
                             Cancelled = true,
                             Comment = "тест",
                             ManagerId = 1,
-                            PaymentDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5815),
+                            PaymentDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6920),
                             PaymentType = "Наличными в офисе"
                         });
                 });
@@ -827,7 +768,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 1,
                             Archived = false,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5838),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6943),
                             DailyPrice = 13.4m,
                             Description = "Безлимитный Интернет со скоростью 100 Мбит/сек с ежемесячной платой",
                             MonthlyPrice = 400m,
@@ -839,7 +780,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 2,
                             Archived = false,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5858),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6970),
                             DailyPrice = 6.7m,
                             Description = "Базовый пакет каналов цифрового телевидения с ежемесячной платой",
                             MonthlyPrice = 200m,
@@ -851,7 +792,7 @@ namespace IPSA.API.Migrations
                         {
                             Id = 3,
                             Archived = false,
-                            CreationDateTime = new DateTime(2024, 3, 3, 8, 33, 31, 183, DateTimeKind.Utc).AddTicks(5876),
+                            CreationDateTime = new DateTime(2024, 3, 1, 5, 54, 47, 782, DateTimeKind.Utc).AddTicks(6987),
                             DailyPrice = 50m,
                             Description = "Безлимитный Интернет со скоростью до 100 Мбит/сек с посуточным списанием платы",
                             MonthlyPrice = 0m,
@@ -919,25 +860,6 @@ namespace IPSA.API.Migrations
                         .IsRequired();
 
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("IPSA.Models.FeeWithdraw", b =>
-                {
-                    b.HasOne("IPSA.Models.Abonent", "Abonent")
-                        .WithMany()
-                        .HasForeignKey("AbonentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("IPSA.Models.ConnectedTariff", "ConnTariff")
-                        .WithMany()
-                        .HasForeignKey("ConnectedTariffId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Abonent");
-
-                    b.Navigation("ConnTariff");
                 });
 
             modelBuilder.Entity("IPSA.Models.MonthlyFee", b =>

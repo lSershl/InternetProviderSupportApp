@@ -26,6 +26,7 @@ builder.Services.AddScoped<IConnectedTariffsRepository, ConnectedTariffsReposito
 builder.Services.AddScoped<IAbonentRequestRepository, AbonentRequestRepository>();
 builder.Services.AddScoped<IScheduledMonthlyFeesRepository, ScheduledMonthlyFeesRepository>();
 builder.Services.AddScoped<IDailyFeesRepository, DailyFeesRepository>();
+builder.Services.AddScoped<IFeeWithdrawRepository, FeeWithdrawRepository>();
 builder.Services.AddScoped<ITariffFeeService, TariffFeeService>();
 builder.Services.AddHostedService<FeeCollectionBackgroundService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());

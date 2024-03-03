@@ -274,6 +274,35 @@ namespace IPSA.API.Data
                 IsBlocked = false
             });
 
+            // FeeWithdraws
+            modelBuilder.Entity<FeeWithdraw>().HasData(new FeeWithdraw
+            {
+                Id = 1,
+                AbonentId = 1,
+                ConnectedTariffId = 1,
+                Type = "Месячный",
+                Amount = 400m,
+                CompletionDateTime = DateTime.UtcNow
+            });
+            modelBuilder.Entity<FeeWithdraw>().HasData(new FeeWithdraw
+            {
+                Id = 2,
+                AbonentId = 1,
+                ConnectedTariffId = 2,
+                Type = "Месячный",
+                Amount = 200m,
+                CompletionDateTime = DateTime.UtcNow
+            });
+            modelBuilder.Entity<FeeWithdraw>().HasData(new FeeWithdraw
+            {
+                Id = 3,
+                AbonentId = 2,
+                ConnectedTariffId = 3,
+                Type = "Посуточный",
+                Amount = 50m,
+                CompletionDateTime = DateTime.UtcNow
+            });
+
             // MonthlyFees
             modelBuilder.Entity<MonthlyFee>().HasData(new MonthlyFee
             {
@@ -409,6 +438,8 @@ namespace IPSA.API.Data
         public DbSet<Tariff> Tariffs { get; set; }
         public DbSet<ConnectedTariff> ConnectedTariffs { get; set; }
         public DbSet<MonthlyFee> MonthlyFees { get; set; }
+        public DbSet<DailyFee> DailyFees { get; set; }
+        public DbSet<FeeWithdraw> FeeWithdraws { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Street> Streets { get; set; }
     }

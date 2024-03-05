@@ -27,6 +27,7 @@ builder.Services.AddScoped<IAbonPageCommentService, AbonPageCommentService>();
 builder.Services.AddScoped<ITariffService, TariffService>();
 builder.Services.AddScoped<IConnectedTariffService, ConnectedTariffService>();
 builder.Services.AddScoped<IAbonentRequestService, AbonentRequestService>();
+builder.Services.AddScoped<IReportService, ReportService>();
 
 var app = builder.Build();
 

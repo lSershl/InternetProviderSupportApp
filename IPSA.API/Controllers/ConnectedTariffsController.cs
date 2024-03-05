@@ -78,9 +78,9 @@ namespace IPSA.API.Controllers
                 var newConnTariff = _mapper.Map<ConnectedTariff>(connTariffDto);
                 newConnTariff.CreationDateTime = DateTime.UtcNow;
                 _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
-                string tariffType = _tariffRepository.GetTariffsList().First(x => x.Id == connTariffDto.TariffId).PricingModel;
+                string tariffPricingModel = _tariffRepository.GetTariffsList().First(x => x.Id == connTariffDto.TariffId).PricingModel;
                 decimal amount = 0m;
-                if (tariffType == MonthlyPricingModel)
+                if (tariffPricingModel == MonthlyPricingModel)
                 {
                     amount = connTariffDto.MonthlyPrice;
                 }
@@ -92,7 +92,8 @@ namespace IPSA.API.Controllers
                     { 
                         AbonentId = connTariffDto.AbonentId,
                         ConnectedTariffId = connTariffDto.Id,
-                        Type = tariffType,
+                        Type = "Списание",
+                        PricingModel = tariffPricingModel,
                         Amount = amount,
                         CompletionDateTime = DateTime.UtcNow
                     };
@@ -148,8 +149,19 @@ namespace IPSA.API.Controllers
             {
                 var refund = _feeWithdrawRepository.CalculateRefundAmount(lastFeeWithdraw);
                 _feeWithdrawRepository.ApplyRefund(lastFeeWithdraw.AbonentId, refund);
+                FeeWithdraw refundRecord = new FeeWithdraw()
+                {
+                    AbonentId = lastFeeWithdraw.AbonentId,
+                    ConnectedTariffId = lastFeeWithdraw.ConnectedTariffId,
+                    Type = "Возврат",
+                    PricingModel = lastFeeWithdraw.PricingModel,
+                    Amount = refund,
+                    CompletionDateTime = DateTime.UtcNow
+                };
+                _feeWithdrawRepository.AddNewFeeWithdrawRecord(refundRecord);
             }
             _connectedTariffsRepository.BlockConnectedTariff(connTariffId);
+            
             _monthlyFeesRepository.RemoveScheduledMonthlyFee(nextMonthlyFee.Id);
         }
 
@@ -209,7 +221,8 @@ namespace IPSA.API.Controllers
             {
                 AbonentId = connectedTariff.AbonentId,
                 ConnectedTariffId = connectedTariff.Id,
-                Type = tariff.PricingModel,
+                Type = "Списание",
+                PricingModel = tariff.PricingModel,
                 Amount = amount,
                 CompletionDateTime = DateTime.UtcNow
             };

@@ -280,7 +280,8 @@ namespace IPSA.API.Data
                 Id = 1,
                 AbonentId = 1,
                 ConnectedTariffId = 1,
-                Type = "Месячный",
+                Type = "Списание",
+                PricingModel = "Месячный",
                 Amount = 400m,
                 CompletionDateTime = DateTime.UtcNow
             });
@@ -289,7 +290,8 @@ namespace IPSA.API.Data
                 Id = 2,
                 AbonentId = 1,
                 ConnectedTariffId = 2,
-                Type = "Месячный",
+                Type = "Списание",
+                PricingModel = "Месячный",
                 Amount = 200m,
                 CompletionDateTime = DateTime.UtcNow
             });
@@ -298,7 +300,8 @@ namespace IPSA.API.Data
                 Id = 3,
                 AbonentId = 2,
                 ConnectedTariffId = 3,
-                Type = "Посуточный",
+                Type = "Списание",
+                PricingModel = "Посуточный",
                 Amount = 50m,
                 CompletionDateTime = DateTime.UtcNow
             });

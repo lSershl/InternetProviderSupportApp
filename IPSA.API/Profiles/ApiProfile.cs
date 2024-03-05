@@ -8,12 +8,16 @@ namespace IPSA.API.Profiles
     {
         public ApiProfile() 
         {
-            // Source -> Target
+            // Dto -> Model
             CreateMap<AbonentCreateDto, Abonent>();
             CreateMap<PaymentDto, Payment>();
             CreateMap<AbonPageCommentDto, AbonPageComment>();
             CreateMap<AbonentRequestDto, AbonentRequest>();
             CreateMap<ConnectedTariffDto, ConnectedTariff>();
+
+            // Model -> Dto
+            CreateMap<FeeWithdraw, FeeWithdrawRecordDto>();
+            CreateMap<Payment, PaymentDto>();
         }
     }
 }

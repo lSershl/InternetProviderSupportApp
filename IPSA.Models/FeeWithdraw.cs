@@ -6,6 +6,7 @@
         public int AbonentId { get; set; }
         public int ConnectedTariffId { get; set; }
         public required string Type { get; set; }
+        public required string PricingModel { get; set; }
         public decimal Amount { get; set; }
         public DateTime CompletionDateTime { get; set; }
 

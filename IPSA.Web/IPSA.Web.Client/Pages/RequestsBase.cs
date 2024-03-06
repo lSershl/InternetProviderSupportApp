@@ -13,17 +13,35 @@ namespace IPSA.Web.Client.Pages
 
         protected DatePeriodDto datePeriod = new DatePeriodDto();
         protected List<AbonentRequestDto> abonRequests = new List<AbonentRequestDto>();
+        protected string[] allocationTypes = ["Все", "Привязанные", "Непривязанные"];
+        protected string selectedAllocationType = "Все";
 
         protected override async Task OnInitializedAsync()
         {
             datePeriod.StartDate = new DateOnly(DateOnly.FromDateTime(DateTime.Now).Year, DateOnly.FromDateTime(DateTime.Now).Month, 1);
             datePeriod.EndDate = datePeriod.StartDate.AddMonths(1);
-            abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+            await RefreshRequestsList();
         }
 
         protected async Task RefreshRequestsList()
         {
-            abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+            switch (selectedAllocationType)
+            {
+                case "Все":
+                    abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+                    break;
+                case "Привязанные":
+                    abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+                    abonRequests = abonRequests.Where(x => String.IsNullOrEmpty(x.AllocatedEngineer) is false).ToList();
+                    break;
+                case "Непривязанные":
+                    abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+                    abonRequests = abonRequests.Where(x => String.IsNullOrEmpty(x.AllocatedEngineer) is true).ToList();
+                    break;
+                default: 
+                    abonRequests = await RequestService.GetAbonentRequestsByDatePeriod(datePeriod);
+                    break;
+            }
         }
 
         protected void EditRequest(int abonentId, int requestId)

@@ -18,6 +18,7 @@ namespace IPSA.Models
         public required string Type { get; set; }
         public required string Description { get; set; }
         public required string Status { get; set; }
+        public required string AllocatedEngineer { get; set; } = string.Empty;
 
         public Abonent Abonent { get; set; } = null!;
         public Employee Employee { get; set; } = null!;

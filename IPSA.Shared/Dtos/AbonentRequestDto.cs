@@ -15,5 +15,6 @@ namespace IPSA.Shared.Dtos
         [MaxLength(100, ErrorMessage = "Описание заявки не должно быть длиннее 100 символов")]
         public string Description { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
+        public string AllocatedEngineer {  get; set; } = string.Empty;
     }
 }

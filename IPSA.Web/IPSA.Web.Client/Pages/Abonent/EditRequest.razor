@@ -38,6 +38,16 @@
                             </InputSelect>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label" for="request_type">Привязать наладчика: </label>
+                            <InputSelect class="form-select" id="request_type" style="max-width: 200px;" @bind-Value="abonentRequest.AllocatedEngineer">
+                                <option selected value="Не привязывать">Не привязывать</option>
+                                @foreach (var engineer in engineersList!)
+                                {
+                                    <option value="@engineer.Name">@engineer.Name</option>
+                                }
+                            </InputSelect>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label" for="description">Описание: </label>
                             <InputText class="form-control" id="description" @bind-Value="abonentRequest!.Description" />
                             <ValidationMessage For="@(() => abonentRequest.Description)" />
@@ -65,6 +75,7 @@
                                 <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Время заявки</th>
                                 <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Тип заявки</th>
                                 <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Описание</th>
+                                <th style="text-align: center;background-color: #99ccff;border-right: solid 1px;min-width: 100px;max-width: auto;">Наладчик</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,6 +88,7 @@
                                         <td style="background-color:lightgreen; text-align: center;border: solid 1px;border-style: solid;">@request.CompletionTimePeriod</td>
                                         <td style="background-color:lightgreen; text-align: center;border: solid 1px;border-style: solid;">@request.Type</td>
                                         <td style="background-color:lightgreen; text-align: center;border: solid 1px;border-style: solid;">@request.Description</td>
+                                        <td style="background-color:lightgreen; text-align: center;border: solid 1px;border-style: solid;">@request.AllocatedEngineer</td>
                                     </tr>
                                 }
                                 else

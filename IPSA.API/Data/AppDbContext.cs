@@ -174,7 +174,8 @@ namespace IPSA.API.Data
                 CompletionTimePeriod = "15:00 - 17:00",
                 Type = "Подключение СПД",
                 Description = "Подкл. СПД через роутер абонента, документы выданы, кабеля нет, предв. позвонить",
-                Status = "Открыта"
+                Status = "Открыта",
+                AllocatedEngineer = ""
             });
 
             // AbonPageComments

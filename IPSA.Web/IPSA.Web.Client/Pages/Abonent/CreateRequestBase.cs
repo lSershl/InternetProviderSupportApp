@@ -27,6 +27,7 @@ namespace IPSA.Web.Client.Pages.Abonent
             abonentRequest!.CompletionTimePeriod = "10:00 - 12:00";
             abonentRequest!.Type = "Подключение СПД";
             abonentRequest!.Status = "Открыта";
+            abonentRequest!.AllocatedEngineer = "";
 
             dayRequests = await RequestService.GetAbonentRequestsByDate(selectedDate);
         }

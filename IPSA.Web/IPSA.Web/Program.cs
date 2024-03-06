@@ -20,6 +20,7 @@ builder.Services.AddScoped<IAbonentService, AbonentService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<ICityService, CityService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();

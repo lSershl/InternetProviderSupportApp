@@ -155,6 +155,7 @@ namespace IPSA.API.Controllers
                     currRequest.Type = updatedAbonentRequestDto.Type;
                     currRequest.Description = updatedAbonentRequestDto.Description;
                     currRequest.Status = updatedAbonentRequestDto.Status;
+                    currRequest.AllocatedEngineer = updatedAbonentRequestDto.AllocatedEngineer;
 
                     await _abonentRequestRepository.UpdateAbonentRequest(currRequest);
                 }

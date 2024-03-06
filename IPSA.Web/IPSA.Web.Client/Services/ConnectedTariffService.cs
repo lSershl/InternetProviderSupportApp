@@ -10,7 +10,6 @@ namespace IPSA.Web.Client.Services
         private readonly HttpClient _httpClient = httpClient;
         private const string BaseUrl = "API/ConnectedTariffs";
 
-
         public async Task<ServiceResponse> AddNewConnectedTariff(ConnectedTariffDto connTariffDto)
         {
             try

@@ -16,12 +16,16 @@ namespace IPSA.Web.Client.Pages.Abonent
         [Inject]
         public required IAbonentRequestService RequestService { get; set; }
         [Inject]
+        public required IEmployeeService EmployeeService { get; set; }
+        [Inject]
         public required NavigationManager NavManager { get; set; }
 
         protected List<AbonentRequestDto>? dayRequests = new();
+        protected List<EmployeeNameDto>? engineersList = new();
         protected AbonentRequestDto abonentRequest = new();
         protected DateDto? selectedDate = new();
         protected string userId = string.Empty;
+        private const string engineersDepartmentName = "Инженеры сети и наладчики";
 
         protected override async Task OnInitializedAsync()
         {
@@ -41,12 +45,18 @@ namespace IPSA.Web.Client.Pages.Abonent
             selectedDate.DateOnly = abonentRequest.CompletionDate;
             selectedDate.DateWithTime = selectedDate.DateOnly.ToDateTime(TimeOnly.MinValue);
 
+            engineersList = await EmployeeService.GetNamesOfAllEmployeesOfTheDepartment(engineersDepartmentName);
+
             dayRequests = await RequestService.GetAbonentRequestsByDate(selectedDate);
         }
 
         protected async Task UpdateRequest()
         {
             abonentRequest!.EmployeeId = Int32.Parse(userId);
+            if(abonentRequest.AllocatedEngineer == "Не привязывать")
+            {
+                abonentRequest.AllocatedEngineer = "";
+            }
             await RequestService.UpdateAbonentRequest(abonentRequest);
             NavManager.NavigateTo($"/Abonent/{AbonId}/EditRequest/{RequestId}", forceLoad:true);
         }

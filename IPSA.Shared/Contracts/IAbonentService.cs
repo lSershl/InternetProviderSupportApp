@@ -7,6 +7,7 @@ namespace IPSA.Shared.Contracts
     {
         Task<IEnumerable<AbonentReadDto>> GetAllAbonents();
         Task<AbonentReadDto> GetAbonent(int abonId);
+        Task<IEnumerable<AbonentReadDto>> GetAbonentsByFilter(SearchAbonentFilter filter);
         Task<AbonentCreateDto> GetAbonentForEdit(int abonId);
         Task<ServiceResponse> AddNewAbonent(AbonentCreateDto abonentCreateDto);
         Task<ServiceResponse> UpdateAbonent(int abonId, AbonentCreateDto abonentToUpdateDto);

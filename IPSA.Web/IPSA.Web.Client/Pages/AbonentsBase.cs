@@ -20,44 +20,44 @@ namespace IPSA.Web.Client.Pages
         public SearchAbonentFilter? filter = new SearchAbonentFilter();
         protected const string selectAllCities = "Все доступные";
         protected string selectedCity = selectAllCities;
-        public int max_results = 20;
+        public int maxResults = 20;
 
         protected override async Task OnInitializedAsync()
         {
             citiesList = await CityService.GetCitiesList();
             citiesList = citiesList.OrderBy(x => x.Name).ToList();
             abonentsList = await AbonentService.GetAllAbonents();
-            abonentsList.Take(max_results);
+            abonentsList.Take(maxResults);
         }
 
-        //protected void Search(SearchAbonentFilter filter, int max_result_count)
-        //{
-        //    if (selectedCity != "Все доступные")
-        //    {
-        //        filter.City = selectedCity;
-        //    }
-        //    else
-        //    {
-        //        filter.City = null;
-        //    }
+        protected async Task Search(SearchAbonentFilter filter, int maxResults)
+        {
+            if (selectedCity != "Все доступные")
+            {
+                filter.City = selectedCity;
+            }
+            else
+            {
+                filter.City = null;
+            }
 
-        //    if (max_result_count < 0) max_result_count = 0;
+            if (maxResults < 0) maxResults = 0;
 
-        //    if (filter == null)
-        //    {
-        //        abonHandler.GetAbonents().OrderBy(x => x.abon_id);
-        //    }
-        //    else
-        //    {
-        //        abonList = abonHandler.SearchAbonents(filter).OrderBy(x => x.abon_id);
-        //        if (max_result_count > 0)
-        //        {
-        //            abonList = abonList.Take(max_result_count);
-        //        }
-        //    }
-        //}
-
-
+            if (filter is null)
+            {
+                abonentsList = await AbonentService.GetAllAbonents();
+                abonentsList.Take(maxResults);
+            }
+            else
+            {
+                abonentsList = await AbonentService.GetAbonentsByFilter(filter);
+                abonentsList = abonentsList.OrderBy(x => x.Id);
+                if (maxResults > 0)
+                {
+                    abonentsList = abonentsList.Take(maxResults);
+                }
+            }
+        }
 
         protected void ClearFilter()
         {
@@ -71,7 +71,7 @@ namespace IPSA.Web.Client.Pages
             filter.House = null;
             filter.Apartment = null;
             selectedCity = "Все доступные";
-            max_results = 20;
+            maxResults = 20;
         }
 
         protected void GoToAbonPage(int abon_id)

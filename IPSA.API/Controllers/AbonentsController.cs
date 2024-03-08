@@ -4,8 +4,6 @@ using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Responses;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-
 
 namespace IPSA.API.Controllers
 {
@@ -22,6 +20,7 @@ namespace IPSA.API.Controllers
             try
             {
                 var abonents = _abonentRepository.GetAllAbonents();
+
 
                 if (abonents is null)
                 {
@@ -52,6 +51,29 @@ namespace IPSA.API.Controllers
                 else
                 {
                     return Ok(abonent);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при получении данных из базы");
+            }
+        }
+
+        [HttpPut("Search")]
+        public async Task<ActionResult<IEnumerable<AbonentReadDto>>> SearchAbonentsByFilter(SearchAbonentFilter filter)
+        {
+            try
+            {
+                var abonents = _abonentRepository.GetAbonentsByFilter(filter);
+
+                if (abonents is null)
+                {
+                    return NoContent();
+                }
+                else
+                {
+                    var result = _mapper.Map<IEnumerable<AbonentReadDto>>(abonents);
+                    return Ok(result);
                 }
             }
             catch (Exception)

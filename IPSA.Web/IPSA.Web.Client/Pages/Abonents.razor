@@ -43,12 +43,12 @@
                 <div class="row">
                     <div class="mb-3">
                         <label class="form-label" for="max_results">Максимум результатов (если равно 0, будут показаны все результаты):</label>
-                        <InputNumber class="col-md-1" id="max_results" @bind-Value="max_results" />
+                        <InputNumber class="col-md-1" id="max_results" @bind-Value="maxResults" />
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-1">
-                        <button class="button">Найти</button>
+                        <button class="button" @onclick="() => Search(filter, maxResults)">Найти</button>
                     </div>
                     <div class="col-sm-1">
                         <button class="button" @onclick="ClearFilter">Очистить</button>

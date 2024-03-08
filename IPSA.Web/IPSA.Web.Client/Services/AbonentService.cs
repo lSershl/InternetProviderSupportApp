@@ -68,6 +68,35 @@ namespace IPSA.Web.Client.Services
             }
         }
 
+        public async Task<IEnumerable<AbonentReadDto>> GetAbonentsByFilter(SearchAbonentFilter filter)
+        {
+            try
+            {
+                var response = await _httpClient.PutAsync($"{BaseUrl}/Search", JSONSerializer.GenerateStringContent(JSONSerializer.SerializeObj(filter)));
+
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<AbonentReadDto>();
+                    }
+
+                    var result = await response.Content.ReadAsStringAsync();
+                    return [.. JSONSerializer.DeserializeJsonStringList<AbonentReadDto>(result)];
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
         public async Task<AbonentCreateDto> GetAbonentForEdit(int abonId)
         {
             try

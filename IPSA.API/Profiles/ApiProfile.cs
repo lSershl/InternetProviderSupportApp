@@ -16,6 +16,7 @@ namespace IPSA.API.Profiles
             CreateMap<ConnectedTariffDto, ConnectedTariff>();
 
             // Model -> Dto
+            CreateMap<Abonent, AbonentReadDto>();
             CreateMap<FeeWithdraw, FeeWithdrawRecordDto>();
             CreateMap<Payment, PaymentDto>();
         }

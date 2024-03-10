@@ -9,9 +9,10 @@ namespace IPSA.API.Controllers
 {
     [Route("API/[controller]")]
     [ApiController]
-    public class PaymentsController(IPaymentRepository paymentRepository, IMapper mapper) : ControllerBase
+    public class PaymentsController(IPaymentRepository paymentRepository, IConnectedTariffsRepository connectedTariffsRepository, IMapper mapper) : ControllerBase
     {
         private readonly IPaymentRepository _paymentRepository = paymentRepository;
+        private readonly IConnectedTariffsRepository _connectedTariffsRepository = connectedTariffsRepository;
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
@@ -67,6 +68,7 @@ namespace IPSA.API.Controllers
 
                 var newPayment = _mapper.Map<Payment>(paymentDto);
                 await _paymentRepository.AddNewPayment(newPayment);
+                await _connectedTariffsRepository.CheckBalanceAndRemoveAutoblocksAfterPeayment(paymentDto.AbonentId);
                 return Ok();
             }
             catch (Exception)

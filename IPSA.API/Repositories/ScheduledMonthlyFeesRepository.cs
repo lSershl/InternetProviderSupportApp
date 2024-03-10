@@ -48,6 +48,7 @@ namespace IPSA.API.Repositories
                     {
                         var connTariffForBlock = _appDbContext.ConnectedTariffs.First(ct => ct.Id == fee.ConnectedTariffId);
                         connTariffForBlock.IsBlocked = true;
+                        connTariffForBlock.IsAutoblocked = true;
                         _appDbContext.ConnectedTariffs.Update(connTariffForBlock);
                     }
                     _appDbContext.MonthlyFees.Update(fee);

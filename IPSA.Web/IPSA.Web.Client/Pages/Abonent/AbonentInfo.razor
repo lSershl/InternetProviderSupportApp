@@ -279,7 +279,14 @@
                                         <td style="background-color: palevioletred;">@ct.Name</td>
                                         <td style="background-color: palevioletred;">@ct.Name</td>
                                         <td style="background-color: palevioletred;">Да</td>
-                                        <td style="background-color: palevioletred;">(Автоматическая)</td>
+                                        @if (ct.IsAutoblocked)
+                                        {
+                                            <td style="background-color: palevioletred;">Автоматическая</td>
+                                        }
+                                        else
+                                        {
+                                            <td style="background-color: palevioletred;">Ручная</td>
+                                        }
                                     </tr>
                                 }
                                 else

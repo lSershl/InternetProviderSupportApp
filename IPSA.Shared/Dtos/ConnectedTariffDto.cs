@@ -20,6 +20,7 @@ namespace IPSA.Shared.Dtos
         public string? PricingModel { get; set; }
         public decimal MonthlyPrice { get; set; }
         public decimal DailyPrice { get; set; }
-        public bool IsBlocked { get; set; } = false;
+        public bool IsBlocked { get; set; }
+        public bool IsAutoblocked { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace IPSA.Models
         public required string IpAddress { get; set; }
         public required string LinkToHardware { get; set; }
         public required bool IsBlocked { get; set;} = false;
+        public required bool IsAutoblocked { get; set; } = false;
 
         public Abonent Abonent { get; set; } = null!;
         public Tariff Tariff { get; set; } = null!;

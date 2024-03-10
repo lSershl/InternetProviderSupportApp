@@ -7,6 +7,7 @@ namespace IPSA.API.Repositories
     public class ConnectedTariffsRepository(AppDbContext appDbContext) : IConnectedTariffsRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
+        private const string MonthlyPricingModel = "Месячный";
 
         public List<ConnectedTariff> GetConnectedTariffsListByAbonent(int abonId)
         {
@@ -29,10 +30,11 @@ namespace IPSA.API.Repositories
 
         public Task BlockConnectedTariff(int connTariffId)
         {
-            var connTariffToBlock = _appDbContext.ConnectedTariffs.First(t => t.Id == connTariffId);
+            var connTariffToBlock = _appDbContext.ConnectedTariffs.First(ct => ct.Id == connTariffId);
             if (connTariffToBlock is not null)
             {
                 connTariffToBlock.IsBlocked = true;
+                connTariffToBlock.IsAutoblocked = false;
                 _appDbContext.ConnectedTariffs.Update(connTariffToBlock);
                 _appDbContext.SaveChanges();
                 return Task.CompletedTask;
@@ -43,12 +45,50 @@ namespace IPSA.API.Repositories
             }
         }
 
+        public Task CheckBalanceAndRemoveAutoblocksAfterPeayment(int abonentId)
+        {
+            Abonent abonent = _appDbContext.Abonents.First(a => a.Id == abonentId);
+            List<ConnectedTariff> autoblockedConnTariffs = _appDbContext.ConnectedTariffs
+                .Where(ct => ct.AbonentId == abonentId && ct.IsAutoblocked.Equals(true)).ToList();
+            foreach (var ct in autoblockedConnTariffs)
+            {
+                var tariff = _appDbContext.Tariffs.First(t => t.Id == ct.Id);
+                if (tariff.PricingModel == MonthlyPricingModel)
+                {
+                    if (tariff.MonthlyPrice <= abonent.Balance)
+                    {
+                        abonent.Balance -= tariff.MonthlyPrice;
+                        ct.IsBlocked = false;
+                        ct.IsAutoblocked = false;
+                        _appDbContext.Update(ct);
+                    }
+                    else continue;
+                }
+                else
+                {
+                    if (tariff.DailyPrice <= abonent.Balance)
+                    {
+                        abonent.Balance -= tariff.DailyPrice;
+                        ct.IsBlocked = false;
+                        ct.IsAutoblocked = false;
+                        _appDbContext.Update(ct);
+                    }
+                    else continue;
+                }
+
+            }
+            _appDbContext.Update(abonent);
+            _appDbContext.SaveChanges();
+            return Task.CompletedTask;
+        }
+
         public Task UnblockConnectedTariff(int connTariffId)
         {
-            var connTariffToUnblock = _appDbContext.ConnectedTariffs.First(t => t.Id == connTariffId);
+            var connTariffToUnblock = _appDbContext.ConnectedTariffs.First(ct => ct.Id == connTariffId);
             if (connTariffToUnblock is not null)
             {
                 connTariffToUnblock.IsBlocked = false;
+                connTariffToUnblock.IsAutoblocked = false;
                 _appDbContext.ConnectedTariffs.Update(connTariffToUnblock);
                 _appDbContext.SaveChanges();
                 return Task.CompletedTask;
@@ -73,7 +113,5 @@ namespace IPSA.API.Repositories
                 throw new NullReferenceException("Указанной подключенной услуги не существует");
             }
         }
-
-        
     }
 }

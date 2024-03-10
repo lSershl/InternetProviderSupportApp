@@ -18,6 +18,8 @@ namespace IPSA.Web.Client.Pages.Abonent
         protected List<ConnectedTariffDto>? connectedTariffs  = new List<ConnectedTariffDto>();
         protected List<TariffDto>? tariffsList = new List<TariffDto>();
         protected TariffDto? selectedTariff = new();
+        protected const string MonthlyPricingModel = "Месячный";
+        protected const string DailyPricingModel = "Посуточный";
 
         protected override async Task OnInitializedAsync()
         {

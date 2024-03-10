@@ -73,6 +73,7 @@ namespace IPSA.API.Repositories
                 else
                 {
                     connectedTariff!.IsBlocked = true;
+                    connectedTariff!.IsAutoblocked = true;
                     _appDbContext.ConnectedTariffs.Update(connectedTariff);
                 }
                 _appDbContext.Abonents.Update(abonent);

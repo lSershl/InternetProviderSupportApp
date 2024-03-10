@@ -52,6 +52,7 @@ namespace IPSA.API.Controllers
                         resultingListItem.MonthlyPrice = tariff.MonthlyPrice;
                         resultingListItem.DailyPrice = tariff.DailyPrice;
                         resultingListItem.IsBlocked = connTariff.IsBlocked;
+                        resultingListItem.IsAutoblocked = connTariff.IsAutoblocked;
 
                         resultingList.Add(resultingListItem);
                     }

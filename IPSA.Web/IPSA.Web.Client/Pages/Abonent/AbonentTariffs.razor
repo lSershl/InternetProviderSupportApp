@@ -48,7 +48,7 @@
                                             </div>
                                             <div class="mb-3">
                                                 <label>Метод списания платы: @selectedTariff!.PricingModel</label>
-                                                @if (selectedTariff.PricingModel == "Месячный")
+                                                @if (selectedTariff.PricingModel == MonthlyPricingModel)
                                                 {
                                                     <label>Цена тарифа: @selectedTariff.MonthlyPrice руб/мес</label>
                                                 }
@@ -85,14 +85,21 @@
                                     {
                                         <tbody>
                                             <tr style="border: solid 1px;border-style: solid;background-color:palevioletred;">
-                                                <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => UnblockConnectedTariff(tariff.Id)">[Разблокировать]</label></td>
+                                                @if (tariff.IsAutoblocked)
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => BlockConnectedTariff(tariff.Id)">[Перевести автоблок в ручную блокировку]</label></td>
+                                                }
+                                                else
+                                                {
+                                                    <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => UnblockConnectedTariff(tariff.Id)">[Разблокировать]</label></td>
+                                                }
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
-                                                @if (tariff.PricingModel == "Месячный")
+                                                @if (tariff.PricingModel == MonthlyPricingModel)
                                                 {
                                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
                                                 }
-                                                else if (tariff.PricingModel == "Посуточный")
+                                                else if (tariff.PricingModel == DailyPricingModel)
                                                 {
                                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
                                                 }
@@ -107,11 +114,11 @@
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;"><label style="color: mediumblue;" @onclick="() => BlockConnectedTariff(tariff.Id)">[Заблокировать]</label></td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.Name</td>
                                                 <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.PricingModel</td>
-                                                @if (tariff.PricingModel == "Месячный")
+                                                @if (tariff.PricingModel == MonthlyPricingModel)
                                                 {
                                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.MonthlyPrice руб/мес</td>
                                                 }
-                                                else if (tariff.PricingModel == "Посуточный")
+                                                else if (tariff.PricingModel == DailyPricingModel)
                                                 {
                                                     <td style="text-align: center;border: solid 1px;border-style: solid;">@tariff.DailyPrice руб/сутки</td>
                                                 }

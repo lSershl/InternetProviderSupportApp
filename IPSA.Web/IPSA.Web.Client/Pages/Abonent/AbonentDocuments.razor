@@ -1,0 +1,9 @@
+﻿@page "/Abonent/{AbonId:int}/Documents/"
+@inherits AbonentDocumentsBase
+@rendermode InteractiveServer
+
+<AuthorizeView>
+    <Authorized>
+        <PageTitle>Документы абонента</PageTitle>
+    </Authorized>
+</AuthorizeView>

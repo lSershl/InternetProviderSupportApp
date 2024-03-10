@@ -250,7 +250,8 @@ namespace IPSA.API.Data
                 TariffId = 1,
                 IpAddress = "127.0.0.1",
                 LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
-                IsBlocked = false
+                IsBlocked = false,
+                IsAutoblocked = false
             });
 
             modelBuilder.Entity<ConnectedTariff>().HasData(new ConnectedTariff
@@ -261,7 +262,8 @@ namespace IPSA.API.Data
                 TariffId = 2,
                 IpAddress = "127.0.0.1",
                 LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
-                IsBlocked = false
+                IsBlocked = false,
+                IsAutoblocked = false
             });
 
             modelBuilder.Entity<ConnectedTariff>().HasData(new ConnectedTariff
@@ -272,7 +274,8 @@ namespace IPSA.API.Data
                 TariffId = 3,
                 IpAddress = "127.0.0.1",
                 LinkToHardware = "(ссылка на мост к сетевому оборудованию)",
-                IsBlocked = false
+                IsBlocked = false,
+                IsAutoblocked = false
             });
 
             // FeeWithdraws

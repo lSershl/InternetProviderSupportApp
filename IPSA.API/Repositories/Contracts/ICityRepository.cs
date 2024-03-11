@@ -4,6 +4,6 @@ namespace IPSA.API.Repositories.Contracts
 {
     public interface ICityRepository
     {
-        Task<List<City>> GetCitiesList();
+        List<City> GetCitiesList();
     }
 }

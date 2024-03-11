@@ -15,6 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IAbonentRepository, AbonentRepository>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
@@ -31,7 +32,7 @@ builder.Services.AddScoped<IDailyFeesRepository, DailyFeesRepository>();
 builder.Services.AddScoped<IFeeWithdrawRepository, FeeWithdrawRepository>();
 builder.Services.AddScoped<ITariffFeeService, TariffFeeService>();
 builder.Services.AddHostedService<FeeCollectionBackgroundService>();
-builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

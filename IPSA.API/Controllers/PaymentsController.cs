@@ -2,7 +2,6 @@
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IPSA.API.Controllers
@@ -16,7 +15,7 @@ namespace IPSA.API.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
-        public async Task<ActionResult<List<Payment>>> GetAllPayments()
+        public async Task<ActionResult<List<PaymentDto>>> GetAllPaymentsList()
         {
             try
             {
@@ -27,6 +26,7 @@ namespace IPSA.API.Controllers
                 }
                 else
                 {
+                    var result = _mapper.Map<PaymentDto>(payments);
                     return Ok(payments);
                 }
             }
@@ -37,7 +37,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpGet("Abonent/{abonId:int}")]
-        public async Task<ActionResult<List<Payment>>> GetAbonentPaymentsList(int abonId)
+        public async Task<ActionResult<List<PaymentDto>>> GetAbonentPaymentsList(int abonId)
         {
             try
             {
@@ -48,7 +48,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonPayments);
+                var result = _mapper.Map<List<PaymentDto>>(abonPayments);
+                return Ok(result);
             }
             catch (Exception)
             {

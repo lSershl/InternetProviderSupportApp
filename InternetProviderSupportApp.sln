@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Web.Client", "IPSA.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IPSA.Shared", "IPSA.Shared\IPSA.Shared.csproj", "{E025738B-D777-41F4-B010-113146BF3C19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IPSA.Tests", "IPSA.Tests\IPSA.Tests.csproj", "{0AC5A3D7-600A-47D4-AB85-A0B107AC810E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E025738B-D777-41F4-B010-113146BF3C19}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E025738B-D777-41F4-B010-113146BF3C19}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E025738B-D777-41F4-B010-113146BF3C19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0AC5A3D7-600A-47D4-AB85-A0B107AC810E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0AC5A3D7-600A-47D4-AB85-A0B107AC810E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0AC5A3D7-600A-47D4-AB85-A0B107AC810E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0AC5A3D7-600A-47D4-AB85-A0B107AC810E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

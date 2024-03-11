@@ -8,9 +8,9 @@ namespace IPSA.API.Repositories
     public class CityRepository(AppDbContext appDbContext) : ICityRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
-        public async Task<List<City>> GetCitiesList()
+        public List<City> GetCitiesList()
         {
-            var cities = await _appDbContext.Cities.ToListAsync();
+            var cities = _appDbContext.Cities.ToList();
             return cities;
         }
     }

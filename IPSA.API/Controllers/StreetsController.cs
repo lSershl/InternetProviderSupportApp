@@ -1,5 +1,7 @@
-﻿using IPSA.API.Repositories.Contracts;
+﻿using AutoMapper;
+using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
+using IPSA.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,23 +9,26 @@ namespace IPSA.API.Controllers
 {
     [Route("API/[controller]")]
     [ApiController]
-    public class StreetsController(IStreetRepository streetRepository) : ControllerBase
+    public class StreetsController(IStreetRepository streetRepository, IMapper mapper) : ControllerBase
     {
         private readonly IStreetRepository _streetRepository = streetRepository;
+        private readonly IMapper _mapper = mapper;
 
         [HttpGet]
-        public async Task<ActionResult<List<Street>>> GetAllStreetsList()
+        public async Task<ActionResult<List<StreetReadDto>>> GetAllStreetsList()
         {
             try
             {
-                var streets = await _streetRepository.GetAllStreetsList();
+                var streets = _streetRepository.GetAllStreetsList();
+
                 if (streets is null)
                 {
                     return NotFound("Список улиц пуст");
                 }
                 else
                 {
-                    return Ok(streets);
+                    var result = _mapper.Map<List<StreetReadDto>>(streets);
+                    return Ok(result);
                 }
             }
             catch (Exception)
@@ -33,11 +38,11 @@ namespace IPSA.API.Controllers
         }
 
         [HttpGet("ByCity/{id:int}")]
-        public async Task<ActionResult<List<Street>>> GetStreetsListByCity(int id)
+        public async Task<ActionResult<List<StreetReadDto>>> GetStreetsListByCity(int id)
         {
             try
             {
-                var streets = await _streetRepository.GetStreetsListByCity(id);
+                var streets = _streetRepository.GetStreetsListByCity(id);
 
                 if (streets is null)
                 {
@@ -45,7 +50,8 @@ namespace IPSA.API.Controllers
                 }
                 else
                 {
-                    return Ok(streets);
+                    var result = _mapper.Map<List<StreetReadDto>>(streets);
+                    return Ok(result);
                 }
             }
             catch (Exception)

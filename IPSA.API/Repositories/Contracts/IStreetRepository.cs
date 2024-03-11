@@ -4,7 +4,7 @@ namespace IPSA.API.Repositories.Contracts
 {
     public interface IStreetRepository
     {
-        Task<List<Street>> GetAllStreetsList();
-        Task<List<Street>> GetStreetsListByCity(int cityId);
+        List<Street> GetAllStreetsList();
+        List<Street> GetStreetsListByCity(int cityId);
     }
 }

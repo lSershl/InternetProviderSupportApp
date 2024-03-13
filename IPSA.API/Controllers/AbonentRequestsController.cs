@@ -15,7 +15,7 @@ namespace IPSA.API.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
-        public async Task<ActionResult<List<AbonentRequest>>> GetAllAbonentsRequestsList()
+        public async Task<ActionResult<List<AbonentRequestDto>>> GetAllAbonentsRequestsList()
         {
             try
             {
@@ -26,7 +26,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonRequests);
+                var result = _mapper.Map<List<AbonentRequestDto>>(abonRequests);
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -35,7 +36,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpPut("Date")]
-        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByDate(DateDto dateDto)
+        public async Task<ActionResult<List<AbonentRequestDto>>> GetRequestsListByDate(DateDto dateDto)
         {
             try
             {
@@ -46,7 +47,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonRequests);
+                var result = _mapper.Map<List<AbonentRequestDto>>(abonRequests);
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -55,7 +57,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpPut("DatePeriod")]
-        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByDatePeriod(DatePeriodDto datePeriodDto)
+        public async Task<ActionResult<List<AbonentRequestDto>>> GetRequestsListByDatePeriod(DatePeriodDto datePeriodDto)
         {
             try
             {
@@ -66,7 +68,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonRequests);
+                var result = _mapper.Map<List<AbonentRequestDto>>(abonRequests);
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -75,7 +78,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpGet("Abonent/{abonId:int}")]
-        public async Task<ActionResult<List<AbonentRequest>>> GetRequestsListByAbonent(int abonId)
+        public async Task<ActionResult<List<AbonentRequestDto>>> GetRequestsListByAbonent(int abonId)
         {
             try
             {
@@ -86,7 +89,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonRequests);
+                var result = _mapper.Map<List<AbonentRequestDto>>(abonRequests);
+                return Ok(result);
             }
             catch (Exception)
             {
@@ -95,7 +99,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpGet("Request/{requestId:int}")]
-        public async Task<ActionResult<AbonentRequest>> GetRequestById(int requestId)
+        public async Task<ActionResult<AbonentRequestDto>> GetRequestById(int requestId)
         {
             try
             {
@@ -106,7 +110,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(request);
+                var result = _mapper.Map<AbonentRequestDto>(request);
+                return Ok(result);
             }
             catch (Exception)
             {

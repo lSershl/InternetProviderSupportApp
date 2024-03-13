@@ -17,6 +17,8 @@ namespace IPSA.API.Profiles
 
             // Model -> Dto
             CreateMap<Abonent, AbonentReadDto>();
+            CreateMap<AbonPageComment, AbonPageCommentDto>();
+            CreateMap<AbonentRequest, AbonentRequestDto>();
             CreateMap<City, CityReadDto>();
             CreateMap<Street, StreetReadDto>();
             CreateMap<FeeWithdraw, FeeWithdrawRecordDto>();

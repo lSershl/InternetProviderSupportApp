@@ -1,20 +1,12 @@
 ﻿using IPSA.API.Data;
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace IPSA.API.Repositories
 {
     public class PaymentRepository(AppDbContext appDbContext) : IPaymentRepository
     {
         private readonly AppDbContext _appDbContext = appDbContext;
-        public delegate void Notify(int abonId);
-        public event Notify PaymentApplied;
-
-        protected virtual void OnPaymentApplied(int abonId)
-        {
-            PaymentApplied?.Invoke(abonId);
-        }
 
         public List<Payment> GetAllPaymentsList()
         {

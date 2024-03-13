@@ -15,12 +15,11 @@ namespace IPSA.API.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Abonent>>> GetAllAbonents()
+        public async Task<ActionResult<IEnumerable<AbonentReadDto>>> GetAllAbonents()
         {
             try
             {
                 var abonents = _abonentRepository.GetAllAbonents();
-
 
                 if (abonents is null)
                 {
@@ -28,7 +27,8 @@ namespace IPSA.API.Controllers
                 }
                 else
                 {
-                    return Ok(abonents);
+                    var result = _mapper.Map<AbonentReadDto>(abonents);
+                    return Ok(result);
                 }
             }
             catch (Exception)
@@ -38,7 +38,7 @@ namespace IPSA.API.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<Abonent>> GetAbonent(int id)
+        public async Task<ActionResult<AbonentReadDto>> GetAbonent(int id)
         {
             try
             {
@@ -50,7 +50,8 @@ namespace IPSA.API.Controllers
                 }
                 else
                 {
-                    return Ok(abonent);
+                    var result = _mapper.Map<AbonentReadDto>(abonent);
+                    return Ok(result);
                 }
             }
             catch (Exception)

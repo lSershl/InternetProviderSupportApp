@@ -15,7 +15,7 @@ namespace IPSA.API.Controllers
         private readonly IMapper _mapper = mapper;
 
         [HttpGet("Abonent/{abonId:int}")]
-        public async Task<ActionResult<List<AbonPageComment>>> GetAbonentPageComments(int abonId)
+        public async Task<ActionResult<List<AbonPageCommentDto>>> GetAbonentPageComments(int abonId)
         {
             try
             {
@@ -26,7 +26,8 @@ namespace IPSA.API.Controllers
                     return NoContent();
                 }
 
-                return Ok(abonPageComments);
+                var result = _mapper.Map<List<AbonPageCommentDto>>(abonPageComments);
+                return Ok(result);
             }
             catch (Exception)
             {

@@ -1,7 +1,5 @@
-﻿using IPSA.API.Repositories;
-using IPSA.API.Repositories.Contracts;
+﻿using IPSA.API.Repositories.Contracts;
 using IPSA.Shared.Dtos;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IPSA.API.Controllers

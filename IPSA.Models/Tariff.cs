@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace IPSA.Models
+﻿namespace IPSA.Models
 {
     public class Tariff
     {

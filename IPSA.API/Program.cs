@@ -8,11 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Reflection;
 using System.Text;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
@@ -56,6 +56,15 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Create Logger configuration from appsettings.json
+var logger = new LoggerConfiguration()
+.ReadFrom.Configuration(builder.Configuration)
+.CreateLogger();
+
+// Add Logger
+Log.Logger = logger;
+builder.Host.UseSerilog(logger);
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -72,5 +81,7 @@ app.MapControllers();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseSerilogRequestLogging();
 
 app.Run();

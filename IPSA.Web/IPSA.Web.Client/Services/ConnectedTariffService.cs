@@ -146,7 +146,7 @@ namespace IPSA.Web.Client.Services
         {
             try
             {
-                var response = await _httpClient.DeleteAsync($"{BaseUrl}");
+                var response = await _httpClient.DeleteAsync($"{BaseUrl}/DeleteSingleTariff/{connectedTariffId}");
                 if (response.IsSuccessStatusCode)
                 {
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
@@ -154,7 +154,34 @@ namespace IPSA.Web.Client.Services
                         return null!;
                     }
 
-                    return new ServiceResponse("Услуга успешно разблокирована");
+                    return new ServiceResponse("Услуга удалена!");
+                }
+                else
+                {
+                    var message = await response.Content.ReadAsStringAsync();
+                    throw new Exception(message);
+                }
+            }
+            catch (Exception)
+            {
+                //Log exception
+                throw;
+            }
+        }
+
+        public async Task<ServiceResponse> DeleteAllConnectedTariffsForAbonent(int abonentId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"{BaseUrl}/DeleteAllTariffsForAbonent/{abonentId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        return null!;
+                    }
+
+                    return new ServiceResponse("Все подключенные для абонента услуги удалены!");
                 }
                 else
                 {

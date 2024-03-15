@@ -1,10 +1,8 @@
-﻿using BCrypt.Net;
-using IPSA.API.Data;
+﻿using IPSA.API.Data;
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Dtos;
 using IPSA.Shared.Responses;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

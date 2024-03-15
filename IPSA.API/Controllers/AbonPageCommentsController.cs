@@ -2,7 +2,6 @@
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IPSA.API.Controllers
@@ -46,7 +45,7 @@ namespace IPSA.API.Controllers
                 }
 
                 var newComment = _mapper.Map<AbonPageComment>(commentDto);
-                await _abonPageCommentsRepository.AddNewAbonentPageComment(newComment);
+                _abonPageCommentsRepository.AddNewAbonentPageComment(newComment);
                 return Ok();
             }
             catch (Exception)
@@ -73,7 +72,7 @@ namespace IPSA.API.Controllers
                     currComment.Text = updComment.Text;
                     currComment.CommentDateTime = updComment.CommentDateTime;
 
-                    await _abonPageCommentsRepository.UpdateAbonentPageComment(currComment);
+                    _abonPageCommentsRepository.UpdateAbonentPageComment(currComment);
                 }
                 return Ok();
             }
@@ -88,7 +87,7 @@ namespace IPSA.API.Controllers
         {
             try
             {
-                await _abonPageCommentsRepository.DeleteAbonentPageComment(commentId);
+                _abonPageCommentsRepository.DeleteAbonentPageComment(commentId);
                 return Ok();
             }
             catch (Exception)

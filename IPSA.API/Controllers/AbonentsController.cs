@@ -25,11 +25,9 @@ namespace IPSA.API.Controllers
                 {
                     return NotFound();
                 }
-                else
-                {
-                    var result = _mapper.Map<AbonentReadDto>(abonents);
-                    return Ok(result);
-                }
+
+                var result = _mapper.Map<IEnumerable<AbonentReadDto>>(abonents);
+                return Ok(result);
             }
             catch (Exception)
             {

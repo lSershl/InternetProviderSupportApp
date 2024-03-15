@@ -28,6 +28,7 @@ namespace IPSA.Web.Client.Pages.Abonent
         protected AbonentReadDto abonent = new AbonentReadDto();
         protected List<AbonPageCommentDto>? abonPageComments = new List<AbonPageCommentDto>();
         protected List<ConnectedTariffDto>? connectedTariffs = new List<ConnectedTariffDto>();
+        protected const string monthlyPricingModel = "Месячный";
         protected string userId = string.Empty;
         protected decimal monthlyTariffSum = 0;
         protected decimal dailyTariffSum = 0;
@@ -50,7 +51,7 @@ namespace IPSA.Web.Client.Pages.Abonent
             {
                 if (ct.IsBlocked == false)
                 {
-                    if (ct.PricingModel == "Месячный")
+                    if (ct.PricingModel == monthlyPricingModel)
                     {
                         monthlyTariffSum += ct.MonthlyPrice;
                     }
@@ -112,6 +113,12 @@ namespace IPSA.Web.Client.Pages.Abonent
             paymentAmount = 0;
             paymentComment = string.Empty;
             paymentPopup = false;
+        }
+
+        protected void DeleteAllConnectedTariffs()
+        {
+            TariffService.DeleteAllConnectedTariffsForAbonent(AbonId);
+            navManager.NavigateTo($"/Abonent/{AbonId}/Info/", true);
         }
 
         protected bool addCommentPopup { get; set; }

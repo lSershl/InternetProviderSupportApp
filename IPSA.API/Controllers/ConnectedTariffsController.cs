@@ -23,7 +23,7 @@ namespace IPSA.API.Controllers
         private readonly IScheduledMonthlyFeesRepository _monthlyFeesRepository = scheduledMonthlyFeesRepository;
         private readonly IMapper _mapper = mapper;
 
-        private const string MonthlyPricingModel = "Месячный";
+        
 
         [HttpGet("Abonent/{abonId:int}")]
         public async Task<ActionResult<List<ConnectedTariffDto>>> GetConnectedTariffsByAbonent(int abonId)
@@ -66,6 +66,8 @@ namespace IPSA.API.Controllers
             }
         }
 
+        private const string MonthlyPricingModel = "Месячный";
+
         [HttpPost]
         public async Task<ActionResult> AddNewConnectedTariff(ConnectedTariffDto connTariffDto)
         {
@@ -76,11 +78,10 @@ namespace IPSA.API.Controllers
                     return BadRequest("Ошибка. Подключаемый тариф/услуга не содержит данных.");
                 }
 
-                var newConnTariff = _mapper.Map<ConnectedTariff>(connTariffDto);
-                newConnTariff.CreationDateTime = DateTime.UtcNow;
-                _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
                 string tariffPricingModel = _tariffRepository.GetTariffsList().First(x => x.Id == connTariffDto.TariffId).PricingModel;
+                decimal abonentBalance = _abonentRepository.GetAbonent(connTariffDto.AbonentId).Balance;
                 decimal amount = 0m;
+
                 if (tariffPricingModel == MonthlyPricingModel)
                 {
                     amount = connTariffDto.MonthlyPrice;
@@ -89,6 +90,15 @@ namespace IPSA.API.Controllers
                 {
                     amount = connTariffDto.DailyPrice;
                 }
+                if (abonentBalance < amount)
+                {
+                    return BadRequest("Баланс абонента недостаточен для подключения услуги. Пополните баланс перед подключением новой услуги!");
+                }
+
+                var newConnTariff = _mapper.Map<ConnectedTariff>(connTariffDto);
+                newConnTariff.CreationDateTime = DateTime.UtcNow;
+                _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
+
                 var newFeeWithdraw = new FeeWithdraw()
                     { 
                         AbonentId = connTariffDto.AbonentId,
@@ -231,16 +241,12 @@ namespace IPSA.API.Controllers
             _feeWithdrawRepository.AddNewFeeWithdrawRecord(newFeeWithdraw);
         }
 
-        [HttpDelete]
-        public async Task<ActionResult> DeleteConnectedTariff(int connTariffId)
+        [HttpDelete("DeleteSingleTariff/{connTariffId:int}")]
+        public async Task<ActionResult> DeleteSingleConnectedTariff(int connTariffId)
         {
             try
             {
-                var connTariff = _connectedTariffsRepository.GetConnectedTariffById(connTariffId);
-                var lastFeeWithdraw = _feeWithdrawRepository.GetWithdrawsListByAbonent(connTariff.AbonentId).OrderBy(x => x.CompletionDateTime).LastOrDefault(x => x.ConnectedTariffId == connTariffId);
-                _connectedTariffsRepository.DeleteConnectedTariff(connTariffId);
-                var refund = _feeWithdrawRepository.CalculateRefundAmount(lastFeeWithdraw);
-                _feeWithdrawRepository.ApplyRefund(lastFeeWithdraw.AbonentId, refund);
+                DeleteConnectedTariff(connTariffId);
                 return Ok();
             }
             catch (Exception)
@@ -249,6 +255,34 @@ namespace IPSA.API.Controllers
             }
         }
 
-        
+        [HttpDelete("DeleteAllTariffsForAbonent/{abonentId:int}")]
+        public async Task<ActionResult> DeleteAllConnectedTariffsForAbonent(int abonentId)
+        {
+            try
+            {
+                var connTariffsList = _connectedTariffsRepository.GetConnectedTariffsListByAbonent(abonentId);
+                foreach (var ct in connTariffsList)
+                {
+                    DeleteConnectedTariff(ct.Id);
+                }
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка при попытке отключить услугу");
+            }
+        }
+
+        private void DeleteConnectedTariff(int connTariffId)
+        {
+            var connTariff = _connectedTariffsRepository.GetConnectedTariffById(connTariffId);
+            var lastFeeWithdraw = _feeWithdrawRepository.GetWithdrawsListByAbonent(connTariff.AbonentId).OrderBy(x => x.CompletionDateTime).LastOrDefault(x => x.ConnectedTariffId == connTariffId);
+            _connectedTariffsRepository.DeleteConnectedTariff(connTariffId);
+            if (lastFeeWithdraw is not null)
+            {
+                var refund = _feeWithdrawRepository.CalculateRefundAmount(lastFeeWithdraw);
+                _feeWithdrawRepository.ApplyRefund(lastFeeWithdraw.AbonentId, refund);
+            }
+        }
     }
 }

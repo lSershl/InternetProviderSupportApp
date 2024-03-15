@@ -39,7 +39,7 @@ namespace IPSA.API.Repositories
             }
             else
             {
-                throw new NullReferenceException("Платёж не существует");
+                throw new NullReferenceException("Такого тарифа не существует");
             }
         }
     }

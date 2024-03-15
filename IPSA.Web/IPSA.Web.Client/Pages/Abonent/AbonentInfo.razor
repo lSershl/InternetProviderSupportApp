@@ -21,7 +21,7 @@
                         <button class="button" type="submit" @onclick="GoToReportsPage">Отчёты</button>
                         <button class="button" type="submit" @onclick="GoToRequestsPage">Заявки</button>
                         <button class="button" type="submit" @onclick="GoToConnectedTariffsPage">Услуги</button>
-                        <button class="button" type="submit">Отключить услуги</button>
+                        <button class="button" type="submit" @onclick="DeleteAllConnectedTariffs">Отключить услуги</button>
                     </div>
                 </div>
             </div>
@@ -122,11 +122,6 @@
                             <td class="head">Плата по посуточным тарифам:</td>
                             <td colspan="2">@dailyTariffSum руб/сутки</td>
                         </tr>
-                      @* <tr>
-                            <td class="head">Итого со скидкой</td>
-                            <td>(Текущая плата со скидкой)</td>
-                            <td>(Плата за след. месяц со скидкой)</td>
-                        </tr> *@
                     </table>
                 </div>
                 <div class="col-lg-2">
@@ -143,10 +138,6 @@
                                 <td><label style="color: red">@abonent.Balance руб</label></td>
                             }
                         </tr>
-                        @* <tr>
-                            <td class="head">Схема оплаты</td>
-                            <td>Авансовая</td>
-                        </tr> *@
                     </table>
                 </div>
             </div>
@@ -307,31 +298,6 @@
                         </tbody>
                     </table>
                 </div>
-                @* <div class="mb-3">
-                    <h4>Цифровое КТВ</h4>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width:5%">Link</th>
-                                <th style="width:10%">Приставка</th>
-                                <th style="width:10%">Пакеты каналов тек. месяца</th>
-                                <th style="width:15%">Пакеты каналов след. месяца</th>
-                                <th style="width:5%">Блокировка</th>
-                                <th style="width:5%">Тип блокировки</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>(Линк услуги)</td>
-                                <td>(Номер приставки, если есть)</td>
-                                <td>(Пакеты каналов тек. месяца)</td>
-                                <td>(Пакеты каналов след. месяца)</td>
-                                <td>(Нет)</td>
-                                <td>(Нет)</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div> *@
             </div>
         }
     </Authorized>

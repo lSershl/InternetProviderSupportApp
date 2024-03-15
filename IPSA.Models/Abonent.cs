@@ -6,26 +6,26 @@ namespace IPSA.Models
     public class Abonent
     {
         public int Id { get; set; }
-        public string LastName { get; set; } = string.Empty;
-        public string FirstName { get; set; } = string.Empty;
-        public string Surname { get; set; } = string.Empty;
-        public DateOnly DateOfBirth { get; set; }
-        public string BirthPlace { get; set; } = string.Empty;
-        public string PhoneNumber { get; set; } = string.Empty;
-        public string PhoneNumberForSending { get; set; } = string.Empty;
-        public string? Email { get; set; }
-        public string PassportSeries { get; set; } = string.Empty;
-        public string PassportNumber { get; set; } = string.Empty;
-        public string PassportRegistration { get; set; } = string.Empty;
-        public DateOnly PassportRegDate { get; set; }
-        public string RegistrationAddress { get; set; } = string.Empty;
+        public required string LastName { get; set; }
+        public required string FirstName { get; set; }
+        public required string Surname { get; set; }
+        public required DateOnly DateOfBirth { get; set; }
+        public required string BirthPlace { get; set; }
+        public required string PhoneNumber { get; set; }
+        public required string PhoneNumberForSending { get; set; }
+        public required string? Email { get; set; }
+        public required string PassportSeries { get; set; }
+        public required string PassportNumber { get; set; }
+        public required string PassportRegistration { get; set; }
+        public required DateOnly PassportRegDate { get; set; }
+        public required string RegistrationAddress { get; set; }
         public string? RegistrationZipCode { get; set; }
-        public string City { get; set; } = string.Empty;
-        public string Street { get; set; } = string.Empty;
-        public string House { get; set; } = string.Empty;
-        public string Apartment { get; set; } = string.Empty;
-        public string HouseEntranceNumber { get; set; } = string.Empty;
-        public string HouseFloorNumber { get; set; } = string.Empty;
+        public required string City { get; set; }
+        public required string Street { get; set; }
+        public required string House { get; set; }
+        public required string Apartment { get; set; }
+        public required string HouseEntranceNumber { get; set; }
+        public required string HouseFloorNumber { get; set; }
         public string? AddressZipCode { get; set; }
         public string? SecretPhrase { get; set; }
         public bool SMSSending { get; set; } = false;

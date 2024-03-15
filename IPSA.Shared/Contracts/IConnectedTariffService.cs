@@ -11,5 +11,6 @@ namespace IPSA.Shared.Contracts
         Task<ServiceResponse> BlockConnectedTariff(int connTariffId);
         Task<ServiceResponse> UnblockConnectedTariff(int connTariffId);
         Task<ServiceResponse> DeleteConnectedTariff(int connTariffId);
+        Task<ServiceResponse> DeleteAllConnectedTariffsForAbonent(int abonentId);
     }
 }

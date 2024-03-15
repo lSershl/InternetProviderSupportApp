@@ -26,6 +26,7 @@ namespace IPSA.API.Repositories
             _appDbContext.SaveChanges();
             return Task.CompletedTask;
         }
+
         public List<DailyFee> GetDailyFeesForToday()
         {
             var dailyFeesList = _appDbContext.DailyFees.Where(x => x.Date == DateOnly.FromDateTime(DateTime.Today)).ToList();

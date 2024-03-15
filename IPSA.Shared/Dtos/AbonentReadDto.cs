@@ -1,5 +1,4 @@
-﻿
-namespace IPSA.Shared.Dtos
+﻿namespace IPSA.Shared.Dtos
 {
     public class AbonentReadDto
     {

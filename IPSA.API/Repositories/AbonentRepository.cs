@@ -2,8 +2,6 @@
 using IPSA.API.Repositories.Contracts;
 using IPSA.Models;
 using IPSA.Shared.Dtos;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace IPSA.API.Repositories
 {
@@ -15,12 +13,6 @@ namespace IPSA.API.Repositories
         {
             var abonents = _appDbContext.Abonents.ToList();
             return abonents;
-        }
-
-        public Abonent GetAbonent(int id)
-        {
-            var abonent = _appDbContext.Abonents.First(a => a.Id == id);
-            return abonent;
         }
 
         public IEnumerable<Abonent> GetAbonentsByFilter(SearchAbonentFilter filter)
@@ -50,9 +42,15 @@ namespace IPSA.API.Repositories
             return result;
         }
 
-        public async Task<Task> AddNewAbonent(Abonent newAbonent)
+        public Abonent GetAbonent(int id)
         {
-            await _appDbContext.Abonents.AddAsync(newAbonent);
+            var abonent = _appDbContext.Abonents.First(a => a.Id == id);
+            return abonent;
+        }
+
+        public Task AddNewAbonent(Abonent newAbonent)
+        {
+            _appDbContext.Abonents.Add(newAbonent);
             _appDbContext.SaveChanges();
             return Task.CompletedTask;
         }

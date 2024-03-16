@@ -7,7 +7,7 @@ namespace IPSA.API.Repositories.Contracts
         List<ConnectedTariff> GetConnectedTariffsListByAbonent(int abonId);
         ConnectedTariff GetConnectedTariffById(int connTariffId);
         Task CheckBalanceAndRemoveAutoblocksAfterPeayment(int abonentId);
-        Task AddConnectedTariff(ConnectedTariff connTariff);
+        int AddConnectedTariff(ConnectedTariff connTariff);
         Task BlockConnectedTariff(int connTariffId);
         Task UnblockConnectedTariff(int connTariffId);
         Task DeleteConnectedTariff(int connTariffId);

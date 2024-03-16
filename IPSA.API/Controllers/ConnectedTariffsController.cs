@@ -97,18 +97,32 @@ namespace IPSA.API.Controllers
 
                 var newConnTariff = _mapper.Map<ConnectedTariff>(connTariffDto);
                 newConnTariff.CreationDateTime = DateTime.UtcNow;
-                _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
+                int newConnTariffId = _connectedTariffsRepository.AddConnectedTariff(newConnTariff);
 
                 var newFeeWithdraw = new FeeWithdraw()
                     { 
                         AbonentId = connTariffDto.AbonentId,
-                        ConnectedTariffId = connTariffDto.Id,
+                        ConnectedTariffId = newConnTariffId,
                         Type = "Списание",
                         PricingModel = tariffPricingModel,
                         Amount = amount,
                         CompletionDateTime = DateTime.UtcNow
                     };
                 _feeWithdrawRepository.AddNewFeeWithdrawRecord(newFeeWithdraw);
+                _feeWithdrawRepository.ApplyBalanceWithdraw(newFeeWithdraw);
+
+                if (tariffPricingModel == MonthlyPricingModel)
+                {
+                    var newMonthlyFee = new MonthlyFee
+                    {
+                        ConnectedTariffId = newConnTariffId,
+                        Amount = amount,
+                        ScheduledDate = DateOnly.FromDateTime(DateTime.UtcNow.AddMonths(1)),
+                        IsCompleted = false
+                    };
+                    _monthlyFeesRepository.AddNewScheduledMonthlyFee(newMonthlyFee);
+                }
+
                 return Ok();
             }
             catch (Exception)

@@ -21,11 +21,11 @@ namespace IPSA.API.Repositories
             return connectedTariff!;
         }
 
-        public Task AddConnectedTariff(ConnectedTariff connTariff)
+        public int AddConnectedTariff(ConnectedTariff connTariff)
         {
             _appDbContext.ConnectedTariffs.Add(connTariff);
             _appDbContext.SaveChanges();
-            return Task.CompletedTask;
+            return connTariff.Id;
         }
 
         public Task BlockConnectedTariff(int connTariffId)
